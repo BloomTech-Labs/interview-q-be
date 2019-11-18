@@ -1,3 +1,28 @@
 type Query {
-    info: String!
-    }
+	info: String!
+	posts: [Post!]!
+}
+
+type Mutation {
+	# addPost(): Post!
+
+	deletePost(id: String!): Post!
+	
+	# updatePost(): Post!
+}
+
+type Post {
+    id: ID!
+		# coachId: ID!
+    price: Int!
+    position: String!
+	description: String!
+    # ratingsId: ID!
+    # industry: Industry!
+	# tags: String!
+}
+
+type Industry {
+	id: ID!
+	name: String!
+}
