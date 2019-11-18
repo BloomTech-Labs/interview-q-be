@@ -1,17 +1,29 @@
 const { GraphQLServer } = require('graphql-yoga');
 const { prisma } = require('../generated/prisma-client');
+const { buildFederatedSchema } = require('@apollo/federation');
+
+const typeDefs = require('./schema');
+const Mutation = require('./resolvers/Mutation')
+const Query = require('./resolvers/Query')
 
 const resolvers = {
-    Query: {
-        info: ()=>"I'm ALIVE"
-    }
-}
+    Query,
+    Mutation,
+};
 
 const server = new GraphQLServer({
-    typeDefs: './src/schema.graphql',
+    schema: buildFederatedSchema([
+    {
+        typeDefs,
+        resolvers,
+    },
+]),
+    context: request => {
+        return {...request, prisma};
+    },
+    // typeDefs,
     resolvers,
-    context: {prisma},
-
-})
+    context: {prisma}
+});
 
 module.exports=server;
