@@ -11,30 +11,32 @@ async function createPost(_parent, args, context) {
 
     checkFields({ price, position, industryName, description });
 
-    // const tagArray = splitAndTrimTags(tagString);
-    // console.log(tagArray)
+    const tagArray = splitAndTrimTags(tagString);
+    console.log(tagArray)
 
-    // const tagsObjArray = tagArray.map(tag => {
-    //     console.log(tag)
-    const tag = await context.prisma.upsertTag({
+    const tagsObjArray = await tagArray.map(async tag => {
+        //     console.log(tag)
+        return await context.prisma.upsertTag({
             where: {
-                name: tagString
+                name: tag.name
             },
             create: {
-                name: tagString
+                name: tag.name
             },
             update: {
-                name: tagString
+                name: tag.name
             }
         })
-        .then(res => {
-            console.log(res);
+    })
+
+    console.log(tagsObjArray);
+    return Promise.all(tagsObjArray)
+        .then(tags => {
+            console.log(tags);
+
+            return context.prisma.createPost({ price, position, industry: { connect: { name: industryName } }, description, tags: { connect: tagArray } });
         })
-        // })
 
-    // console.log(tagsObjArray);
-
-    return context.prisma.createPost({ price, position, industry: { connect: { name: industryName } }, description, tags: { connect: {name: tagString } } });
 }
 
 function deletePost(_parent, args, context) {

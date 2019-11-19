@@ -16,5 +16,5 @@ function checkFields(args) {
 // Returns array of tags
 function splitAndTrimTags(tagString) {
     const tagArray = tagString.split(',');
-    return tagArray.map(tag => tag.trim());
+    return tagArray.map(tag => {return {name: tag.trim()}});
 }
