@@ -4,8 +4,8 @@ module.exports = {
   posts,
 }
 
-function info() {
-  return 'Welcome to InterviewQ';
+function interviewQinfo() {
+  return '"Welcome to InterviewQ" - love JQH';
 }
 
 function post (_parent, args, context){
