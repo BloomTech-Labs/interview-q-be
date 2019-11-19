@@ -7,27 +7,27 @@ const Mutation = require('./resolvers/Mutation')
 const Query = require('./resolvers/Query')
 const Post = require('./resolvers/Post')
 const Industry = require('./resolvers/Industry')
+const Tag = require('./resolvers/Tag')
 
 const resolvers = {
     Query,
     Mutation,
     Post,
-    Industry
+    Industry,
+    Tag
 };
 
 const server = new GraphQLServer({
-    schema: buildFederatedSchema([
-    {
+    schema: buildFederatedSchema([{
         typeDefs,
         resolvers,
-    },
-]),
+    }, ]),
     context: request => {
-        return {...request, prisma};
+        return {...request, prisma };
     },
     // typeDefs,
     resolvers,
-    context: {prisma}
+    context: { prisma }
 });
 
-module.exports=server;
+module.exports = server;

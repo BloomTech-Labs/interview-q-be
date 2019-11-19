@@ -1,7 +1,8 @@
 const { gql } = require('apollo-server')
 
-const typeDefs = gql`
+const typeDefs = gql `
   # The Query type lists all the different queries (Retrieve operations) that front-end can make from this Endpoint
+  # We can name these whatever we want. "Banana" words
   type Query {
     interviewQinfo: String!
     posts: [Post!]!
@@ -19,6 +20,7 @@ const typeDefs = gql`
       position: String!
       industryName: String!
       description: String!
+      tagString: String
     ): Post!
 
     deletePost(id: String!): Post!
@@ -48,10 +50,9 @@ const typeDefs = gql`
       # An alternate method could be connecting them via ID, but since both are unique, we chose name
       industry: Industry!
       description: String!
-      
+      tags: [Tag]!
       # coachId: ID!
       # ratingsId: ID!
-      # tags: String!
   }
 
   type Industry {
@@ -60,6 +61,12 @@ const typeDefs = gql`
     posts: [Post]! # This is how GraphQL connects the Industry type with the Post type... it designates a key for an industry object that references an array of matching Posts
     
     # This is a one to many relationship between Industry and Post
+  }
+
+  type Tag {
+    id: ID!
+    name: String!
+    posts: [Post]!
   }
 `;
 

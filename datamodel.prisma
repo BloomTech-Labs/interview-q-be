@@ -1,7 +1,7 @@
-type User {
-  id: ID! @id
-  name: String!
-}
+# type User {
+#  id: ID! @id
+#  name: String!
+# }
 
 type Post {
   id: ID! @id
@@ -9,6 +9,7 @@ type Post {
   position: String!
   industry: Industry!
   description: String!
+  tags: [Tag]!
   # coachId: ID!
   # ratingsId: ID!
 }
@@ -19,3 +20,8 @@ type Industry {
   posts: [Post]!
 }
 
+type Tag {
+  id: ID! @id
+  name: String! @unique
+  posts: [Post]!
+}
