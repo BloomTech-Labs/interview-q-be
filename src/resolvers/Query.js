@@ -1,5 +1,5 @@
 module.exports = {
-  info,
+  interviewQinfo,
   post,
   posts,
 }
