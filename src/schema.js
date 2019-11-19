@@ -16,7 +16,12 @@ const typeDefs = gql`
 
     deletePost(id: String!): Post!
     
-    # updatePost: Post!
+    updatePost(
+      id: String!
+      price: Int
+      description: String
+      position: String
+    ): Post!
   }
 
   type Post {
