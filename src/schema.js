@@ -57,7 +57,9 @@ const typeDefs = gql`
   type Industry {
     id: ID!
     name: String!
-    posts: [Post]!
+    posts: [Post]! # This is how GraphQL connects the Industry type with the Post type... it designates a key for an industry object that references an array of matching Posts
+    
+    # This is a one to many relationship between Industry and Post
   }
 `;
 
