@@ -31,6 +31,7 @@ const typeDefs = gql `
       position: String
       industryName: String
       description: String
+      tagString: String
     ): Post!
   }
 
