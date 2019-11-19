@@ -5,15 +5,17 @@ type User {
 
 type Post {
   id: ID! @id
-  # coachId: ID!
   price: Int!
   position: String!
-  # ratingsId: ID!
-  # industry: Industry!
+  industry: Industry!
   description: String!
+  # coachId: ID!
+  # ratingsId: ID!
 }
 
 type Industry {
 	id: ID! @id
-	name: String!
+	name: String! @unique
+  posts: [Post]!
 }
+

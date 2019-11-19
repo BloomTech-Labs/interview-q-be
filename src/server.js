@@ -5,10 +5,14 @@ const { buildFederatedSchema } = require('@apollo/federation');
 const typeDefs = require('./schema');
 const Mutation = require('./resolvers/Mutation')
 const Query = require('./resolvers/Query')
+const Post = require('./resolvers/Post')
+const Industry = require('./resolvers/Industry')
 
 const resolvers = {
     Query,
     Mutation,
+    Post,
+    Industry
 };
 
 const server = new GraphQLServer({

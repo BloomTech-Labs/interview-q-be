@@ -7,11 +7,11 @@ module.exports = {
 const {checkFields} = require('../utils');
 
 function createPost(_parent, args, context){
-    const { price, position, description } = args;
+    const { price, position, industryName, description } = args;
     
-    checkFields({price, position, description});
+    checkFields({price, position, industryName, description});
 
-    return context.prisma.createPost(args);
+    return context.prisma.createPost({price, position, industry: {connect: {name: industryName}}, description});
 }
 
 function deletePost(_parent, args, context){

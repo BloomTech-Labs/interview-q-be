@@ -22,6 +22,7 @@ type BatchPayload {
 type Industry {
   id: ID!
   name: String!
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
 }
 
 type IndustryConnection {
@@ -31,6 +32,17 @@ type IndustryConnection {
 }
 
 input IndustryCreateInput {
+  id: ID
+  name: String!
+  posts: PostCreateManyWithoutIndustryInput
+}
+
+input IndustryCreateOneWithoutPostsInput {
+  create: IndustryCreateWithoutPostsInput
+  connect: IndustryWhereUniqueInput
+}
+
+input IndustryCreateWithoutPostsInput {
   id: ID
   name: String!
 }
@@ -72,10 +84,27 @@ input IndustrySubscriptionWhereInput {
 
 input IndustryUpdateInput {
   name: String
+  posts: PostUpdateManyWithoutIndustryInput
 }
 
 input IndustryUpdateManyMutationInput {
   name: String
+}
+
+input IndustryUpdateOneRequiredWithoutPostsInput {
+  create: IndustryCreateWithoutPostsInput
+  update: IndustryUpdateWithoutPostsDataInput
+  upsert: IndustryUpsertWithoutPostsInput
+  connect: IndustryWhereUniqueInput
+}
+
+input IndustryUpdateWithoutPostsDataInput {
+  name: String
+}
+
+input IndustryUpsertWithoutPostsInput {
+  update: IndustryUpdateWithoutPostsDataInput!
+  create: IndustryCreateWithoutPostsInput!
 }
 
 input IndustryWhereInput {
@@ -107,6 +136,9 @@ input IndustryWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  posts_every: PostWhereInput
+  posts_some: PostWhereInput
+  posts_none: PostWhereInput
   AND: [IndustryWhereInput!]
   OR: [IndustryWhereInput!]
   NOT: [IndustryWhereInput!]
@@ -114,6 +146,7 @@ input IndustryWhereInput {
 
 input IndustryWhereUniqueInput {
   id: ID
+  name: String
 }
 
 scalar Long
@@ -160,6 +193,7 @@ type Post {
   id: ID!
   price: Int!
   position: String!
+  industry: Industry!
   description: String!
 }
 
@@ -170,6 +204,19 @@ type PostConnection {
 }
 
 input PostCreateInput {
+  id: ID
+  price: Int!
+  position: String!
+  industry: IndustryCreateOneWithoutPostsInput!
+  description: String!
+}
+
+input PostCreateManyWithoutIndustryInput {
+  create: [PostCreateWithoutIndustryInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
+input PostCreateWithoutIndustryInput {
   id: ID
   price: Int!
   position: String!
@@ -199,6 +246,62 @@ type PostPreviousValues {
   description: String!
 }
 
+input PostScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  price: Int
+  price_not: Int
+  price_in: [Int!]
+  price_not_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
+  position: String
+  position_not: String
+  position_in: [String!]
+  position_not_in: [String!]
+  position_lt: String
+  position_lte: String
+  position_gt: String
+  position_gte: String
+  position_contains: String
+  position_not_contains: String
+  position_starts_with: String
+  position_not_starts_with: String
+  position_ends_with: String
+  position_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [PostScalarWhereInput!]
+  OR: [PostScalarWhereInput!]
+  NOT: [PostScalarWhereInput!]
+}
+
 type PostSubscriptionPayload {
   mutation: MutationType!
   node: Post
@@ -220,6 +323,13 @@ input PostSubscriptionWhereInput {
 input PostUpdateInput {
   price: Int
   position: String
+  industry: IndustryUpdateOneRequiredWithoutPostsInput
+  description: String
+}
+
+input PostUpdateManyDataInput {
+  price: Int
+  position: String
   description: String
 }
 
@@ -227,6 +337,40 @@ input PostUpdateManyMutationInput {
   price: Int
   position: String
   description: String
+}
+
+input PostUpdateManyWithoutIndustryInput {
+  create: [PostCreateWithoutIndustryInput!]
+  delete: [PostWhereUniqueInput!]
+  connect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  disconnect: [PostWhereUniqueInput!]
+  update: [PostUpdateWithWhereUniqueWithoutIndustryInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutIndustryInput!]
+  deleteMany: [PostScalarWhereInput!]
+  updateMany: [PostUpdateManyWithWhereNestedInput!]
+}
+
+input PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput!
+  data: PostUpdateManyDataInput!
+}
+
+input PostUpdateWithoutIndustryDataInput {
+  price: Int
+  position: String
+  description: String
+}
+
+input PostUpdateWithWhereUniqueWithoutIndustryInput {
+  where: PostWhereUniqueInput!
+  data: PostUpdateWithoutIndustryDataInput!
+}
+
+input PostUpsertWithWhereUniqueWithoutIndustryInput {
+  where: PostWhereUniqueInput!
+  update: PostUpdateWithoutIndustryDataInput!
+  create: PostCreateWithoutIndustryInput!
 }
 
 input PostWhereInput {
@@ -266,6 +410,7 @@ input PostWhereInput {
   position_not_starts_with: String
   position_ends_with: String
   position_not_ends_with: String
+  industry: IndustryWhereInput
   description: String
   description_not: String
   description_in: [String!]
