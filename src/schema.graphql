@@ -1,34 +1,49 @@
 type Query {
 	interviewQinfo: String!
-	posts: [Post!]!
+	posts: [Post]!
 	post(id: String!): Post!
+	industries: [Industry]!
+	
 }
 
 type Mutation {
-	createPost(price: Int!, description: String!, position: String!): Post!
+	createPost(
+		price: Int!
+		position: String!
+		industryName: String!
+		description: String!
+	): Post!
 
 	deletePost(id: String!): Post!
 
 	updatePost(
 		id: String!
 		price: Int
-		description: String
 		position: String
+		industryName: String
+		description: String
 	): Post!
 }
 
 type Post {
 	id: ID!
-	# coachId: ID!
 	price: Int!
 	position: String!
-	# ratingsId: ID!
-	# industry: Industry!
-	# tags: String!
+	industry: Industry!
 	description: String!
+	# coachId: ID!
+	# ratingsId: ID!
+	# tags: String!
 }
 
 type Industry {
 	id: ID!
 	name: String!
+	posts: [Post]!
 }
+
+# type Tag{
+# 	id: ID!
+# 	name: String!
+# 	postings: [Posting!]
+# }

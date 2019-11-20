@@ -18,7 +18,7 @@ export type Maybe<T> = T | undefined | null;
 export interface Exists {
   industry: (where?: IndustryWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
-  user: (where?: UserWhereInput) => Promise<boolean>;
+  tag: (where?: TagWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -78,25 +78,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => PostConnectionPromise;
-  user: (where: UserWhereUniqueInput) => UserNullablePromise;
-  users: (args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
+  tag: (where: TagWhereUniqueInput) => TagNullablePromise;
+  tags: (args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<User>;
-  usersConnection: (args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
+  }) => FragmentableArray<Tag>;
+  tagsConnection: (args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => UserConnectionPromise;
+  }) => TagConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -135,22 +135,22 @@ export interface Prisma {
   }) => PostPromise;
   deletePost: (where: PostWhereUniqueInput) => PostPromise;
   deleteManyPosts: (where?: PostWhereInput) => BatchPayloadPromise;
-  createUser: (data: UserCreateInput) => UserPromise;
-  updateUser: (args: {
-    data: UserUpdateInput;
-    where: UserWhereUniqueInput;
-  }) => UserPromise;
-  updateManyUsers: (args: {
-    data: UserUpdateManyMutationInput;
-    where?: UserWhereInput;
+  createTag: (data: TagCreateInput) => TagPromise;
+  updateTag: (args: {
+    data: TagUpdateInput;
+    where: TagWhereUniqueInput;
+  }) => TagPromise;
+  updateManyTags: (args: {
+    data: TagUpdateManyMutationInput;
+    where?: TagWhereInput;
   }) => BatchPayloadPromise;
-  upsertUser: (args: {
-    where: UserWhereUniqueInput;
-    create: UserCreateInput;
-    update: UserUpdateInput;
-  }) => UserPromise;
-  deleteUser: (where: UserWhereUniqueInput) => UserPromise;
-  deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
+  upsertTag: (args: {
+    where: TagWhereUniqueInput;
+    create: TagCreateInput;
+    update: TagUpdateInput;
+  }) => TagPromise;
+  deleteTag: (where: TagWhereUniqueInput) => TagPromise;
+  deleteManyTags: (where?: TagWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -166,9 +166,9 @@ export interface Subscription {
   post: (
     where?: PostSubscriptionWhereInput
   ) => PostSubscriptionPayloadSubscription;
-  user: (
-    where?: UserSubscriptionWhereInput
-  ) => UserSubscriptionPayloadSubscription;
+  tag: (
+    where?: TagSubscriptionWhereInput
+  ) => TagSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -178,14 +178,6 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
-
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
-
-export type IndustryOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC";
 
 export type PostOrderByInput =
   | "id_ASC"
@@ -197,15 +189,29 @@ export type PostOrderByInput =
   | "description_ASC"
   | "description_DESC";
 
-export type UserOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
+export type TagOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
 
-export type PostWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export type IndustryOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
+
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export interface TagUpdateWithoutPostsDataInput {
+  name?: Maybe<String>;
+}
 
 export type IndustryWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  name?: Maybe<String>;
 }>;
+
+export interface TagUpdateManyWithWhereNestedInput {
+  where: TagScalarWhereInput;
+  data: TagUpdateManyDataInput;
+}
 
 export interface IndustryWhereInput {
   id?: Maybe<ID_Input>;
@@ -236,9 +242,69 @@ export interface IndustryWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  posts_every?: Maybe<PostWhereInput>;
+  posts_some?: Maybe<PostWhereInput>;
+  posts_none?: Maybe<PostWhereInput>;
   AND?: Maybe<IndustryWhereInput[] | IndustryWhereInput>;
   OR?: Maybe<IndustryWhereInput[] | IndustryWhereInput>;
   NOT?: Maybe<IndustryWhereInput[] | IndustryWhereInput>;
+}
+
+export interface TagCreateWithoutPostsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface IndustryCreateWithoutPostsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface IndustryUpdateInput {
+  name?: Maybe<String>;
+  posts?: Maybe<PostUpdateManyWithoutIndustryInput>;
+}
+
+export interface TagUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface PostUpdateManyWithoutIndustryInput {
+  create?: Maybe<
+    PostCreateWithoutIndustryInput[] | PostCreateWithoutIndustryInput
+  >;
+  delete?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  set?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  disconnect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  update?: Maybe<
+    | PostUpdateWithWhereUniqueWithoutIndustryInput[]
+    | PostUpdateWithWhereUniqueWithoutIndustryInput
+  >;
+  upsert?: Maybe<
+    | PostUpsertWithWhereUniqueWithoutIndustryInput[]
+    | PostUpsertWithWhereUniqueWithoutIndustryInput
+  >;
+  deleteMany?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  updateMany?: Maybe<
+    PostUpdateManyWithWhereNestedInput[] | PostUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TagSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TagWhereInput>;
+  AND?: Maybe<TagSubscriptionWhereInput[] | TagSubscriptionWhereInput>;
+  OR?: Maybe<TagSubscriptionWhereInput[] | TagSubscriptionWhereInput>;
+  NOT?: Maybe<TagSubscriptionWhereInput[] | TagSubscriptionWhereInput>;
+}
+
+export interface PostUpdateWithWhereUniqueWithoutIndustryInput {
+  where: PostWhereUniqueInput;
+  data: PostUpdateWithoutIndustryDataInput;
 }
 
 export interface IndustrySubscriptionWhereInput {
@@ -256,49 +322,94 @@ export interface IndustrySubscriptionWhereInput {
   >;
 }
 
-export interface PostCreateInput {
+export interface PostUpdateWithoutIndustryDataInput {
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  description?: Maybe<String>;
+  tags?: Maybe<TagUpdateManyWithoutPostsInput>;
+}
+
+export interface PostUpsertWithWhereUniqueWithoutTagsInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutTagsDataInput;
+  create: PostCreateWithoutTagsInput;
+}
+
+export interface TagUpdateManyWithoutPostsInput {
+  create?: Maybe<TagCreateWithoutPostsInput[] | TagCreateWithoutPostsInput>;
+  delete?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  connect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  set?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  disconnect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  update?: Maybe<
+    | TagUpdateWithWhereUniqueWithoutPostsInput[]
+    | TagUpdateWithWhereUniqueWithoutPostsInput
+  >;
+  upsert?: Maybe<
+    | TagUpsertWithWhereUniqueWithoutPostsInput[]
+    | TagUpsertWithWhereUniqueWithoutPostsInput
+  >;
+  deleteMany?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+  updateMany?: Maybe<
+    TagUpdateManyWithWhereNestedInput[] | TagUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface PostUpdateWithWhereUniqueWithoutTagsInput {
+  where: PostWhereUniqueInput;
+  data: PostUpdateWithoutTagsDataInput;
+}
+
+export interface TagUpdateWithWhereUniqueWithoutPostsInput {
+  where: TagWhereUniqueInput;
+  data: TagUpdateWithoutPostsDataInput;
+}
+
+export interface PostUpdateManyWithoutTagsInput {
+  create?: Maybe<PostCreateWithoutTagsInput[] | PostCreateWithoutTagsInput>;
+  delete?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  set?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  disconnect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  update?: Maybe<
+    | PostUpdateWithWhereUniqueWithoutTagsInput[]
+    | PostUpdateWithWhereUniqueWithoutTagsInput
+  >;
+  upsert?: Maybe<
+    | PostUpsertWithWhereUniqueWithoutTagsInput[]
+    | PostUpsertWithWhereUniqueWithoutTagsInput
+  >;
+  deleteMany?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  updateMany?: Maybe<
+    PostUpdateManyWithWhereNestedInput[] | PostUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface IndustryUpsertWithoutPostsInput {
+  update: IndustryUpdateWithoutPostsDataInput;
+  create: IndustryCreateWithoutPostsInput;
+}
+
+export interface PostCreateWithoutTagsInput {
   id?: Maybe<ID_Input>;
   price: Int;
   position: String;
+  industry: IndustryCreateOneWithoutPostsInput;
   description: String;
 }
 
-export interface UserUpdateInput {
-  name?: Maybe<String>;
+export interface TagUpsertWithWhereUniqueWithoutPostsInput {
+  where: TagWhereUniqueInput;
+  update: TagUpdateWithoutPostsDataInput;
+  create: TagCreateWithoutPostsInput;
 }
 
-export interface IndustryUpdateManyMutationInput {
-  name?: Maybe<String>;
+export interface PostCreateManyWithoutTagsInput {
+  create?: Maybe<PostCreateWithoutTagsInput[] | PostCreateWithoutTagsInput>;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
 }
 
-export interface PostUpdateManyMutationInput {
-  price?: Maybe<Int>;
-  position?: Maybe<String>;
-  description?: Maybe<String>;
-}
-
-export interface IndustryUpdateInput {
-  name?: Maybe<String>;
-}
-
-export interface PostUpdateInput {
-  price?: Maybe<Int>;
-  position?: Maybe<String>;
-  description?: Maybe<String>;
-}
-
-export interface PostSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<PostWhereInput>;
-  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-}
-
-export interface UserWhereInput {
+export interface TagScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -327,21 +438,139 @@ export interface UserWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+  AND?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+  OR?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+  NOT?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+}
+
+export interface PostUpdateManyMutationInput {
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  description?: Maybe<String>;
+}
+
+export interface TagWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  posts_every?: Maybe<PostWhereInput>;
+  posts_some?: Maybe<PostWhereInput>;
+  posts_none?: Maybe<PostWhereInput>;
+  AND?: Maybe<TagWhereInput[] | TagWhereInput>;
+  OR?: Maybe<TagWhereInput[] | TagWhereInput>;
+  NOT?: Maybe<TagWhereInput[] | TagWhereInput>;
 }
 
 export interface IndustryCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
+  posts?: Maybe<PostCreateManyWithoutIndustryInput>;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface IndustryUpdateWithoutPostsDataInput {
+  name?: Maybe<String>;
+}
+
+export interface PostCreateWithoutIndustryInput {
+  id?: Maybe<ID_Input>;
+  price: Int;
+  position: String;
+  description: String;
+  tags?: Maybe<TagCreateManyWithoutPostsInput>;
+}
+
+export interface PostUpsertWithWhereUniqueWithoutIndustryInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutIndustryDataInput;
+  create: PostCreateWithoutIndustryInput;
+}
 
 export interface PostWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  price?: Maybe<Int>;
+  price_not?: Maybe<Int>;
+  price_in?: Maybe<Int[] | Int>;
+  price_not_in?: Maybe<Int[] | Int>;
+  price_lt?: Maybe<Int>;
+  price_lte?: Maybe<Int>;
+  price_gt?: Maybe<Int>;
+  price_gte?: Maybe<Int>;
+  position?: Maybe<String>;
+  position_not?: Maybe<String>;
+  position_in?: Maybe<String[] | String>;
+  position_not_in?: Maybe<String[] | String>;
+  position_lt?: Maybe<String>;
+  position_lte?: Maybe<String>;
+  position_gt?: Maybe<String>;
+  position_gte?: Maybe<String>;
+  position_contains?: Maybe<String>;
+  position_not_contains?: Maybe<String>;
+  position_starts_with?: Maybe<String>;
+  position_not_starts_with?: Maybe<String>;
+  position_ends_with?: Maybe<String>;
+  position_not_ends_with?: Maybe<String>;
+  industry?: Maybe<IndustryWhereInput>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  tags_every?: Maybe<TagWhereInput>;
+  tags_some?: Maybe<TagWhereInput>;
+  tags_none?: Maybe<TagWhereInput>;
+  AND?: Maybe<PostWhereInput[] | PostWhereInput>;
+  OR?: Maybe<PostWhereInput[] | PostWhereInput>;
+  NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
+}
+
+export interface PostScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -392,66 +621,362 @@ export interface PostWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
-  AND?: Maybe<PostWhereInput[] | PostWhereInput>;
-  OR?: Maybe<PostWhereInput[] | PostWhereInput>;
-  NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
+  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
 }
 
-export interface UserSubscriptionWhereInput {
+export interface TagUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput;
+  data: PostUpdateManyDataInput;
+}
+
+export type PostWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface PostUpdateManyDataInput {
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  description?: Maybe<String>;
+}
+
+export type TagWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
+export interface IndustryUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface TagCreateManyWithoutPostsInput {
+  create?: Maybe<TagCreateWithoutPostsInput[] | TagCreateWithoutPostsInput>;
+  connect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+}
+
+export interface IndustryCreateOneWithoutPostsInput {
+  create?: Maybe<IndustryCreateWithoutPostsInput>;
+  connect?: Maybe<IndustryWhereUniqueInput>;
+}
+
+export interface PostCreateInput {
+  id?: Maybe<ID_Input>;
+  price: Int;
+  position: String;
+  industry: IndustryCreateOneWithoutPostsInput;
+  description: String;
+  tags?: Maybe<TagCreateManyWithoutPostsInput>;
+}
+
+export interface PostUpdateInput {
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  industry?: Maybe<IndustryUpdateOneRequiredWithoutPostsInput>;
+  description?: Maybe<String>;
+  tags?: Maybe<TagUpdateManyWithoutPostsInput>;
+}
+
+export interface IndustryUpdateOneRequiredWithoutPostsInput {
+  create?: Maybe<IndustryCreateWithoutPostsInput>;
+  update?: Maybe<IndustryUpdateWithoutPostsDataInput>;
+  upsert?: Maybe<IndustryUpsertWithoutPostsInput>;
+  connect?: Maybe<IndustryWhereUniqueInput>;
+}
+
+export interface PostSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  node?: Maybe<PostWhereInput>;
+  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
 }
 
-export interface UserCreateInput {
+export interface PostCreateManyWithoutIndustryInput {
+  create?: Maybe<
+    PostCreateWithoutIndustryInput[] | PostCreateWithoutIndustryInput
+  >;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+}
+
+export interface TagCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
+  posts?: Maybe<PostCreateManyWithoutTagsInput>;
 }
 
-export interface UserUpdateManyMutationInput {
+export interface TagUpdateInput {
   name?: Maybe<String>;
+  posts?: Maybe<PostUpdateManyWithoutTagsInput>;
+}
+
+export interface PostUpdateWithoutTagsDataInput {
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  industry?: Maybe<IndustryUpdateOneRequiredWithoutPostsInput>;
+  description?: Maybe<String>;
 }
 
 export interface NodeNode {
   id: ID_Output;
 }
 
-export interface UserEdge {
-  node: User;
+export interface TagPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface TagPreviousValuesPromise
+  extends Promise<TagPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface TagPreviousValuesSubscription
+  extends Promise<AsyncIterator<TagPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface IndustryEdge {
+  node: Industry;
   cursor: String;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
+export interface IndustryEdgePromise
+  extends Promise<IndustryEdge>,
+    Fragmentable {
+  node: <T = IndustryPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface IndustryEdgeSubscription
+  extends Promise<AsyncIterator<IndustryEdge>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T;
+  node: <T = IndustrySubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateIndustry {
+export interface PostPreviousValues {
+  id: ID_Output;
+  price: Int;
+  position: String;
+  description: String;
+}
+
+export interface PostPreviousValuesPromise
+  extends Promise<PostPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  price: () => Promise<Int>;
+  position: () => Promise<String>;
+  description: () => Promise<String>;
+}
+
+export interface PostPreviousValuesSubscription
+  extends Promise<AsyncIterator<PostPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  price: () => Promise<AsyncIterator<Int>>;
+  position: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface TagSubscriptionPayload {
+  mutation: MutationType;
+  node: Tag;
+  updatedFields: String[];
+  previousValues: TagPreviousValues;
+}
+
+export interface TagSubscriptionPayloadPromise
+  extends Promise<TagSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TagPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TagPreviousValuesPromise>() => T;
+}
+
+export interface TagSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TagSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TagSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TagPreviousValuesSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TagEdge {
+  node: Tag;
+  cursor: String;
+}
+
+export interface TagEdgePromise extends Promise<TagEdge>, Fragmentable {
+  node: <T = TagPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TagEdgeSubscription
+  extends Promise<AsyncIterator<TagEdge>>,
+    Fragmentable {
+  node: <T = TagSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface IndustryConnection {
+  pageInfo: PageInfo;
+  edges: IndustryEdge[];
+}
+
+export interface IndustryConnectionPromise
+  extends Promise<IndustryConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<IndustryEdge>>() => T;
+  aggregate: <T = AggregateIndustryPromise>() => T;
+}
+
+export interface IndustryConnectionSubscription
+  extends Promise<AsyncIterator<IndustryConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<IndustryEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateIndustrySubscription>() => T;
+}
+
+export interface AggregatePost {
   count: Int;
 }
 
-export interface AggregateIndustryPromise
-  extends Promise<AggregateIndustry>,
+export interface AggregatePostPromise
+  extends Promise<AggregatePost>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateIndustrySubscription
-  extends Promise<AsyncIterator<AggregateIndustry>>,
+export interface AggregatePostSubscription
+  extends Promise<AsyncIterator<AggregatePost>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Tag {
+  id: ID_Output;
+  name: String;
+}
+
+export interface TagPromise extends Promise<Tag>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface TagSubscription
+  extends Promise<AsyncIterator<Tag>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface TagNullablePromise extends Promise<Tag | null>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PostConnection {
+  pageInfo: PageInfo;
+  edges: PostEdge[];
+}
+
+export interface PostConnectionPromise
+  extends Promise<PostConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PostEdge>>() => T;
+  aggregate: <T = AggregatePostPromise>() => T;
+}
+
+export interface PostConnectionSubscription
+  extends Promise<AsyncIterator<PostConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePostSubscription>() => T;
 }
 
 export interface PostSubscriptionPayload {
@@ -479,225 +1004,55 @@ export interface PostSubscriptionPayloadSubscription
   previousValues: <T = PostPreviousValuesSubscription>() => T;
 }
 
-export interface IndustryEdge {
-  node: Industry;
-  cursor: String;
-}
-
-export interface IndustryEdgePromise
-  extends Promise<IndustryEdge>,
-    Fragmentable {
-  node: <T = IndustryPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface IndustryEdgeSubscription
-  extends Promise<AsyncIterator<IndustryEdge>>,
-    Fragmentable {
-  node: <T = IndustrySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserPreviousValues {
+export interface Industry {
   id: ID_Output;
   name: String;
 }
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
+export interface IndustryPromise extends Promise<Industry>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
+export interface IndustrySubscription
+  extends Promise<AsyncIterator<Industry>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
+  posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface User {
-  id: ID_Output;
-  name: String;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserNullablePromise
-  extends Promise<User | null>,
+export interface IndustryNullablePromise
+  extends Promise<Industry | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface PostEdge {
-  node: Post;
-  cursor: String;
-}
-
-export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
-  node: <T = PostPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PostEdgeSubscription
-  extends Promise<AsyncIterator<PostEdge>>,
-    Fragmentable {
-  node: <T = PostSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface IndustryConnection {
-  pageInfo: PageInfo;
-  edges: IndustryEdge[];
-}
-
-export interface IndustryConnectionPromise
-  extends Promise<IndustryConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<IndustryEdge>>() => T;
-  aggregate: <T = AggregateIndustryPromise>() => T;
-}
-
-export interface IndustryConnectionSubscription
-  extends Promise<AsyncIterator<IndustryConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<IndustryEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateIndustrySubscription>() => T;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface Post {
-  id: ID_Output;
-  price: Int;
-  position: String;
-  description: String;
-}
-
-export interface PostPromise extends Promise<Post>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  price: () => Promise<Int>;
-  position: () => Promise<String>;
-  description: () => Promise<String>;
-}
-
-export interface PostSubscription
-  extends Promise<AsyncIterator<Post>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  price: () => Promise<AsyncIterator<Int>>;
-  position: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-}
-
-export interface PostNullablePromise
-  extends Promise<Post | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  price: () => Promise<Int>;
-  position: () => Promise<String>;
-  description: () => Promise<String>;
-}
-
-export interface PostPreviousValues {
-  id: ID_Output;
-  price: Int;
-  position: String;
-  description: String;
-}
-
-export interface PostPreviousValuesPromise
-  extends Promise<PostPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  price: () => Promise<Int>;
-  position: () => Promise<String>;
-  description: () => Promise<String>;
-}
-
-export interface PostPreviousValuesSubscription
-  extends Promise<AsyncIterator<PostPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  price: () => Promise<AsyncIterator<Int>>;
-  position: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface IndustryPreviousValues {
@@ -744,102 +1099,136 @@ export interface IndustrySubscriptionPayloadSubscription
   previousValues: <T = IndustryPreviousValuesSubscription>() => T;
 }
 
-export interface Industry {
-  id: ID_Output;
-  name: String;
-}
-
-export interface IndustryPromise extends Promise<Industry>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface IndustrySubscription
-  extends Promise<AsyncIterator<Industry>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-}
-
-export interface IndustryNullablePromise
-  extends Promise<Industry | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface PostConnection {
-  pageInfo: PageInfo;
-  edges: PostEdge[];
-}
-
-export interface PostConnectionPromise
-  extends Promise<PostConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PostEdge>>() => T;
-  aggregate: <T = AggregatePostPromise>() => T;
-}
-
-export interface PostConnectionSubscription
-  extends Promise<AsyncIterator<PostConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePostSubscription>() => T;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface AggregatePost {
+export interface AggregateIndustry {
   count: Int;
 }
 
-export interface AggregatePostPromise
-  extends Promise<AggregatePost>,
+export interface AggregateIndustryPromise
+  extends Promise<AggregateIndustry>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregatePostSubscription
-  extends Promise<AsyncIterator<AggregatePost>>,
+export interface AggregateIndustrySubscription
+  extends Promise<AsyncIterator<AggregateIndustry>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PostEdge {
+  node: Post;
+  cursor: String;
+}
+
+export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
+  node: <T = PostPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PostEdgeSubscription
+  extends Promise<AsyncIterator<PostEdge>>,
+    Fragmentable {
+  node: <T = PostSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TagConnection {
+  pageInfo: PageInfo;
+  edges: TagEdge[];
+}
+
+export interface TagConnectionPromise
+  extends Promise<TagConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TagEdge>>() => T;
+  aggregate: <T = AggregateTagPromise>() => T;
+}
+
+export interface TagConnectionSubscription
+  extends Promise<AsyncIterator<TagConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TagEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTagSubscription>() => T;
+}
+
+export interface AggregateTag {
+  count: Int;
+}
+
+export interface AggregateTagPromise
+  extends Promise<AggregateTag>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTagSubscription
+  extends Promise<AsyncIterator<AggregateTag>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Post {
+  id: ID_Output;
+  price: Int;
+  position: String;
+  description: String;
+}
+
+export interface PostPromise extends Promise<Post>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  price: () => Promise<Int>;
+  position: () => Promise<String>;
+  industry: <T = IndustryPromise>() => T;
+  description: () => Promise<String>;
+  tags: <T = FragmentableArray<Tag>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PostSubscription
+  extends Promise<AsyncIterator<Post>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  price: () => Promise<AsyncIterator<Int>>;
+  position: () => Promise<AsyncIterator<String>>;
+  industry: <T = IndustrySubscription>() => T;
+  description: () => Promise<AsyncIterator<String>>;
+  tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PostNullablePromise
+  extends Promise<Post | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  price: () => Promise<Int>;
+  position: () => Promise<String>;
+  industry: <T = IndustryPromise>() => T;
+  description: () => Promise<String>;
+  tags: <T = FragmentableArray<Tag>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 /*
@@ -848,17 +1237,17 @@ The `Boolean` scalar type represents `true` or `false`.
 export type Boolean = boolean;
 
 /*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type Int = number;
 
 export type Long = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
-export type Int = number;
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
@@ -871,15 +1260,15 @@ export type String = string;
 
 export const models: Model[] = [
   {
-    name: "User",
-    embedded: false
-  },
-  {
     name: "Post",
     embedded: false
   },
   {
     name: "Industry",
+    embedded: false
+  },
+  {
+    name: "Tag",
     embedded: false
   }
 ];

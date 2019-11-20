@@ -1,19 +1,27 @@
-type User {
-  id: ID! @id
-  name: String!
-}
+# type User {
+#  id: ID! @id
+#  name: String!
+# }
 
 type Post {
   id: ID! @id
-  # coachId: ID!
   price: Int!
   position: String!
-  # ratingsId: ID!
-  # industry: Industry!
+  industry: Industry!
   description: String!
+  tags: [Tag]!
+  # coachId: ID!
+  # ratingsId: ID!
 }
 
 type Industry {
 	id: ID! @id
-	name: String!
+	name: String! @unique
+  posts: [Post]!
+}
+
+type Tag {
+  id: ID! @id
+  name: String! @unique
+  posts: [Post]!
 }
