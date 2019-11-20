@@ -13,31 +13,27 @@ async function createPost(_parent, args, context) {
 
 	checkFields({ price, position, industryName, description });
 
-	const tagArray = splitAndTrimTags(tagString);
+	if (tagString) {
+		const tagArray = splitAndTrimTags(tagString);
+		const tagsObjArray = await addNewTags(tagArray, context);
 
-	const tagsObjArray = await tagArray.map(async tag => {
-		return await context.prisma.upsertTag({
-			where: {
-				name: tag.name,
-			},
-			create: {
-				name: tag.name,
-			},
-			update: {
-				name: tag.name,
-			},
+		return Promise.all(tagsObjArray).then(tags => {
+			return context.prisma.createPost({
+				price,
+				position,
+				description,
+				industry: { connect: { name: industryName } },
+				tags: { connect: tagArray },
+			});
 		});
-	});
-
-	return Promise.all(tagsObjArray).then(tags => {
+	} else {
 		return context.prisma.createPost({
 			price,
 			position,
-			industry: { connect: { name: industryName } },
 			description,
-			tags: { connect: tagArray },
+			industry: { connect: { name: industryName } },
 		});
-	});
+	}
 }
 
 function deletePost(_parent, args, context) {
@@ -49,19 +45,8 @@ async function updatePost(_parent, args, context) {
 
 	if (tagString && industryName) {
 		const tagArray = splitAndTrimTags(tagString);
-		const tagsObjArray = await tagArray.map(async tag => {
-			return await context.prisma.upsertTag({
-				where: {
-					name: tag.name,
-				},
-				create: {
-					name: tag.name,
-				},
-				update: {
-					name: tag.name,
-				},
-			});
-		});
+		const tagsObjArray = await addNewTags(tagArray, context);
+
 		return Promise.all(tagsObjArray).then(tags => {
 			return context.prisma.updatePost({
 				data: {
@@ -71,6 +56,18 @@ async function updatePost(_parent, args, context) {
 					industry: { connect: { name: industryName } },
 					tags: { connect: tagArray },
 				},
+				where: {
+					id,
+				},
+			});
+		});
+	} else if (tagString) {
+		const tagArray = splitAndTrimTags(tagString);
+		const tagsObjArray = await addNewTags(tagArray, context);
+
+		return Promise.all(tagsObjArray).then(tags => {
+			return context.prisma.updatePost({
+				data: { price, position, description, tags: { connect: tagArray } },
 				where: {
 					id,
 				},
@@ -88,29 +85,6 @@ async function updatePost(_parent, args, context) {
 				id,
 			},
 		});
-	} else if (tagString) {
-		const tagArray = splitAndTrimTags(tagString);
-		const tagsObjArray = await tagArray.map(async tag => {
-			return await context.prisma.upsertTag({
-				where: {
-					name: tag.name,
-				},
-				create: {
-					name: tag.name,
-				},
-				update: {
-					name: tag.name,
-				},
-			});
-		});
-		return Promise.all(tagsObjArray).then(tags => {
-			return context.prisma.updatePost({
-				data: { price, position, description, tags: { connect: tagArray } },
-				where: {
-					id,
-				},
-			});
-		});
 	} else {
 		//If no industry and tagname
 		return context.prisma.updatePost({
@@ -126,11 +100,27 @@ function deleteIndustry(_parent, args, context) {
 	return context.prisma.deleteIndustry({ id: args.id });
 }
 
-function updateIndustry(parent, args, context) {
+function updateIndustry(_parent, args, context) {
 	return context.prisma.updateIndustry({
 		data: { args },
 		where: {
 			id,
 		},
+	});
+}
+
+function addNewTags(array, context) {
+	return array.map(async tag => {
+		return await context.prisma.upsertTag({
+			where: {
+				name: tag.name,
+			},
+			create: {
+				name: tag.name,
+			},
+			update: {
+				name: tag.name,
+			},
+		});
 	});
 }
