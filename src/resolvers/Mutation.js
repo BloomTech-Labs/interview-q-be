@@ -4,6 +4,7 @@ module.exports = {
 	updatePost,
 	deleteIndustry,
 	updateIndustry,
+	removeTagFromPost,
 };
 
 const { checkFields, splitAndTrimTags } = require('../utils');
@@ -106,6 +107,15 @@ function updateIndustry(_parent, args, context) {
 		where: {
 			id,
 		},
+	});
+}
+
+function removeTagFromPost(_parent, args, context) {
+	const { id, tag } = args;
+
+	return context.prisma.updatePost({
+		data: { tags: { delete: { name: tag } } },
+		where: { id },
 	});
 }
 
