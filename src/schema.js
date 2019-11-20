@@ -21,6 +21,7 @@ const typeDefs = gql`
 			industryName: String!
 			description: String!
 			tagString: String
+			coachEmail: String!
 		): Post!
 
 		deletePost(id: String!): Post!
