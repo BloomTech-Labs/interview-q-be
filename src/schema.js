@@ -21,18 +21,21 @@ const typeDefs = gql`
 			industryName: String!
 			description: String!
 			tagString: String
+			coachEmail: String!
 		): Post!
 
 		deletePost(id: String!): Post!
 
 		updatePost(
-			id: String!
+			id: ID!
 			price: Int
 			position: String
 			industryName: String
 			description: String
 			tagString: String
 		): Post!
+
+		removeTagFromPost(id: ID!, tag: String): Post!
 	}
 
 	# ***************************************************
@@ -54,11 +57,12 @@ const typeDefs = gql`
 		tags: [Tag]!
 		# coachId: ID!
 		# ratingsId: ID!
-		# coach: User @provides(fields: "email")
+		# coach: User @provides(fields: "id email first_name last_name image_url personal_url blog_url twitter_url portfolio_url linkedin_url github_url bio")
 	}
 
-	# extend type User @key(fields: "id") {
+	# extend type User @key(fields: "email") {
 	# 	id: ID! @external
+	#		email: String! @external
 	# 	first_name: String! @external
 	# 	last_name: String! @external
 	# 	image_url: String @external
@@ -69,6 +73,7 @@ const typeDefs = gql`
 	# 	linkedin_url: String @external
 	# 	github_url: String @external
 	# 	bio: String @external
+	#		isCoach: Boolean!
 	# 	post: Post
 	# }
 
