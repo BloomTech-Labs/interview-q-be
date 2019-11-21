@@ -1,16 +1,12 @@
-# type User {
-#  id: ID! @id
-#  name: String!
-# }
-
 type Post {
   id: ID! @id
   price: Int!
   position: String!
   industry: Industry!
   description: String!
+  coachEmail: String @unique
+  coach: User @provides(fields: "email") @relation(link: TABLE name: "UserOnPost", onDelete: SET_NULL)
   tags: [Tag]!
-  # coachId: ID!
   # ratingsId: ID!
 }
 
@@ -24,4 +20,11 @@ type Tag {
   id: ID! @id
   name: String! @unique
   posts: [Post]!
+}
+
+type User {
+  id: ID! @id
+  email: String! @unique
+  isCoach: Boolean!
+  post: Post @relation(name: "UserOnPost", onDelete: CASCADE)
 }
