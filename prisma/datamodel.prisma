@@ -9,13 +9,11 @@ type Post {
   tags: [Tag]!
   # ratingsId: ID!
 }
-
 type Industry {
 	id: ID! @id
 	name: String! @unique
   posts: [Post]!
 }
-
 type Tag {
   id: ID! @id
   name: String! @unique
