@@ -4,8 +4,8 @@ type Post {
   position: String!
   industry: Industry!
   description: String!
-  coachEmail: String @unique
-  coach: User @provides(fields: "email") @relation(link: TABLE name: "UserOnPost", onDelete: SET_NULL)
+  coachID: String! @unique
+  # coach: User @provides(fields: "email") @relation(link: TABLE name: "UserOnPost", onDelete: SET_NULL)
   tags: [Tag]!
   # ratingsId: ID!
 }
@@ -19,9 +19,9 @@ type Tag {
   name: String! @unique
   posts: [Post]!
 }
-type User {
-  id: ID! @id
-  email: String! @unique
-  isCoach: Boolean!
-  post: Post @relation(name: "UserOnPost", onDelete: CASCADE)
-}
+
+# type User {
+#  id: ID! @id
+#  email: String! @unique
+#  post: Post @relation(name: "UserOnPost", onDelete: CASCADE)
+# }
