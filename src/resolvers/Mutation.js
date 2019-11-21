@@ -10,9 +10,16 @@ module.exports = {
 const { checkFields, splitAndTrimTags } = require('../utils');
 
 async function createPost(_parent, args, context) {
-	const { price, position, industryName, description, tagString } = args;
+	const {
+		price,
+		position,
+		industryName,
+		description,
+		tagString,
+		coachEmail,
+	} = args;
 
-	checkFields({ price, position, industryName, description });
+	checkFields({ price, position, industryName, description, coachEmail });
 
 	if (tagString) {
 		const tagArray = splitAndTrimTags(tagString);
@@ -23,6 +30,7 @@ async function createPost(_parent, args, context) {
 				price,
 				position,
 				description,
+				coachEmail,
 				industry: { connect: { name: industryName } },
 				tags: { connect: tagArray },
 			});
@@ -32,6 +40,7 @@ async function createPost(_parent, args, context) {
 			price,
 			position,
 			description,
+			coachEmail,
 			industry: { connect: { name: industryName } },
 		});
 	}
