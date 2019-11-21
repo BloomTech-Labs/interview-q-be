@@ -54,27 +54,15 @@ const typeDefs = gql`
 		industry: Industry!
 		description: String!
 		tags: [Tag]!
-		# coachId: ID!
 		# ratingsId: ID!
-		# coach: User @provides(fields: "id email first_name last_name image_url personal_url blog_url twitter_url portfolio_url linkedin_url github_url bio")
+		coach: User @provides(fields: "email")
 	}
 
-	# extend type User @key(fields: "email") {
-	# 	id: ID! @external
-	#		email: String! @external
-	# 	first_name: String! @external
-	# 	last_name: String! @external
-	# 	image_url: String @external
-	# 	personal_url: String @external
-	# 	blog_url: String @external
-	# 	twitter_url: String @external
-	# 	portfolio_url: String @external
-	# 	linkedin_url: String @external
-	# 	github_url: String @external
-	# 	bio: String @external
-	#		isCoach: Boolean!
-	# 	post: Post
-	# }
+	extend type User @key(fields: "email") {
+		email: String! @external
+		isCoach: Boolean!
+		post: Post
+	}
 
 	type Industry {
 		id: ID!
