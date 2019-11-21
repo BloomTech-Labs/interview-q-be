@@ -8,13 +8,15 @@ const Query = require('./resolvers/Query')
 const Post = require('./resolvers/Post')
 const Industry = require('./resolvers/Industry')
 const Tag = require('./resolvers/Tag')
+const User = require('./resolvers/User')
 
 const resolvers = {
     Query,
     Mutation,
     Post,
     Industry,
-    Tag
+    Tag,
+    User
 };
 
 const server = new GraphQLServer({
@@ -25,9 +27,7 @@ const server = new GraphQLServer({
     context: request => {
         return {...request, prisma };
     },
-    // typeDefs,
-    resolvers,
-    context: { prisma },
+
 });
 
 module.exports = server;

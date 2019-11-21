@@ -15,10 +15,6 @@ type AggregateTag {
   count: Int!
 }
 
-type AggregateUser {
-  count: Int!
-}
-
 type BatchPayload {
   count: Long!
 }
@@ -174,12 +170,6 @@ type Mutation {
   upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
   deleteTag(where: TagWhereUniqueInput!): Tag
   deleteManyTags(where: TagWhereInput): BatchPayload!
-  createUser(data: UserCreateInput!): User!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -205,8 +195,7 @@ type Post {
   position: String!
   industry: Industry!
   description: String!
-  coachEmail: String
-  coach: User
+  coachID: String!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
 }
 
@@ -222,8 +211,7 @@ input PostCreateInput {
   position: String!
   industry: IndustryCreateOneWithoutPostsInput!
   description: String!
-  coachEmail: String
-  coach: UserCreateOneWithoutPostInput
+  coachID: String!
   tags: TagCreateManyWithoutPostsInput
 }
 
@@ -237,28 +225,12 @@ input PostCreateManyWithoutTagsInput {
   connect: [PostWhereUniqueInput!]
 }
 
-input PostCreateOneWithoutCoachInput {
-  create: PostCreateWithoutCoachInput
-  connect: PostWhereUniqueInput
-}
-
-input PostCreateWithoutCoachInput {
-  id: ID
-  price: Int!
-  position: String!
-  industry: IndustryCreateOneWithoutPostsInput!
-  description: String!
-  coachEmail: String
-  tags: TagCreateManyWithoutPostsInput
-}
-
 input PostCreateWithoutIndustryInput {
   id: ID
   price: Int!
   position: String!
   description: String!
-  coachEmail: String
-  coach: UserCreateOneWithoutPostInput
+  coachID: String!
   tags: TagCreateManyWithoutPostsInput
 }
 
@@ -268,8 +240,7 @@ input PostCreateWithoutTagsInput {
   position: String!
   industry: IndustryCreateOneWithoutPostsInput!
   description: String!
-  coachEmail: String
-  coach: UserCreateOneWithoutPostInput
+  coachID: String!
 }
 
 type PostEdge {
@@ -286,8 +257,8 @@ enum PostOrderByInput {
   position_DESC
   description_ASC
   description_DESC
-  coachEmail_ASC
-  coachEmail_DESC
+  coachID_ASC
+  coachID_DESC
 }
 
 type PostPreviousValues {
@@ -295,7 +266,7 @@ type PostPreviousValues {
   price: Int!
   position: String!
   description: String!
-  coachEmail: String
+  coachID: String!
 }
 
 input PostScalarWhereInput {
@@ -349,20 +320,20 @@ input PostScalarWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
-  coachEmail: String
-  coachEmail_not: String
-  coachEmail_in: [String!]
-  coachEmail_not_in: [String!]
-  coachEmail_lt: String
-  coachEmail_lte: String
-  coachEmail_gt: String
-  coachEmail_gte: String
-  coachEmail_contains: String
-  coachEmail_not_contains: String
-  coachEmail_starts_with: String
-  coachEmail_not_starts_with: String
-  coachEmail_ends_with: String
-  coachEmail_not_ends_with: String
+  coachID: String
+  coachID_not: String
+  coachID_in: [String!]
+  coachID_not_in: [String!]
+  coachID_lt: String
+  coachID_lte: String
+  coachID_gt: String
+  coachID_gte: String
+  coachID_contains: String
+  coachID_not_contains: String
+  coachID_starts_with: String
+  coachID_not_starts_with: String
+  coachID_ends_with: String
+  coachID_not_ends_with: String
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -391,8 +362,7 @@ input PostUpdateInput {
   position: String
   industry: IndustryUpdateOneRequiredWithoutPostsInput
   description: String
-  coachEmail: String
-  coach: UserUpdateOneWithoutPostInput
+  coachID: String
   tags: TagUpdateManyWithoutPostsInput
 }
 
@@ -400,14 +370,14 @@ input PostUpdateManyDataInput {
   price: Int
   position: String
   description: String
-  coachEmail: String
+  coachID: String
 }
 
 input PostUpdateManyMutationInput {
   price: Int
   position: String
   description: String
-  coachEmail: String
+  coachID: String
 }
 
 input PostUpdateManyWithoutIndustryInput {
@@ -439,30 +409,11 @@ input PostUpdateManyWithWhereNestedInput {
   data: PostUpdateManyDataInput!
 }
 
-input PostUpdateOneWithoutCoachInput {
-  create: PostCreateWithoutCoachInput
-  update: PostUpdateWithoutCoachDataInput
-  upsert: PostUpsertWithoutCoachInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: PostWhereUniqueInput
-}
-
-input PostUpdateWithoutCoachDataInput {
-  price: Int
-  position: String
-  industry: IndustryUpdateOneRequiredWithoutPostsInput
-  description: String
-  coachEmail: String
-  tags: TagUpdateManyWithoutPostsInput
-}
-
 input PostUpdateWithoutIndustryDataInput {
   price: Int
   position: String
   description: String
-  coachEmail: String
-  coach: UserUpdateOneWithoutPostInput
+  coachID: String
   tags: TagUpdateManyWithoutPostsInput
 }
 
@@ -471,8 +422,7 @@ input PostUpdateWithoutTagsDataInput {
   position: String
   industry: IndustryUpdateOneRequiredWithoutPostsInput
   description: String
-  coachEmail: String
-  coach: UserUpdateOneWithoutPostInput
+  coachID: String
 }
 
 input PostUpdateWithWhereUniqueWithoutIndustryInput {
@@ -483,11 +433,6 @@ input PostUpdateWithWhereUniqueWithoutIndustryInput {
 input PostUpdateWithWhereUniqueWithoutTagsInput {
   where: PostWhereUniqueInput!
   data: PostUpdateWithoutTagsDataInput!
-}
-
-input PostUpsertWithoutCoachInput {
-  update: PostUpdateWithoutCoachDataInput!
-  create: PostCreateWithoutCoachInput!
 }
 
 input PostUpsertWithWhereUniqueWithoutIndustryInput {
@@ -554,21 +499,20 @@ input PostWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
-  coachEmail: String
-  coachEmail_not: String
-  coachEmail_in: [String!]
-  coachEmail_not_in: [String!]
-  coachEmail_lt: String
-  coachEmail_lte: String
-  coachEmail_gt: String
-  coachEmail_gte: String
-  coachEmail_contains: String
-  coachEmail_not_contains: String
-  coachEmail_starts_with: String
-  coachEmail_not_starts_with: String
-  coachEmail_ends_with: String
-  coachEmail_not_ends_with: String
-  coach: UserWhereInput
+  coachID: String
+  coachID_not: String
+  coachID_in: [String!]
+  coachID_not_in: [String!]
+  coachID_lt: String
+  coachID_lte: String
+  coachID_gt: String
+  coachID_gte: String
+  coachID_contains: String
+  coachID_not_contains: String
+  coachID_starts_with: String
+  coachID_not_starts_with: String
+  coachID_ends_with: String
+  coachID_not_ends_with: String
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
@@ -579,7 +523,7 @@ input PostWhereInput {
 
 input PostWhereUniqueInput {
   id: ID
-  coachEmail: String
+  coachID: String
 }
 
 type Query {
@@ -592,9 +536,6 @@ type Query {
   tag(where: TagWhereUniqueInput!): Tag
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
   tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
-  user(where: UserWhereUniqueInput!): User
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
 }
 
@@ -602,7 +543,6 @@ type Subscription {
   industry(where: IndustrySubscriptionWhereInput): IndustrySubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type Tag {
@@ -787,147 +727,6 @@ input TagWhereInput {
 input TagWhereUniqueInput {
   id: ID
   name: String
-}
-
-type User {
-  id: ID!
-  email: String!
-  isCoach: Boolean!
-  post: Post
-}
-
-type UserConnection {
-  pageInfo: PageInfo!
-  edges: [UserEdge]!
-  aggregate: AggregateUser!
-}
-
-input UserCreateInput {
-  id: ID
-  email: String!
-  isCoach: Boolean!
-  post: PostCreateOneWithoutCoachInput
-}
-
-input UserCreateOneWithoutPostInput {
-  create: UserCreateWithoutPostInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateWithoutPostInput {
-  id: ID
-  email: String!
-  isCoach: Boolean!
-}
-
-type UserEdge {
-  node: User!
-  cursor: String!
-}
-
-enum UserOrderByInput {
-  id_ASC
-  id_DESC
-  email_ASC
-  email_DESC
-  isCoach_ASC
-  isCoach_DESC
-}
-
-type UserPreviousValues {
-  id: ID!
-  email: String!
-  isCoach: Boolean!
-}
-
-type UserSubscriptionPayload {
-  mutation: MutationType!
-  node: User
-  updatedFields: [String!]
-  previousValues: UserPreviousValues
-}
-
-input UserSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: UserWhereInput
-  AND: [UserSubscriptionWhereInput!]
-  OR: [UserSubscriptionWhereInput!]
-  NOT: [UserSubscriptionWhereInput!]
-}
-
-input UserUpdateInput {
-  email: String
-  isCoach: Boolean
-  post: PostUpdateOneWithoutCoachInput
-}
-
-input UserUpdateManyMutationInput {
-  email: String
-  isCoach: Boolean
-}
-
-input UserUpdateOneWithoutPostInput {
-  create: UserCreateWithoutPostInput
-  update: UserUpdateWithoutPostDataInput
-  upsert: UserUpsertWithoutPostInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: UserWhereUniqueInput
-}
-
-input UserUpdateWithoutPostDataInput {
-  email: String
-  isCoach: Boolean
-}
-
-input UserUpsertWithoutPostInput {
-  update: UserUpdateWithoutPostDataInput!
-  create: UserCreateWithoutPostInput!
-}
-
-input UserWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  isCoach: Boolean
-  isCoach_not: Boolean
-  post: PostWhereInput
-  AND: [UserWhereInput!]
-  OR: [UserWhereInput!]
-  NOT: [UserWhereInput!]
-}
-
-input UserWhereUniqueInput {
-  id: ID
-  email: String
 }
 `
       }

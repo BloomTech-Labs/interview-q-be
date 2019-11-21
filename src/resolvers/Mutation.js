@@ -7,17 +7,13 @@ module.exports = {
     removeTagFromPost,
 };
 
-const { checkFields, splitAndTrimTags } = require('../utils');
+const { checkFields, splitAndTrimTags, getUserId } = require('../utils');
 
 async function createPost(_parent, args, context) {
-    const { price, position, industryName, description, tagString, coachEmail } = args;
-
-    checkFields({ price, position, industryName, description, coachEmail });
-    const user = await context.prisma.upsertUser({
-      where: {email: coachEmail},
-      create: {email: coachEmail, isCoach: true},
-      update: {email: coachEmail},
-    })
+    const { price, position, industryName, description, tagString } = args;
+    // const coachID = getUserId(context)
+    const coachID = "ck30m5z8e00060757vcujlko6";
+    checkFields({ price, position, industryName, description });
     if (tagString) {
         const tagArray = splitAndTrimTags(tagString);
         const tagsObjArray = await addNewTags(tagArray, context);
@@ -27,7 +23,7 @@ async function createPost(_parent, args, context) {
                 price,
                 position,
                 description,
-                coach: { connect: { email: coachEmail } },
+                coachID,
                 industry: { connect: { name: industryName } },
                 tags: { connect: tagArray },
             });
@@ -37,7 +33,7 @@ async function createPost(_parent, args, context) {
             price,
             position,
             description,
-            coach: { connect: { email: coachEmail } },
+            coachID,
             industry: { connect: { name: industryName } },
         });
     }

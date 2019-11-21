@@ -1,15 +1,17 @@
-module.exports = { industry, coach, tags };
+module.exports = { industry, coach, tags, __resolveReference };
 
 function industry(root, _args, context) {
     return context.prisma.post({ id: root.id }).industry();
 }
 
-async function coach(post, args, context) {
-  let user = await context.prisma.post({id: post.id}).coach()
-  console.log(user);
-  return { __typename: "User", email: user.email, isCoach: user.isCoach }
+function coach(post) {
+  return { __typename: "User", id: post.coachID }
 }
 
 function tags(root, _args, context) {
     return context.prisma.post({ id: root.id }).tags();
+}
+
+function __resolveReference(post, context) {
+  return context.prisma.post({id: post.id })
 }
