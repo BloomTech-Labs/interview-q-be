@@ -6,7 +6,7 @@ const typeDefs = gql `
 	# We can name these whatever we want. "Banana" words
 	extend type Query {
 		interviewQinfo: String!
-		posts: [Post!]!
+		posts(industry: String, price: String, orderBy: String, tag: String): [Post!]!
 		post(id: String!): Post!
 		industries: [Industry]!
     industry(name: String!): [Post!]!
