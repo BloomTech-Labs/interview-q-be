@@ -17,7 +17,9 @@ function post(_parent, args, context){
 function posts(parent, args, context){
   // Create filter here
   let where =  {AND: []};
-  where.AND.push({industry: {name: args.industry}});
+  if (args.industry) {
+    where.AND.push({industry: {name: args.industry}});
+  }
   if (args.price) {
     let prices = args.price.split(',');
     where.AND.push({price_gte: Number(prices[0])});
