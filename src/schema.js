@@ -12,6 +12,7 @@ const typeDefs = gql`
 			tags: String
 		): [Post!]!
 		post(id: String!): Post!
+		postByCoach(coach_id: String!): Post!
 		industries: [Industry]!
 		industry(name: String!): [Post!]!
 		availabilities: [Availability]
