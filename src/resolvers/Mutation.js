@@ -40,8 +40,9 @@ async function createPost(_parent, args, context) {
 	}
 }
 
-function deletePost(_parent, args, context) {
-	return context.prisma.deletePost({ id: args.id });
+function deletePost(_parent, _args, context) {
+	const id = getUserId(context);
+	return context.prisma.deletePost({ coachID: id });
 }
 
 async function updatePost(_parent, args, context) {
