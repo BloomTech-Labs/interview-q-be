@@ -1,5 +1,5 @@
-module.exports = {posts};
+module.exports = { posts };
 
-function posts(root, _args, context) {
-    return context.prisma.industry({ id:root.id }).posts();
+function posts(parent, _args, context) {
+	return context.prisma.industry({ id: parent.id }).posts();
 }

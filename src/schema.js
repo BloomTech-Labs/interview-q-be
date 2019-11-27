@@ -1,22 +1,27 @@
 const { gql } = require('apollo-server');
 
-const typeDefs = gql `
-
+const typeDefs = gql`
 	# The Query type lists all the different queries (Retrieve operations) that front-end can make from this Endpoint
 	# We can name these whatever we want. "Banana" words
 	extend type Query {
 		interviewQinfo: String!
-		posts(industry: String, price: String, orderBy: String, tags: String): [Post!]!
+		posts(
+			industry: String
+			price: String
+			orderBy: String
+			tags: String
+		): [Post!]!
 		post(id: String!): Post!
+		postByCoach(coach_id: String!): Post!
 		industries: [Industry]!
 		industry(name: String!): [Post!]!
 		availabilities: [Availability]
 		availabilitiesByCoach(coach_id: String!): [Availability]
 		bookings: [Booking]
 		bookingsByCoach(coach_id: String!): [Booking]
-		bookingsBySeeker(seeker_id: String!): [Booking] 
+		bookingsBySeeker(seeker_id: String!): [Booking]
 		# coachBookings: [Booking]
-    # seekerBookings: [Booking]
+		# seekerBookings: [Booking]
 	}
 
 	# ***************************************************
@@ -32,7 +37,7 @@ const typeDefs = gql `
 			coachEmail: String!
 		): Post!
 
-		deletePost(id: String!): Post!
+		deletePost: Post!
 
 		updatePost(
 			id: ID!
@@ -54,7 +59,7 @@ const typeDefs = gql `
 
 	#The datamodel.prisma file should match this part, although that file includes @id for every primary key ID
 	type Post {
-		id: ID! 
+		id: ID!
 		price: Int!
 		position: String!
 		# A post is connected to one industry. We connect them via a String of the unique name of the industry
@@ -66,34 +71,34 @@ const typeDefs = gql `
 	}
 
 	type Availability {
-  # Availability slot by user
+		# Availability slot by user
 
-    id: ID!
-    dayOfWeek: String!
-    start_hour: Int!
-    start_minute: Int!
-    end_hour: Int!
-    end_minute: Int!
-    coach: User!
+		id: ID!
+		dayOfWeek: String!
+		start_hour: Int!
+		start_minute: Int!
+		end_hour: Int!
+		end_minute: Int!
+		coach: User!
 	}
-	
+
 	type Booking {
-		   id: ID!
-		   year: Int!
-		   month: Int!
-		   day: Int!
-		   hour: Int!
-		   minute: Int!
-		   coach: User!
-		   seeker: User!
-		 }
+		id: ID!
+		year: Int!
+		month: Int!
+		day: Int!
+		hour: Int!
+		minute: Int!
+		coach: User!
+		seeker: User!
+	}
 
 	extend type User @key(fields: "id") {
-    id: ID! @external
+		id: ID! @external
 		post: Post
 		availability: [Availability]
-	  coach_bookings: [Booking]
-    # seeker_booking: [Booking]
+		coach_bookings: [Booking]
+		# seeker_booking: [Booking]
 	}
 
 	type Industry {
