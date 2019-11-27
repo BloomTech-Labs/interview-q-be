@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateIndustry {
+/* GraphQL */ `type AggregateAvailability {
+  count: Int!
+}
+
+type AggregateIndustry {
   count: Int!
 }
 
@@ -13,6 +17,184 @@ type AggregatePost {
 
 type AggregateTag {
   count: Int!
+}
+
+type Availability {
+  id: ID!
+  dayOfWeek: String!
+  start_hour: Int!
+  start_minute: Int!
+  end_hour: Int!
+  end_minute: Int!
+  coach: String!
+}
+
+type AvailabilityConnection {
+  pageInfo: PageInfo!
+  edges: [AvailabilityEdge]!
+  aggregate: AggregateAvailability!
+}
+
+input AvailabilityCreateInput {
+  id: ID
+  dayOfWeek: String!
+  start_hour: Int!
+  start_minute: Int!
+  end_hour: Int!
+  end_minute: Int!
+  coach: String!
+}
+
+type AvailabilityEdge {
+  node: Availability!
+  cursor: String!
+}
+
+enum AvailabilityOrderByInput {
+  id_ASC
+  id_DESC
+  dayOfWeek_ASC
+  dayOfWeek_DESC
+  start_hour_ASC
+  start_hour_DESC
+  start_minute_ASC
+  start_minute_DESC
+  end_hour_ASC
+  end_hour_DESC
+  end_minute_ASC
+  end_minute_DESC
+  coach_ASC
+  coach_DESC
+}
+
+type AvailabilityPreviousValues {
+  id: ID!
+  dayOfWeek: String!
+  start_hour: Int!
+  start_minute: Int!
+  end_hour: Int!
+  end_minute: Int!
+  coach: String!
+}
+
+type AvailabilitySubscriptionPayload {
+  mutation: MutationType!
+  node: Availability
+  updatedFields: [String!]
+  previousValues: AvailabilityPreviousValues
+}
+
+input AvailabilitySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AvailabilityWhereInput
+  AND: [AvailabilitySubscriptionWhereInput!]
+  OR: [AvailabilitySubscriptionWhereInput!]
+  NOT: [AvailabilitySubscriptionWhereInput!]
+}
+
+input AvailabilityUpdateInput {
+  dayOfWeek: String
+  start_hour: Int
+  start_minute: Int
+  end_hour: Int
+  end_minute: Int
+  coach: String
+}
+
+input AvailabilityUpdateManyMutationInput {
+  dayOfWeek: String
+  start_hour: Int
+  start_minute: Int
+  end_hour: Int
+  end_minute: Int
+  coach: String
+}
+
+input AvailabilityWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  dayOfWeek: String
+  dayOfWeek_not: String
+  dayOfWeek_in: [String!]
+  dayOfWeek_not_in: [String!]
+  dayOfWeek_lt: String
+  dayOfWeek_lte: String
+  dayOfWeek_gt: String
+  dayOfWeek_gte: String
+  dayOfWeek_contains: String
+  dayOfWeek_not_contains: String
+  dayOfWeek_starts_with: String
+  dayOfWeek_not_starts_with: String
+  dayOfWeek_ends_with: String
+  dayOfWeek_not_ends_with: String
+  start_hour: Int
+  start_hour_not: Int
+  start_hour_in: [Int!]
+  start_hour_not_in: [Int!]
+  start_hour_lt: Int
+  start_hour_lte: Int
+  start_hour_gt: Int
+  start_hour_gte: Int
+  start_minute: Int
+  start_minute_not: Int
+  start_minute_in: [Int!]
+  start_minute_not_in: [Int!]
+  start_minute_lt: Int
+  start_minute_lte: Int
+  start_minute_gt: Int
+  start_minute_gte: Int
+  end_hour: Int
+  end_hour_not: Int
+  end_hour_in: [Int!]
+  end_hour_not_in: [Int!]
+  end_hour_lt: Int
+  end_hour_lte: Int
+  end_hour_gt: Int
+  end_hour_gte: Int
+  end_minute: Int
+  end_minute_not: Int
+  end_minute_in: [Int!]
+  end_minute_not_in: [Int!]
+  end_minute_lt: Int
+  end_minute_lte: Int
+  end_minute_gt: Int
+  end_minute_gte: Int
+  coach: String
+  coach_not: String
+  coach_in: [String!]
+  coach_not_in: [String!]
+  coach_lt: String
+  coach_lte: String
+  coach_gt: String
+  coach_gte: String
+  coach_contains: String
+  coach_not_contains: String
+  coach_starts_with: String
+  coach_not_starts_with: String
+  coach_ends_with: String
+  coach_not_ends_with: String
+  AND: [AvailabilityWhereInput!]
+  OR: [AvailabilityWhereInput!]
+  NOT: [AvailabilityWhereInput!]
+}
+
+input AvailabilityWhereUniqueInput {
+  id: ID
 }
 
 type BatchPayload {
@@ -152,6 +334,12 @@ input IndustryWhereUniqueInput {
 scalar Long
 
 type Mutation {
+  createAvailability(data: AvailabilityCreateInput!): Availability!
+  updateAvailability(data: AvailabilityUpdateInput!, where: AvailabilityWhereUniqueInput!): Availability
+  updateManyAvailabilities(data: AvailabilityUpdateManyMutationInput!, where: AvailabilityWhereInput): BatchPayload!
+  upsertAvailability(where: AvailabilityWhereUniqueInput!, create: AvailabilityCreateInput!, update: AvailabilityUpdateInput!): Availability!
+  deleteAvailability(where: AvailabilityWhereUniqueInput!): Availability
+  deleteManyAvailabilities(where: AvailabilityWhereInput): BatchPayload!
   createIndustry(data: IndustryCreateInput!): Industry!
   updateIndustry(data: IndustryUpdateInput!, where: IndustryWhereUniqueInput!): Industry
   updateManyIndustries(data: IndustryUpdateManyMutationInput!, where: IndustryWhereInput): BatchPayload!
@@ -527,6 +715,9 @@ input PostWhereUniqueInput {
 }
 
 type Query {
+  availability(where: AvailabilityWhereUniqueInput!): Availability
+  availabilities(where: AvailabilityWhereInput, orderBy: AvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Availability]!
+  availabilitiesConnection(where: AvailabilityWhereInput, orderBy: AvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AvailabilityConnection!
   industry(where: IndustryWhereUniqueInput!): Industry
   industries(where: IndustryWhereInput, orderBy: IndustryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Industry]!
   industriesConnection(where: IndustryWhereInput, orderBy: IndustryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IndustryConnection!
@@ -540,6 +731,7 @@ type Query {
 }
 
 type Subscription {
+  availability(where: AvailabilitySubscriptionWhereInput): AvailabilitySubscriptionPayload
   industry(where: IndustrySubscriptionWhereInput): IndustrySubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
