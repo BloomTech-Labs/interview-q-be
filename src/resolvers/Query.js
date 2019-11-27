@@ -5,6 +5,10 @@ module.exports = {
   industry,
   industries,
   availabilities,
+  availabilitiesByCoach,
+  bookings,
+  bookingsByCoach,
+  bookingsBySeeker
 }
 
 function interviewQinfo() {
@@ -45,7 +49,25 @@ function industries(_parent, _args, context){
   return context.prisma.industries();
 }
 
- function availabilities (parents, args, context, info) {
+ function availabilities (parents, args, context) {
   console.log(context.prisma.availabilities());
   return context.prisma.availabilities();
  }
+
+ function availabilitiesByCoach (parents, args, context) {
+   console.log(args)
+   return context.prisma.availabilities({ where: {coach: args.coach_id}})
+ }
+
+ function bookings (parents, args, context) {
+  console.log(context.prisma.bookings());
+  return context.prisma.bookings();
+ }
+
+ function bookingsByCoach (parents, args, context) {
+   return context.prisma.bookings({ where: {coach: args.coach_id}})
+ }
+
+ function bookingsBySeeker (parents, args, context) {
+  return context.prisma.bookings({ where: {seeker: args.seeker_id}})
+}

@@ -30,17 +30,16 @@ type Availability {
   coach: String!
 }
 
-#type Booking {
-#  type: ApptType!
-#  id: ID! @id
-#  year: Int!
-#  month: Int!
-#  day: Int!
-#  hour: Int!
-#  minute: Int!
-#  coach: String!
-#  seeker: String!
-#}
+type Booking {
+  id: ID! @id
+  year: Int!
+  month: Int!
+  day: Int!
+  hour: Int!
+  minute: Int!
+  coach: String!
+  seeker: String!
+}
 
 # type User {
 #  id: ID! @id
