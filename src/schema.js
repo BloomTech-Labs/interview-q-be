@@ -37,7 +37,7 @@ const typeDefs = gql`
 			coachEmail: String!
 		): Post!
 
-		deletePost(id: String!): Post!
+		deletePost: Post!
 
 		updatePost(
 			id: ID!
