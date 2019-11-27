@@ -9,6 +9,7 @@ const Post = require('./resolvers/Post')
 const Industry = require('./resolvers/Industry')
 const Tag = require('./resolvers/Tag')
 const User = require('./resolvers/User')
+const Availability = require('./resolvers/Availability')
 
 const resolvers = {
     Query,
@@ -16,7 +17,8 @@ const resolvers = {
     Post,
     Industry,
     Tag,
-    User
+    User,
+    Availability
 };
 
 const server = new GraphQLServer({
