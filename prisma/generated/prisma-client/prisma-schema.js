@@ -3,7 +3,15 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateIndustry {
+/* GraphQL */ `type AggregateAvailability {
+  count: Int!
+}
+
+type AggregateBooking {
+  count: Int!
+}
+
+type AggregateIndustry {
   count: Int!
 }
 
@@ -15,8 +23,379 @@ type AggregateTag {
   count: Int!
 }
 
+type Availability {
+  id: ID!
+  dayOfWeek: String!
+  start_hour: Int!
+  start_minute: Int!
+  end_hour: Int!
+  end_minute: Int!
+  coach: String!
+}
+
+type AvailabilityConnection {
+  pageInfo: PageInfo!
+  edges: [AvailabilityEdge]!
+  aggregate: AggregateAvailability!
+}
+
+input AvailabilityCreateInput {
+  id: ID
+  dayOfWeek: String!
+  start_hour: Int!
+  start_minute: Int!
+  end_hour: Int!
+  end_minute: Int!
+  coach: String!
+}
+
+type AvailabilityEdge {
+  node: Availability!
+  cursor: String!
+}
+
+enum AvailabilityOrderByInput {
+  id_ASC
+  id_DESC
+  dayOfWeek_ASC
+  dayOfWeek_DESC
+  start_hour_ASC
+  start_hour_DESC
+  start_minute_ASC
+  start_minute_DESC
+  end_hour_ASC
+  end_hour_DESC
+  end_minute_ASC
+  end_minute_DESC
+  coach_ASC
+  coach_DESC
+}
+
+type AvailabilityPreviousValues {
+  id: ID!
+  dayOfWeek: String!
+  start_hour: Int!
+  start_minute: Int!
+  end_hour: Int!
+  end_minute: Int!
+  coach: String!
+}
+
+type AvailabilitySubscriptionPayload {
+  mutation: MutationType!
+  node: Availability
+  updatedFields: [String!]
+  previousValues: AvailabilityPreviousValues
+}
+
+input AvailabilitySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AvailabilityWhereInput
+  AND: [AvailabilitySubscriptionWhereInput!]
+  OR: [AvailabilitySubscriptionWhereInput!]
+  NOT: [AvailabilitySubscriptionWhereInput!]
+}
+
+input AvailabilityUpdateInput {
+  dayOfWeek: String
+  start_hour: Int
+  start_minute: Int
+  end_hour: Int
+  end_minute: Int
+  coach: String
+}
+
+input AvailabilityUpdateManyMutationInput {
+  dayOfWeek: String
+  start_hour: Int
+  start_minute: Int
+  end_hour: Int
+  end_minute: Int
+  coach: String
+}
+
+input AvailabilityWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  dayOfWeek: String
+  dayOfWeek_not: String
+  dayOfWeek_in: [String!]
+  dayOfWeek_not_in: [String!]
+  dayOfWeek_lt: String
+  dayOfWeek_lte: String
+  dayOfWeek_gt: String
+  dayOfWeek_gte: String
+  dayOfWeek_contains: String
+  dayOfWeek_not_contains: String
+  dayOfWeek_starts_with: String
+  dayOfWeek_not_starts_with: String
+  dayOfWeek_ends_with: String
+  dayOfWeek_not_ends_with: String
+  start_hour: Int
+  start_hour_not: Int
+  start_hour_in: [Int!]
+  start_hour_not_in: [Int!]
+  start_hour_lt: Int
+  start_hour_lte: Int
+  start_hour_gt: Int
+  start_hour_gte: Int
+  start_minute: Int
+  start_minute_not: Int
+  start_minute_in: [Int!]
+  start_minute_not_in: [Int!]
+  start_minute_lt: Int
+  start_minute_lte: Int
+  start_minute_gt: Int
+  start_minute_gte: Int
+  end_hour: Int
+  end_hour_not: Int
+  end_hour_in: [Int!]
+  end_hour_not_in: [Int!]
+  end_hour_lt: Int
+  end_hour_lte: Int
+  end_hour_gt: Int
+  end_hour_gte: Int
+  end_minute: Int
+  end_minute_not: Int
+  end_minute_in: [Int!]
+  end_minute_not_in: [Int!]
+  end_minute_lt: Int
+  end_minute_lte: Int
+  end_minute_gt: Int
+  end_minute_gte: Int
+  coach: String
+  coach_not: String
+  coach_in: [String!]
+  coach_not_in: [String!]
+  coach_lt: String
+  coach_lte: String
+  coach_gt: String
+  coach_gte: String
+  coach_contains: String
+  coach_not_contains: String
+  coach_starts_with: String
+  coach_not_starts_with: String
+  coach_ends_with: String
+  coach_not_ends_with: String
+  AND: [AvailabilityWhereInput!]
+  OR: [AvailabilityWhereInput!]
+  NOT: [AvailabilityWhereInput!]
+}
+
+input AvailabilityWhereUniqueInput {
+  id: ID
+}
+
 type BatchPayload {
   count: Long!
+}
+
+type Booking {
+  id: ID!
+  year: Int!
+  month: Int!
+  day: Int!
+  hour: Int!
+  minute: Int!
+  coach: String!
+  seeker: String!
+}
+
+type BookingConnection {
+  pageInfo: PageInfo!
+  edges: [BookingEdge]!
+  aggregate: AggregateBooking!
+}
+
+input BookingCreateInput {
+  id: ID
+  year: Int!
+  month: Int!
+  day: Int!
+  hour: Int!
+  minute: Int!
+  coach: String!
+  seeker: String!
+}
+
+type BookingEdge {
+  node: Booking!
+  cursor: String!
+}
+
+enum BookingOrderByInput {
+  id_ASC
+  id_DESC
+  year_ASC
+  year_DESC
+  month_ASC
+  month_DESC
+  day_ASC
+  day_DESC
+  hour_ASC
+  hour_DESC
+  minute_ASC
+  minute_DESC
+  coach_ASC
+  coach_DESC
+  seeker_ASC
+  seeker_DESC
+}
+
+type BookingPreviousValues {
+  id: ID!
+  year: Int!
+  month: Int!
+  day: Int!
+  hour: Int!
+  minute: Int!
+  coach: String!
+  seeker: String!
+}
+
+type BookingSubscriptionPayload {
+  mutation: MutationType!
+  node: Booking
+  updatedFields: [String!]
+  previousValues: BookingPreviousValues
+}
+
+input BookingSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: BookingWhereInput
+  AND: [BookingSubscriptionWhereInput!]
+  OR: [BookingSubscriptionWhereInput!]
+  NOT: [BookingSubscriptionWhereInput!]
+}
+
+input BookingUpdateInput {
+  year: Int
+  month: Int
+  day: Int
+  hour: Int
+  minute: Int
+  coach: String
+  seeker: String
+}
+
+input BookingUpdateManyMutationInput {
+  year: Int
+  month: Int
+  day: Int
+  hour: Int
+  minute: Int
+  coach: String
+  seeker: String
+}
+
+input BookingWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  month: Int
+  month_not: Int
+  month_in: [Int!]
+  month_not_in: [Int!]
+  month_lt: Int
+  month_lte: Int
+  month_gt: Int
+  month_gte: Int
+  day: Int
+  day_not: Int
+  day_in: [Int!]
+  day_not_in: [Int!]
+  day_lt: Int
+  day_lte: Int
+  day_gt: Int
+  day_gte: Int
+  hour: Int
+  hour_not: Int
+  hour_in: [Int!]
+  hour_not_in: [Int!]
+  hour_lt: Int
+  hour_lte: Int
+  hour_gt: Int
+  hour_gte: Int
+  minute: Int
+  minute_not: Int
+  minute_in: [Int!]
+  minute_not_in: [Int!]
+  minute_lt: Int
+  minute_lte: Int
+  minute_gt: Int
+  minute_gte: Int
+  coach: String
+  coach_not: String
+  coach_in: [String!]
+  coach_not_in: [String!]
+  coach_lt: String
+  coach_lte: String
+  coach_gt: String
+  coach_gte: String
+  coach_contains: String
+  coach_not_contains: String
+  coach_starts_with: String
+  coach_not_starts_with: String
+  coach_ends_with: String
+  coach_not_ends_with: String
+  seeker: String
+  seeker_not: String
+  seeker_in: [String!]
+  seeker_not_in: [String!]
+  seeker_lt: String
+  seeker_lte: String
+  seeker_gt: String
+  seeker_gte: String
+  seeker_contains: String
+  seeker_not_contains: String
+  seeker_starts_with: String
+  seeker_not_starts_with: String
+  seeker_ends_with: String
+  seeker_not_ends_with: String
+  AND: [BookingWhereInput!]
+  OR: [BookingWhereInput!]
+  NOT: [BookingWhereInput!]
+}
+
+input BookingWhereUniqueInput {
+  id: ID
 }
 
 type Industry {
@@ -152,6 +531,18 @@ input IndustryWhereUniqueInput {
 scalar Long
 
 type Mutation {
+  createAvailability(data: AvailabilityCreateInput!): Availability!
+  updateAvailability(data: AvailabilityUpdateInput!, where: AvailabilityWhereUniqueInput!): Availability
+  updateManyAvailabilities(data: AvailabilityUpdateManyMutationInput!, where: AvailabilityWhereInput): BatchPayload!
+  upsertAvailability(where: AvailabilityWhereUniqueInput!, create: AvailabilityCreateInput!, update: AvailabilityUpdateInput!): Availability!
+  deleteAvailability(where: AvailabilityWhereUniqueInput!): Availability
+  deleteManyAvailabilities(where: AvailabilityWhereInput): BatchPayload!
+  createBooking(data: BookingCreateInput!): Booking!
+  updateBooking(data: BookingUpdateInput!, where: BookingWhereUniqueInput!): Booking
+  updateManyBookings(data: BookingUpdateManyMutationInput!, where: BookingWhereInput): BatchPayload!
+  upsertBooking(where: BookingWhereUniqueInput!, create: BookingCreateInput!, update: BookingUpdateInput!): Booking!
+  deleteBooking(where: BookingWhereUniqueInput!): Booking
+  deleteManyBookings(where: BookingWhereInput): BatchPayload!
   createIndustry(data: IndustryCreateInput!): Industry!
   updateIndustry(data: IndustryUpdateInput!, where: IndustryWhereUniqueInput!): Industry
   updateManyIndustries(data: IndustryUpdateManyMutationInput!, where: IndustryWhereInput): BatchPayload!
@@ -527,6 +918,12 @@ input PostWhereUniqueInput {
 }
 
 type Query {
+  availability(where: AvailabilityWhereUniqueInput!): Availability
+  availabilities(where: AvailabilityWhereInput, orderBy: AvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Availability]!
+  availabilitiesConnection(where: AvailabilityWhereInput, orderBy: AvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AvailabilityConnection!
+  booking(where: BookingWhereUniqueInput!): Booking
+  bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking]!
+  bookingsConnection(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookingConnection!
   industry(where: IndustryWhereUniqueInput!): Industry
   industries(where: IndustryWhereInput, orderBy: IndustryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Industry]!
   industriesConnection(where: IndustryWhereInput, orderBy: IndustryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IndustryConnection!
@@ -540,6 +937,8 @@ type Query {
 }
 
 type Subscription {
+  availability(where: AvailabilitySubscriptionWhereInput): AvailabilitySubscriptionPayload
+  booking(where: BookingSubscriptionWhereInput): BookingSubscriptionPayload
   industry(where: IndustrySubscriptionWhereInput): IndustrySubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload

@@ -20,8 +20,32 @@ type Tag {
   posts: [Post]!
 }
 
+type Availability {
+  id: ID! @id
+  dayOfWeek: String!
+  start_hour: Int!
+  start_minute: Int!
+  end_hour: Int!
+  end_minute: Int!
+  coach: String!
+}
+
+type Booking {
+  id: ID! @id
+  year: Int!
+  month: Int!
+  day: Int!
+  hour: Int!
+  minute: Int!
+  coach: String!
+  seeker: String!
+}
+
 # type User {
 #  id: ID! @id
 #  email: String! @unique
 #  post: Post @relation(name: "UserOnPost", onDelete: CASCADE)
+ # coach_bookings: [Booking] @relation(name: "CoachBookings", onDelete: CASCADE)
+  # seeker_bookings: [Booking] @relation(name: "SeekerBookings", onDelete: CASCADE)
+  # availability: [Availability]
 # }

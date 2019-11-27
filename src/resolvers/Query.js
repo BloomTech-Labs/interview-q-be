@@ -3,7 +3,12 @@ module.exports = {
   post,
   posts,
   industry,
-  industries
+  industries,
+  availabilities,
+  availabilitiesByCoach,
+  bookings,
+  bookingsByCoach,
+  bookingsBySeeker
 }
 
 function interviewQinfo() {
@@ -14,8 +19,26 @@ function post(_parent, args, context){
   return context.prisma.post({ id: args.id })
 }
 
-function posts(_parent, _args, context){
-  return context.prisma.posts()
+function posts(parent, args, context){
+  // Create filter here
+  let where =  {AND: []};
+  if (args.industry) {
+    where.AND.push({industry: {name: args.industry}});
+  }
+  if (args.price) {
+    let prices = args.price.split(',');
+    where.AND.push({price_gte: Number(prices[0])});
+    where.AND.push({price_lte: Number(prices[1])});
+  }
+  if (args.tags) {
+    let tags = args.tags.split(' ');
+    let idx = where.AND.push({tags_some: {OR: []}});
+    tags.forEach(tag => {
+      where.AND[idx-1].tags_some.OR.push({name: tag});
+    })
+  }
+
+  return context.prisma.posts({where, orderBy: args.orderBy})
 }
 
 function industry(_parent, args, context) {
@@ -24,4 +47,27 @@ function industry(_parent, args, context) {
 
 function industries(_parent, _args, context){
   return context.prisma.industries();
+}
+
+ function availabilities (parents, args, context) {
+  console.log(context.prisma.availabilities());
+  return context.prisma.availabilities();
+ }
+
+ function availabilitiesByCoach (parents, args, context) {
+   console.log(args)
+   return context.prisma.availabilities({ where: {coach: args.coach_id}})
+ }
+
+ function bookings (parents, args, context) {
+  console.log(context.prisma.bookings());
+  return context.prisma.bookings();
+ }
+
+ function bookingsByCoach (parents, args, context) {
+   return context.prisma.bookings({ where: {coach: args.coach_id}})
+ }
+
+ function bookingsBySeeker (parents, args, context) {
+  return context.prisma.bookings({ where: {seeker: args.seeker_id}})
 }

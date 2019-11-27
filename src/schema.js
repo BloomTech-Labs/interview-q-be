@@ -5,10 +5,20 @@ const typeDefs = gql`
 	# We can name these whatever we want. "Banana" words
 	extend type Query {
 		interviewQinfo: String!
-		posts: [Post!]!
+		posts(industry: String, price: String, orderBy: String, tags: String): [Post!]!
 		post(id: String!): Post!
 		industries: [Industry]!
 		industry(name: String!): [Post!]!
+<<<<<<< HEAD
+=======
+		availabilities: [Availability]
+		availabilitiesByCoach(coach_id: String!): [Availability]
+		bookings: [Booking]
+		bookingsByCoach(coach_id: String!): [Booking]
+		bookingsBySeeker(seeker_id: String!): [Booking] 
+		# coachBookings: [Booking]
+    # seekerBookings: [Booking]
+>>>>>>> 70f0f0ed85567b4086c1aa4978cb084154744b8d
 	}
 
 	# ***************************************************
@@ -57,9 +67,35 @@ const typeDefs = gql`
 		coach: User!
 	}
 
+	type Availability {
+  # Availability slot by user
+
+    id: ID!
+    dayOfWeek: String!
+    start_hour: Int!
+    start_minute: Int!
+    end_hour: Int!
+    end_minute: Int!
+    coach: User!
+	}
+	
+	type Booking {
+		   id: ID!
+		   year: Int!
+		   month: Int!
+		   day: Int!
+		   hour: Int!
+		   minute: Int!
+		   coach: User!
+		   seeker: User!
+		 }
+
 	extend type User @key(fields: "id") {
 		id: ID! @external
 		post: Post
+		availability: [Availability]
+	  coach_bookings: [Booking]
+    # seeker_booking: [Booking]
 	}
 
 	type Industry {
