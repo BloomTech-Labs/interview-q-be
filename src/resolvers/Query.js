@@ -3,7 +3,8 @@ module.exports = {
   post,
   posts,
   industry,
-  industries
+  industries,
+  availabilities,
 }
 
 function interviewQinfo() {
@@ -43,3 +44,8 @@ function industry(_parent, args, context) {
 function industries(_parent, _args, context){
   return context.prisma.industries();
 }
+
+ function availabilities (parents, args, context, info) {
+  console.log(context.prisma.availabilities());
+  return context.prisma.availabilities();
+ }
