@@ -1,17 +1,17 @@
 module.exports = { industry, coach, tags, __resolveReference };
 
-function industry(root, _args, context) {
-    return context.prisma.post({ id: root.id }).industry();
+function industry(parent, _args, context) {
+	return context.prisma.post({ id: parent.id }).industry();
 }
 
 function coach(post) {
-  return { __typename: "User", id: post.coachID }
+	return { __typename: 'User', id: post.coachID };
 }
 
-function tags(root, _args, context) {
-    return context.prisma.post({ id: root.id }).tags();
+function tags(parent, _args, context) {
+	return context.prisma.post({ id: parent.id }).tags();
 }
 
 function __resolveReference(post, context) {
-  return context.prisma.post({id: post.id })
+	return context.prisma.post({ id: post.id });
 }
