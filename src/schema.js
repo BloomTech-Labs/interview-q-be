@@ -11,6 +11,10 @@ const typeDefs = gql `
 		industries: [Industry]!
 		industry(name: String!): [Post!]!
 		availabilities: [Availability]
+		availabilitiesByCoach(coach_id: String!): [Availability]
+		bookings: [Booking]
+		bookingsByCoach(coach_id: String!): [Booking]
+		bookingsBySeeker(seeker_id: String!): [Booking] 
 		# coachBookings: [Booking]
     # seekerBookings: [Booking]
 	}
@@ -73,23 +77,22 @@ const typeDefs = gql `
     coach: User!
 	}
 	
-	# type Booking {
-		#   id: ID!
-		#   type: ApptType!
-		#   year: Int!
-		#   month: Int!
-		#   day: Int!
-		#   hour: Int!
-		#   minute: Int!
-		#   coach: User!
-		#   seeker: User!
-		# }
+	type Booking {
+		   id: ID!
+		   year: Int!
+		   month: Int!
+		   day: Int!
+		   hour: Int!
+		   minute: Int!
+		   coach: User!
+		   seeker: User!
+		 }
 
 	extend type User @key(fields: "id") {
     id: ID! @external
 		post: Post
 		availability: [Availability]
-		# coach_bookings: [Booking]
+	  coach_bookings: [Booking]
     # seeker_booking: [Booking]
 	}
 
