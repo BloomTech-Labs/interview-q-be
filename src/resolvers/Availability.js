@@ -4,8 +4,8 @@ module.exports = {
 	__resolveReference,
 };
 
-// function user(root, _args, context) {
-//   return context.prisma.availability({ id: root.id }).user()
+// function user(parent, _args, context) {
+//   return context.prisma.availability({ id: parent.id }).user()
 // }
 
 function coach(availability) {
