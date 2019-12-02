@@ -11,7 +11,7 @@ const { checkFields, splitAndTrimTags, getUserId } = require('../utils');
 
 // Mutations/Operations for Post
 async function createPost(_parent, args, context) {
-	const { price, position, industryName, description, tagString } = args;
+	const { price, position, industryName, description, tagString, company } = args;
 	const coachID = getUserId(context);
 	checkFields({ price, position, industryName, description });
 	if (tagString) {
@@ -23,7 +23,8 @@ async function createPost(_parent, args, context) {
 				price,
 				position,
 				description,
-				coachID,
+        coachID,
+        company,
 				industry: { connect: { name: industryName } },
 				tags: { connect: tagArray },
 			});
@@ -33,7 +34,8 @@ async function createPost(_parent, args, context) {
 			price,
 			position,
 			description,
-			coachID,
+      coachID,
+      company,
 			industry: { connect: { name: industryName } },
 		});
 	}
@@ -45,7 +47,7 @@ function deletePost(_parent, _args, context) {
 }
 
 async function updatePost(_parent, args, context) {
-	const { id, price, position, description, industryName, tagString } = args;
+	const { id, price, position, description, industryName, tagString, company } = args;
 
 	if (tagString && industryName) {
 		const tagArray = splitAndTrimTags(tagString);
@@ -56,7 +58,8 @@ async function updatePost(_parent, args, context) {
 				data: {
 					price,
 					position,
-					description,
+          description,
+          company,
 					industry: { connect: { name: industryName } },
 					tags: { connect: tagArray },
 				},
@@ -71,7 +74,7 @@ async function updatePost(_parent, args, context) {
 
 		return Promise.all(tagsObjArray).then(tags => {
 			return context.prisma.updatePost({
-				data: { price, position, description, tags: { connect: tagArray } },
+				data: { price, position, description, company, tags: { connect: tagArray } },
 				where: {
 					id,
 				},

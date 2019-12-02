@@ -17,7 +17,7 @@ describe('Post', () => {
 			.set({ Authorization: token })
 			.send({
 				query: `mutation {
-          createPost(price: 10, position: "Test position", industryName: "Visual Arts", description: "Test description", tagString: "Test1, Test2") {
+          createPost(price: 10, position: "Test position", industryName: "Visual Arts", description: "Test description", tagString: "Test1, Test2", company: "McDonalds" ) {
 						id
             coach {
               id
