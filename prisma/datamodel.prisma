@@ -5,8 +5,12 @@ type Post {
   industry: Industry!
   description: String!
   coachID: String! @unique
-  # coach: User @provides(fields: "email") @relation(link: TABLE name: "UserOnPost", onDelete: SET_NULL)
+  createdAt: DateTime! @createdAt
+  lastUpdated: DateTime! @updatedAt
+  company: String!
+  isPublished: Boolean! @default(value: true)
   tags: [Tag]!
+  # coach: User @provides(fields: "email") @relation(link: TABLE name: "UserOnPost", onDelete: SET_NULL)
   # ratingsId: ID!
 }
 type Industry {
@@ -14,6 +18,7 @@ type Industry {
 	name: String! @unique
   posts: [Post]!
 }
+
 type Tag {
   id: ID! @id
   name: String! @unique

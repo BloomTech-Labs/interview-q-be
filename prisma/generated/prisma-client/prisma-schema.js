@@ -398,6 +398,8 @@ input BookingWhereUniqueInput {
   id: ID
 }
 
+scalar DateTime
+
 type Industry {
   id: ID!
   name: String!
@@ -587,6 +589,10 @@ type Post {
   industry: Industry!
   description: String!
   coachID: String!
+  createdAt: DateTime!
+  lastUpdated: DateTime!
+  company: String!
+  isPublished: Boolean!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
 }
 
@@ -603,6 +609,8 @@ input PostCreateInput {
   industry: IndustryCreateOneWithoutPostsInput!
   description: String!
   coachID: String!
+  company: String!
+  isPublished: Boolean
   tags: TagCreateManyWithoutPostsInput
 }
 
@@ -622,6 +630,8 @@ input PostCreateWithoutIndustryInput {
   position: String!
   description: String!
   coachID: String!
+  company: String!
+  isPublished: Boolean
   tags: TagCreateManyWithoutPostsInput
 }
 
@@ -632,6 +642,8 @@ input PostCreateWithoutTagsInput {
   industry: IndustryCreateOneWithoutPostsInput!
   description: String!
   coachID: String!
+  company: String!
+  isPublished: Boolean
 }
 
 type PostEdge {
@@ -650,6 +662,14 @@ enum PostOrderByInput {
   description_DESC
   coachID_ASC
   coachID_DESC
+  createdAt_ASC
+  createdAt_DESC
+  lastUpdated_ASC
+  lastUpdated_DESC
+  company_ASC
+  company_DESC
+  isPublished_ASC
+  isPublished_DESC
 }
 
 type PostPreviousValues {
@@ -658,6 +678,10 @@ type PostPreviousValues {
   position: String!
   description: String!
   coachID: String!
+  createdAt: DateTime!
+  lastUpdated: DateTime!
+  company: String!
+  isPublished: Boolean!
 }
 
 input PostScalarWhereInput {
@@ -725,6 +749,38 @@ input PostScalarWhereInput {
   coachID_not_starts_with: String
   coachID_ends_with: String
   coachID_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  lastUpdated: DateTime
+  lastUpdated_not: DateTime
+  lastUpdated_in: [DateTime!]
+  lastUpdated_not_in: [DateTime!]
+  lastUpdated_lt: DateTime
+  lastUpdated_lte: DateTime
+  lastUpdated_gt: DateTime
+  lastUpdated_gte: DateTime
+  company: String
+  company_not: String
+  company_in: [String!]
+  company_not_in: [String!]
+  company_lt: String
+  company_lte: String
+  company_gt: String
+  company_gte: String
+  company_contains: String
+  company_not_contains: String
+  company_starts_with: String
+  company_not_starts_with: String
+  company_ends_with: String
+  company_not_ends_with: String
+  isPublished: Boolean
+  isPublished_not: Boolean
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -754,6 +810,8 @@ input PostUpdateInput {
   industry: IndustryUpdateOneRequiredWithoutPostsInput
   description: String
   coachID: String
+  company: String
+  isPublished: Boolean
   tags: TagUpdateManyWithoutPostsInput
 }
 
@@ -762,6 +820,8 @@ input PostUpdateManyDataInput {
   position: String
   description: String
   coachID: String
+  company: String
+  isPublished: Boolean
 }
 
 input PostUpdateManyMutationInput {
@@ -769,6 +829,8 @@ input PostUpdateManyMutationInput {
   position: String
   description: String
   coachID: String
+  company: String
+  isPublished: Boolean
 }
 
 input PostUpdateManyWithoutIndustryInput {
@@ -805,6 +867,8 @@ input PostUpdateWithoutIndustryDataInput {
   position: String
   description: String
   coachID: String
+  company: String
+  isPublished: Boolean
   tags: TagUpdateManyWithoutPostsInput
 }
 
@@ -814,6 +878,8 @@ input PostUpdateWithoutTagsDataInput {
   industry: IndustryUpdateOneRequiredWithoutPostsInput
   description: String
   coachID: String
+  company: String
+  isPublished: Boolean
 }
 
 input PostUpdateWithWhereUniqueWithoutIndustryInput {
@@ -904,6 +970,38 @@ input PostWhereInput {
   coachID_not_starts_with: String
   coachID_ends_with: String
   coachID_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  lastUpdated: DateTime
+  lastUpdated_not: DateTime
+  lastUpdated_in: [DateTime!]
+  lastUpdated_not_in: [DateTime!]
+  lastUpdated_lt: DateTime
+  lastUpdated_lte: DateTime
+  lastUpdated_gt: DateTime
+  lastUpdated_gte: DateTime
+  company: String
+  company_not: String
+  company_in: [String!]
+  company_not_in: [String!]
+  company_lt: String
+  company_lte: String
+  company_gt: String
+  company_gte: String
+  company_contains: String
+  company_not_contains: String
+  company_starts_with: String
+  company_not_starts_with: String
+  company_ends_with: String
+  company_not_ends_with: String
+  isPublished: Boolean
+  isPublished_not: Boolean
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
