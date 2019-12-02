@@ -33,8 +33,7 @@ const typeDefs = gql`
 			position: String!
 			industryName: String!
 			description: String!
-			tagString: String
-      coachEmail: String!
+      tagString: String
       company: String!
 		): Post!
 
