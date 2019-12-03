@@ -35,7 +35,7 @@ const typeDefs = gql`
 			description: String!
       tagString: String
       company: String!
-      isPublished: Boolean
+      isPublished: Boolean!
 		): Post!
 
 		deletePost: Post!

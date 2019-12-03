@@ -12,8 +12,11 @@ const { checkFields, splitAndTrimTags, getUserId } = require('../utils');
 // Mutations/Operations for Post
 async function createPost(_parent, args, context) {
 	const { price, position, industryName, description, tagString, company, isPublished } = args;
-	const coachID = getUserId(context);
-	checkFields({ price, position, industryName, description });
+  const coachID = getUserId(context);
+  
+  if (isPublished) {
+    checkFields({ price, position, industryName, description, company });
+  }
 	if (tagString) {
 		const tagArray = splitAndTrimTags(tagString);
 		const tagsObjArray = await addNewTags(tagArray, context);
