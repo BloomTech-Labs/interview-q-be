@@ -11,14 +11,15 @@ const { checkFields, splitAndTrimTags, getUserId } = require('../utils');
 
 // Mutations/Operations for Post
 async function createPost(_parent, args, context) {
-	const { price, position, industryName, description, tagString, company, isPublished } = args;
+  let { price, position, industryName, description, tagString, company, isPublished } = args;
   const coachID = getUserId(context);
   
   if (isPublished) {
     checkFields({ price, position, industryName, description, company });
   }
 	if (tagString) {
-		const tagArray = splitAndTrimTags(tagString);
+    tagString = tagString.toLowerCase();
+    const tagArray = splitAndTrimTags(tagString);
 		const tagsObjArray = await addNewTags(tagArray, context);
 
 		return Promise.all(tagsObjArray).then(tags => {
@@ -52,9 +53,10 @@ function deletePost(_parent, _args, context) {
 }
 
 async function updatePost(_parent, args, context) {
-	const { id, price, position, description, industryName, tagString, company, isPublished } = args;
+	let { id, price, position, description, industryName, tagString, company, isPublished } = args;
 
 	if (tagString && industryName) {
+    tagString = tagString.toLowerCase();
 		const tagArray = splitAndTrimTags(tagString);
 		const tagsObjArray = await addNewTags(tagArray, context);
 
@@ -75,6 +77,7 @@ async function updatePost(_parent, args, context) {
 			});
 		});
 	} else if (tagString) {
+    tagString = tagString.toLowerCase();
 		const tagArray = splitAndTrimTags(tagString);
 		const tagsObjArray = await addNewTags(tagArray, context);
 
