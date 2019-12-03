@@ -23,7 +23,7 @@ function post(_parent, args, context) {
 
 function posts(_parent, args, context) {
 	// Create filter here
-	let where = { AND: [] };
+	let where = { AND: [{isPublished: true}] };
 	if (args.industry) {
 		where.AND.push({ industry: { name: args.industry } });
 	}
@@ -33,10 +33,11 @@ function posts(_parent, args, context) {
 		where.AND.push({ price_lte: Number(prices[1]) });
 	}
 	if (args.tags) {
-		let tags = args.tags.split(' ');
+    args.tags = args.tags.toLowerCase();
+    let tags = args.tags.split(',');
 		let idx = where.AND.push({ tags_some: { OR: [] } });
 		tags.forEach(tag => {
-			where.AND[idx - 1].tags_some.OR.push({ name: tag });
+			where.AND[idx - 1].tags_some.OR.push({ name_contains: tag.trim() });
 		});
 	}
 
