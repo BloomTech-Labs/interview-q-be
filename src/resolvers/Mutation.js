@@ -11,7 +11,7 @@ const { checkFields, splitAndTrimTags, getUserId } = require('../utils');
 
 // Mutations/Operations for Post
 async function createPost(_parent, args, context) {
-	const { price, position, industryName, description, tagString, company } = args;
+	const { price, position, industryName, description, tagString, company, isPublished } = args;
 	const coachID = getUserId(context);
 	checkFields({ price, position, industryName, description });
 	if (tagString) {
@@ -25,6 +25,7 @@ async function createPost(_parent, args, context) {
 				description,
         coachID,
         company,
+        isPublished,
 				industry: { connect: { name: industryName } },
 				tags: { connect: tagArray },
 			});
@@ -36,6 +37,7 @@ async function createPost(_parent, args, context) {
 			description,
       coachID,
       company,
+      isPublished,
 			industry: { connect: { name: industryName } },
 		});
 	}
@@ -47,7 +49,7 @@ function deletePost(_parent, _args, context) {
 }
 
 async function updatePost(_parent, args, context) {
-	const { id, price, position, description, industryName, tagString, company } = args;
+	const { id, price, position, description, industryName, tagString, company, isPublished } = args;
 
 	if (tagString && industryName) {
 		const tagArray = splitAndTrimTags(tagString);
@@ -60,6 +62,7 @@ async function updatePost(_parent, args, context) {
 					position,
           description,
           company,
+          isPublished,
 					industry: { connect: { name: industryName } },
 					tags: { connect: tagArray },
 				},
@@ -74,7 +77,7 @@ async function updatePost(_parent, args, context) {
 
 		return Promise.all(tagsObjArray).then(tags => {
 			return context.prisma.updatePost({
-				data: { price, position, description, company, tags: { connect: tagArray } },
+				data: { price, position, description, company, isPublished, tags: { connect: tagArray } },
 				where: {
 					id,
 				},
@@ -85,7 +88,9 @@ async function updatePost(_parent, args, context) {
 			data: {
 				price,
 				position,
-				description,
+        description,
+        isPublished,
+        company,
 				industry: { connect: { name: industryName } },
 			},
 			where: {
@@ -95,7 +100,7 @@ async function updatePost(_parent, args, context) {
 	} else {
 		//If no industry and tagname
 		return context.prisma.updatePost({
-			data: { price, position, description },
+			data: { price, position, description, isPublished, company },
 			where: {
 				id,
 			},
