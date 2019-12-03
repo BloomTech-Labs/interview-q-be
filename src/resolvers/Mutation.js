@@ -12,13 +12,13 @@ const { checkFields, splitAndTrimTags, getUserId } = require('../utils');
 // Mutations/Operations for Post
 async function createPost(_parent, args, context) {
   let { price, position, industryName, description, tagString, company, isPublished } = args;
-  tagString = tagString.toLowerCase();
   const coachID = getUserId(context);
   
   if (isPublished) {
     checkFields({ price, position, industryName, description, company });
   }
 	if (tagString) {
+    tagString = tagString.toLowerCase();
     const tagArray = splitAndTrimTags(tagString);
 		const tagsObjArray = await addNewTags(tagArray, context);
 
@@ -77,6 +77,7 @@ async function updatePost(_parent, args, context) {
 			});
 		});
 	} else if (tagString) {
+    tagString = tagString.toLowerCase();
 		const tagArray = splitAndTrimTags(tagString);
 		const tagsObjArray = await addNewTags(tagArray, context);
 
