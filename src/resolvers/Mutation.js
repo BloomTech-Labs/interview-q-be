@@ -57,21 +57,11 @@ async function deletePost(_parent, _args, context) {
 
 async function updatePost(_parent, args, context) {
   let { id, price, position, description, industryName, tagString, company, isPublished } = args;
-  let foundPostTags = await context.prisma.post({id}).tags().id();
-  let updatedPost;
-  await context.prisma.updatePost({
-    data: {
-      tags: { disconnect: foundPostTags }
-    },
-    where : {
-      id
-    }
-  });
 	if (tagString && industryName) {
     tagString = tagString.toLowerCase();
 		const tagArray = splitAndTrimTags(tagString);
     const tagsObjArray = await addNewTags(tagArray, context);
-    updatedPost = await context.prisma.updatePost({
+    return await context.prisma.updatePost({
       data: {
         price,
         position,
@@ -89,7 +79,7 @@ async function updatePost(_parent, args, context) {
     tagString = tagString.toLowerCase();
 		const tagArray = splitAndTrimTags(tagString);
     const tagsObjArray = await addNewTags(tagArray, context);
-    updatedPost = await context.prisma.updatePost({
+    return await context.prisma.updatePost({
       data: { price, position, description, company, isPublished, tags: { connect: tagArray } },
       where: {
         id,
@@ -97,7 +87,7 @@ async function updatePost(_parent, args, context) {
     });
 
 	} else if (industryName) {
-		updatedPost = await context.prisma.updatePost({
+		return await context.prisma.updatePost({
 			data: {
 				price,
 				position,
@@ -112,15 +102,13 @@ async function updatePost(_parent, args, context) {
 		});
 	} else {
 		//If no industry and tagname
-		updatedPost = await context.prisma.updatePost({
+		return await context.prisma.updatePost({
 			data: { price, position, description, isPublished, company },
 			where: {
 				id,
 			},
 		});
   }
-  deleteDisconnectedTags(context, foundPostTags)
-  return updatedPost;
 }
 
 // Mutations/Operations for Industry
@@ -137,6 +125,17 @@ function updateIndustry(_parent, args, context) {
 	});
 }
 
+async function removeTagFromPost(_parent, args, context) {
+	const { id, tagID } = args;
+
+	const updatedPost = await context.prisma.updatePost({
+		data: { tags: { disconnect: { id: tagID } } },
+		where: { id },
+  });
+  await deleteDisconnectedTags(context, [{id: tagID}]);
+  return updatedPost
+}
+
 // Mutations/Operations for Tag
 function addNewTags(array, context) {
 	return array.map(async tag => {
@@ -151,15 +150,6 @@ function addNewTags(array, context) {
 				name: tag.name,
 			},
 		});
-	});
-}
-
-function removeTagFromPost(_parent, args, context) {
-	const { id, tag } = args;
-
-	return context.prisma.updatePost({
-		data: { tags: { delete: { name: tag } } },
-		where: { id },
 	});
 }
 

@@ -50,7 +50,7 @@ const typeDefs = gql`
       company: String
 		): Post!
 
-		removeTagFromPost(id: ID!, tag: String): Post!
+		removeTagFromPost(id: ID!, tagID: String): Post!
 	}
 
 	# ***************************************************
