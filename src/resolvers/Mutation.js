@@ -15,8 +15,9 @@ async function createPost(_parent, args, context) {
   const coachID = getUserId(context);
   
   if (isPublished) {
-    checkFields({ price, position, industryName, description, company });
+    checkFields({ position, industryName, description, company });
   }
+  
 	if (tagString) {
     tagString = tagString.toLowerCase();
     const tagArray = splitAndTrimTags(tagString);
