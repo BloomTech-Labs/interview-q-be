@@ -57,16 +57,19 @@ async function deletePost(_parent, _args, context) {
 
 async function updatePost(_parent, args, context) {
   let { id, price, position, description, industryName, tagString, company, isPublished } = args;
-  let foundPostTags = await context.prisma.post({id}).tags().id();
   let updatedPost;
-  await context.prisma.updatePost({
-    data: {
-      tags: { disconnect: foundPostTags }
-    },
-    where : {
-      id
-    }
-  });
+  let foundPostTags;
+  if (tagString !== undefined) {
+    foundPostTags = await context.prisma.post({id}).tags().id();
+    await context.prisma.updatePost({
+      data: {
+        tags: { disconnect: foundPostTags }
+      },
+      where : {
+        id
+      }
+    });
+  }
 	if (tagString && industryName) {
     tagString = tagString.toLowerCase();
 		const tagArray = splitAndTrimTags(tagString);
@@ -119,7 +122,9 @@ async function updatePost(_parent, args, context) {
 			},
 		});
   }
-  deleteDisconnectedTags(context, foundPostTags)
+  if (foundPostTags) {
+    deleteDisconnectedTags(context, foundPostTags)
+  }
   return updatedPost;
 }
 
