@@ -48,6 +48,7 @@ const typeDefs = gql`
 			description: String
       tagString: String
       company: String
+      isPublished: Boolean
 		): Post!
 
 		removeTagFromPost(id: ID!, tag: String): Post!
