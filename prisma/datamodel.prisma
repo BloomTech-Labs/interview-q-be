@@ -35,6 +35,7 @@ type Availability {
 	year: Int!
 	month: Int!
 	day: Int!
+  uniquecheck: String! @unique
 	isOpen: Boolean!
 	recurring: Boolean!
 }
@@ -48,6 +49,7 @@ type Booking {
   minute: Int!
   coach: String!
   seeker: String!
+  uniquecheck: String! @unique
   availability: [Availability]!
 	pending: Boolean
 	confirmed: Boolean
