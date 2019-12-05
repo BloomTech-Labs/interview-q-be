@@ -27,12 +27,15 @@ type Tag {
 
 type Availability {
   id: ID! @id
-  dayOfWeek: String!
   start_hour: Int!
   start_minute: Int!
-  end_hour: Int!
-  end_minute: Int!
   coach: String!
+  bookingID: String
+	year: Int!
+	month: Int!
+	day: Int!
+	isOpen: Boolean!
+	recurring: Boolean!
 }
 
 type Booking {
@@ -44,6 +47,9 @@ type Booking {
   minute: Int!
   coach: String!
   seeker: String!
+  availability: [Availability]!
+	pending: Boolean
+	confirmed: Boolean
 }
 
 # type User {
