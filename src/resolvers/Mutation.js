@@ -225,6 +225,10 @@ function deleteAvailability(parent, args, context) {}
 
 // Mutations/Operations for Bookings
 
-function createBooking(parent, args, context) {}
+function createBooking(parent, args, context) {
+	return context.prisma.createBooking({})
+}
 
-function deleteBooking(parent, args, context) {}
+function deleteBooking(parent, args, context) {
+	return context.prisma.deleteBooking({id: args.id})
+}
