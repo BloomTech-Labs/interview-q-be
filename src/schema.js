@@ -9,7 +9,8 @@ const typeDefs = gql`
 			industry: String
 			price: String
 			orderBy: String
-			tags: String
+      tags: String
+      ids: [String]
 		): [Post!]!
 		post(id: String!): Post!
 		postByCoach(coach_id: String!): Post!
