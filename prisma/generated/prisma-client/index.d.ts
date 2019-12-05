@@ -329,7 +329,9 @@ export type PostOrderByInput =
   | "company_ASC"
   | "company_DESC"
   | "isPublished_ASC"
-  | "isPublished_DESC";
+  | "isPublished_DESC"
+  | "desc_lc_ASC"
+  | "desc_lc_DESC";
 
 export type TagOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
 
@@ -400,6 +402,7 @@ export interface PostCreateWithoutIndustryInput {
   coachID: String;
   company: String;
   isPublished?: Maybe<Boolean>;
+  desc_lc: String;
   tags?: Maybe<TagCreateManyWithoutPostsInput>;
 }
 
@@ -453,6 +456,7 @@ export interface PostUpdateManyDataInput {
   coachID?: Maybe<String>;
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
 }
 
 export interface AvailabilityWhereInput {
@@ -717,6 +721,20 @@ export interface PostWhereInput {
   company_not_ends_with?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
   isPublished_not?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
+  desc_lc_not?: Maybe<String>;
+  desc_lc_in?: Maybe<String[] | String>;
+  desc_lc_not_in?: Maybe<String[] | String>;
+  desc_lc_lt?: Maybe<String>;
+  desc_lc_lte?: Maybe<String>;
+  desc_lc_gt?: Maybe<String>;
+  desc_lc_gte?: Maybe<String>;
+  desc_lc_contains?: Maybe<String>;
+  desc_lc_not_contains?: Maybe<String>;
+  desc_lc_starts_with?: Maybe<String>;
+  desc_lc_not_starts_with?: Maybe<String>;
+  desc_lc_ends_with?: Maybe<String>;
+  desc_lc_not_ends_with?: Maybe<String>;
   tags_every?: Maybe<TagWhereInput>;
   tags_some?: Maybe<TagWhereInput>;
   tags_none?: Maybe<TagWhereInput>;
@@ -760,6 +778,7 @@ export interface PostUpdateWithoutTagsDataInput {
   coachID?: Maybe<String>;
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
 }
 
 export interface AvailabilityUpdateWithWhereUniqueNestedInput {
@@ -914,6 +933,7 @@ export interface PostUpdateManyMutationInput {
   coachID?: Maybe<String>;
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
 }
 
 export interface AvailabilityUpdateManyWithWhereNestedInput {
@@ -1076,6 +1096,20 @@ export interface PostScalarWhereInput {
   company_not_ends_with?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
   isPublished_not?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
+  desc_lc_not?: Maybe<String>;
+  desc_lc_in?: Maybe<String[] | String>;
+  desc_lc_not_in?: Maybe<String[] | String>;
+  desc_lc_lt?: Maybe<String>;
+  desc_lc_lte?: Maybe<String>;
+  desc_lc_gt?: Maybe<String>;
+  desc_lc_gte?: Maybe<String>;
+  desc_lc_contains?: Maybe<String>;
+  desc_lc_not_contains?: Maybe<String>;
+  desc_lc_starts_with?: Maybe<String>;
+  desc_lc_not_starts_with?: Maybe<String>;
+  desc_lc_ends_with?: Maybe<String>;
+  desc_lc_not_ends_with?: Maybe<String>;
   AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
@@ -1159,6 +1193,7 @@ export interface PostCreateWithoutTagsInput {
   coachID: String;
   company: String;
   isPublished?: Maybe<Boolean>;
+  desc_lc: String;
 }
 
 export interface PostUpdateManyWithoutIndustryInput {
@@ -1201,6 +1236,7 @@ export interface PostUpdateInput {
   coachID?: Maybe<String>;
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
   tags?: Maybe<TagUpdateManyWithoutPostsInput>;
 }
 
@@ -1211,6 +1247,7 @@ export interface PostUpdateWithoutIndustryDataInput {
   coachID?: Maybe<String>;
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
   tags?: Maybe<TagUpdateManyWithoutPostsInput>;
 }
 
@@ -1223,6 +1260,7 @@ export interface PostCreateInput {
   coachID: String;
   company: String;
   isPublished?: Maybe<Boolean>;
+  desc_lc: String;
   tags?: Maybe<TagCreateManyWithoutPostsInput>;
 }
 
@@ -1612,6 +1650,7 @@ export interface PostPreviousValues {
   lastUpdated: DateTimeOutput;
   company: String;
   isPublished: Boolean;
+  desc_lc: String;
 }
 
 export interface PostPreviousValuesPromise
@@ -1626,6 +1665,7 @@ export interface PostPreviousValuesPromise
   lastUpdated: () => Promise<DateTimeOutput>;
   company: () => Promise<String>;
   isPublished: () => Promise<Boolean>;
+  desc_lc: () => Promise<String>;
 }
 
 export interface PostPreviousValuesSubscription
@@ -1640,6 +1680,7 @@ export interface PostPreviousValuesSubscription
   lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
   company: () => Promise<AsyncIterator<String>>;
   isPublished: () => Promise<AsyncIterator<Boolean>>;
+  desc_lc: () => Promise<AsyncIterator<String>>;
 }
 
 export interface Industry {
@@ -2371,6 +2412,7 @@ export interface Post {
   lastUpdated: DateTimeOutput;
   company: String;
   isPublished: Boolean;
+  desc_lc: String;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
@@ -2384,6 +2426,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   lastUpdated: () => Promise<DateTimeOutput>;
   company: () => Promise<String>;
   isPublished: () => Promise<Boolean>;
+  desc_lc: () => Promise<String>;
   tags: <T = FragmentableArray<Tag>>(args?: {
     where?: TagWhereInput;
     orderBy?: TagOrderByInput;
@@ -2408,6 +2451,7 @@ export interface PostSubscription
   lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
   company: () => Promise<AsyncIterator<String>>;
   isPublished: () => Promise<AsyncIterator<Boolean>>;
+  desc_lc: () => Promise<AsyncIterator<String>>;
   tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
     where?: TagWhereInput;
     orderBy?: TagOrderByInput;
@@ -2432,6 +2476,7 @@ export interface PostNullablePromise
   lastUpdated: () => Promise<DateTimeOutput>;
   company: () => Promise<String>;
   isPublished: () => Promise<Boolean>;
+  desc_lc: () => Promise<String>;
   tags: <T = FragmentableArray<Tag>>(args?: {
     where?: TagWhereInput;
     orderBy?: TagOrderByInput;
