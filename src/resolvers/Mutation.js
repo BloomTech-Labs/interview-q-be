@@ -219,9 +219,27 @@ function deleteDisconnectedTags(context, tags) {
 
 // Mutations/Operations for Availibilities
 
-function createAvailability(parent, args, context) {}
+async function createAvailability(_parent, args, context) {
+	const coach = getUserId(context);
 
-function deleteAvailability(parent, args, context) {}
+	const newAvailability = { ...args, coach, isOpen: true, recurring: false };
+
+	// Check to see if availabilities already includes newAvailability exactly
+	// If yes, throw error, if not,
+	const avails = await context.prisma.availabilities({ where: { coach } });
+
+	console.log(JSON.stringify(avails));
+
+	if (JSON.stringify(avails).includes(JSON.stringify(newAvailability))) {
+		throw new Error('Already exists!');
+	} else {
+		return context.prisma.createAvailability(newAvailability);
+	}
+}
+
+function deleteAvailability(_parent, args, context) {
+	return context.prisma.deleteAvailability({ id: args.id });
+}
 
 // Mutations/Operations for Bookings
 
