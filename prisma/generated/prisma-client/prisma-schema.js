@@ -799,6 +799,7 @@ type Post {
   lastUpdated: DateTime!
   company: String!
   isPublished: Boolean!
+  desc_lc: String!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
 }
 
@@ -817,6 +818,7 @@ input PostCreateInput {
   coachID: String!
   company: String!
   isPublished: Boolean
+  desc_lc: String!
   tags: TagCreateManyWithoutPostsInput
 }
 
@@ -838,6 +840,7 @@ input PostCreateWithoutIndustryInput {
   coachID: String!
   company: String!
   isPublished: Boolean
+  desc_lc: String!
   tags: TagCreateManyWithoutPostsInput
 }
 
@@ -850,6 +853,7 @@ input PostCreateWithoutTagsInput {
   coachID: String!
   company: String!
   isPublished: Boolean
+  desc_lc: String!
 }
 
 type PostEdge {
@@ -876,6 +880,8 @@ enum PostOrderByInput {
   company_DESC
   isPublished_ASC
   isPublished_DESC
+  desc_lc_ASC
+  desc_lc_DESC
 }
 
 type PostPreviousValues {
@@ -888,6 +894,7 @@ type PostPreviousValues {
   lastUpdated: DateTime!
   company: String!
   isPublished: Boolean!
+  desc_lc: String!
 }
 
 input PostScalarWhereInput {
@@ -987,6 +994,20 @@ input PostScalarWhereInput {
   company_not_ends_with: String
   isPublished: Boolean
   isPublished_not: Boolean
+  desc_lc: String
+  desc_lc_not: String
+  desc_lc_in: [String!]
+  desc_lc_not_in: [String!]
+  desc_lc_lt: String
+  desc_lc_lte: String
+  desc_lc_gt: String
+  desc_lc_gte: String
+  desc_lc_contains: String
+  desc_lc_not_contains: String
+  desc_lc_starts_with: String
+  desc_lc_not_starts_with: String
+  desc_lc_ends_with: String
+  desc_lc_not_ends_with: String
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -1018,6 +1039,7 @@ input PostUpdateInput {
   coachID: String
   company: String
   isPublished: Boolean
+  desc_lc: String
   tags: TagUpdateManyWithoutPostsInput
 }
 
@@ -1028,6 +1050,7 @@ input PostUpdateManyDataInput {
   coachID: String
   company: String
   isPublished: Boolean
+  desc_lc: String
 }
 
 input PostUpdateManyMutationInput {
@@ -1037,6 +1060,7 @@ input PostUpdateManyMutationInput {
   coachID: String
   company: String
   isPublished: Boolean
+  desc_lc: String
 }
 
 input PostUpdateManyWithoutIndustryInput {
@@ -1075,6 +1099,7 @@ input PostUpdateWithoutIndustryDataInput {
   coachID: String
   company: String
   isPublished: Boolean
+  desc_lc: String
   tags: TagUpdateManyWithoutPostsInput
 }
 
@@ -1086,6 +1111,7 @@ input PostUpdateWithoutTagsDataInput {
   coachID: String
   company: String
   isPublished: Boolean
+  desc_lc: String
 }
 
 input PostUpdateWithWhereUniqueWithoutIndustryInput {
@@ -1208,6 +1234,20 @@ input PostWhereInput {
   company_not_ends_with: String
   isPublished: Boolean
   isPublished_not: Boolean
+  desc_lc: String
+  desc_lc_not: String
+  desc_lc_in: [String!]
+  desc_lc_not_in: [String!]
+  desc_lc_lt: String
+  desc_lc_lte: String
+  desc_lc_gt: String
+  desc_lc_gte: String
+  desc_lc_contains: String
+  desc_lc_not_contains: String
+  desc_lc_starts_with: String
+  desc_lc_not_starts_with: String
+  desc_lc_ends_with: String
+  desc_lc_not_ends_with: String
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput

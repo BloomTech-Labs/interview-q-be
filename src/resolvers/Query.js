@@ -41,14 +41,14 @@ function posts(_parent, args, context) {
         // let idx where.AND.push({ tags_some: { OR: [] } });
         tags.forEach(tag => {
             where.AND[idx - 1].OR[0].tags_some.OR.push({ name_contains: tag.trim() });
+            where.AND[idx - 1].OR.push({ desc_lc_contains: tag.trim() })
         });
+        if (args.ids) {
+          args.ids.forEach(id => {
+            where.AND[idx - 1].OR.push({ coachID: id })
+          })
+        }
     }
-    if (args.ids) {
-      args.ids.forEach(id => {
-        where.AND[idx - 1].OR.push({ coachID: id })
-      })
-    }
-    console.log(where);
     return context.prisma.posts({ where, orderBy: args.orderBy });
 }
 
