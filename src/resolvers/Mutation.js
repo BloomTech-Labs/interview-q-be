@@ -218,23 +218,18 @@ function deleteDisconnectedTags(context, tags) {
 }
 
 // Mutations/Operations for Availibilities
-
 async function createAvailability(_parent, args, context) {
+	const { year, month, day, start_hour, start_minute } = args;
 	const coach = getUserId(context);
+	const uniquecheck = coach + year + month + day + start_hour + start_minute;
 
-	const newAvailability = { ...args, coach, isOpen: true, recurring: false };
-
-	// Check to see if availabilities already includes newAvailability exactly
-	// If yes, throw error, if not,
-	const avails = await context.prisma.availabilities({ where: { coach } });
-
-	console.log(JSON.stringify(avails));
-
-	if (JSON.stringify(avails).includes(JSON.stringify(newAvailability))) {
-		throw new Error('Already exists!');
-	} else {
-		return context.prisma.createAvailability(newAvailability);
-	}
+	return context.prisma.createAvailability({
+		...args,
+		coach,
+		isOpen: true,
+		uniquecheck,
+		recurring: false,
+	});
 }
 
 function deleteAvailability(_parent, args, context) {
