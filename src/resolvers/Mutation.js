@@ -5,22 +5,34 @@ module.exports = {
 	deleteIndustry,
 	updateIndustry,
 	removeTagFromPost,
+	createAvailability,
+	deleteAvailability,
+	createBooking,
+	deleteBooking,
 };
 
 const { checkFields, splitAndTrimTags, getUserId } = require('../utils');
 
 // Mutations/Operations for Post
 async function createPost(_parent, args, context) {
-  let { price, position, industryName, description, tagString, company, isPublished } = args;
-  const coachID = getUserId(context);
-  
-  if (isPublished) {
-    checkFields({ position, industryName, description, company });
-  }
-  
+	let {
+		price,
+		position,
+		industryName,
+		description,
+		tagString,
+		company,
+		isPublished,
+	} = args;
+	const coachID = getUserId(context);
+
+	if (isPublished) {
+		checkFields({ position, industryName, description, company });
+	}
+
 	if (tagString) {
-    tagString = tagString.toLowerCase();
-    const tagArray = splitAndTrimTags(tagString);
+		tagString = tagString.toLowerCase();
+		const tagArray = splitAndTrimTags(tagString);
 		const tagsObjArray = await addNewTags(tagArray, context);
 
 		return Promise.all(tagsObjArray).then(tags => {
@@ -28,9 +40,9 @@ async function createPost(_parent, args, context) {
 				price,
 				position,
 				description,
-        coachID,
-        company,
-        isPublished,
+				coachID,
+				company,
+				isPublished,
 				industry: { connect: { name: industryName } },
 				tags: { connect: tagArray },
 			});
@@ -40,74 +52,95 @@ async function createPost(_parent, args, context) {
 			price,
 			position,
 			description,
-      coachID,
-      company,
-      isPublished,
+			coachID,
+			company,
+			isPublished,
 			industry: { connect: { name: industryName } },
 		});
 	}
 }
 
 async function deletePost(_parent, _args, context) {
-  const id = getUserId(context);
-  let foundPostTags = await context.prisma.post({coachID: id}).tags().id();
-  updatedPost = await context.prisma.deletePost({ coachID: id });
-  deleteDisconnectedTags(context, foundPostTags)
-  return updatedPost;
+	const id = getUserId(context);
+	let foundPostTags = await context.prisma
+		.post({ coachID: id })
+		.tags()
+		.id();
+	updatedPost = await context.prisma.deletePost({ coachID: id });
+	deleteDisconnectedTags(context, foundPostTags);
+	return updatedPost;
 }
 
 async function updatePost(_parent, args, context) {
-  let { id, price, position, description, industryName, tagString, company, isPublished } = args;
-  let updatedPost;
-  let foundPostTags;
-  if (tagString !== undefined) {
-    foundPostTags = await context.prisma.post({id}).tags().id();
-    await context.prisma.updatePost({
-      data: {
-        tags: { disconnect: foundPostTags }
-      },
-      where : {
-        id
-      }
-    });
-  }
+	let {
+		id,
+		price,
+		position,
+		description,
+		industryName,
+		tagString,
+		company,
+		isPublished,
+	} = args;
+	let updatedPost;
+	let foundPostTags;
+	if (tagString !== undefined) {
+		foundPostTags = await context.prisma
+			.post({ id })
+			.tags()
+			.id();
+		await context.prisma.updatePost({
+			data: {
+				tags: { disconnect: foundPostTags },
+			},
+			where: {
+				id,
+			},
+		});
+	}
 	if (tagString && industryName) {
-    tagString = tagString.toLowerCase();
+		tagString = tagString.toLowerCase();
 		const tagArray = splitAndTrimTags(tagString);
-    const tagsObjArray = await addNewTags(tagArray, context);
-    updatedPost = await context.prisma.updatePost({
-      data: {
-        price,
-        position,
-        description,
-        company,
-        isPublished,
-        industry: { connect: { name: industryName } },
-        tags: { connect: tagArray },
-      },
-      where: {
-        id,
-      },
-    });
+		const tagsObjArray = await addNewTags(tagArray, context);
+		updatedPost = await context.prisma.updatePost({
+			data: {
+				price,
+				position,
+				description,
+				company,
+				isPublished,
+				industry: { connect: { name: industryName } },
+				tags: { connect: tagArray },
+			},
+			where: {
+				id,
+			},
+		});
 	} else if (tagString) {
-    tagString = tagString.toLowerCase();
+		tagString = tagString.toLowerCase();
 		const tagArray = splitAndTrimTags(tagString);
-    const tagsObjArray = await addNewTags(tagArray, context);
-    updatedPost = await context.prisma.updatePost({
-      data: { price, position, description, company, isPublished, tags: { connect: tagArray } },
-      where: {
-        id,
-      },
-    });
-
+		const tagsObjArray = await addNewTags(tagArray, context);
+		updatedPost = await context.prisma.updatePost({
+			data: {
+				price,
+				position,
+				description,
+				company,
+				isPublished,
+				tags: { connect: tagArray },
+			},
+			where: {
+				id,
+			},
+		});
 	} else if (industryName) {
 		updatedPost = await context.prisma.updatePost({
 			data: {
 				price,
 				position,
-        description,
-        isPublished,
-        company,
+				description,
+				isPublished,
+				company,
 				industry: { connect: { name: industryName } },
 			},
 			where: {
@@ -122,11 +155,11 @@ async function updatePost(_parent, args, context) {
 				id,
 			},
 		});
-  }
-  if (foundPostTags) {
-    deleteDisconnectedTags(context, foundPostTags)
-  }
-  return updatedPost;
+	}
+	if (foundPostTags) {
+		deleteDisconnectedTags(context, foundPostTags);
+	}
+	return updatedPost;
 }
 
 // Mutations/Operations for Industry
@@ -170,9 +203,28 @@ function removeTagFromPost(_parent, args, context) {
 }
 
 function deleteDisconnectedTags(context, tags) {
-  return Promise.all(tags.map(async tag => {
-    if (await context.prisma.postsConnection({where: {tags_some: {id: tag.id}}}).aggregate().count() === 0) {
-      return await context.prisma.deleteTag({id: tag.id});
-    }
-  }));
+	return Promise.all(
+		tags.map(async tag => {
+			if (
+				(await context.prisma
+					.postsConnection({ where: { tags_some: { id: tag.id } } })
+					.aggregate()
+					.count()) === 0
+			) {
+				return await context.prisma.deleteTag({ id: tag.id });
+			}
+		}),
+	);
 }
+
+// Mutations/Operations for Availibilities
+
+function createAvailability(parent, args, context) {}
+
+function deleteAvailability(parent, args, context) {}
+
+// Mutations/Operations for Bookings
+
+function createBooking(parent, args, context) {}
+
+function deleteBooking(parent, args, context) {}
