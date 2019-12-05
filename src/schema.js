@@ -9,7 +9,8 @@ const typeDefs = gql`
 			industry: String
 			price: String
 			orderBy: String
-			tags: String
+      tags: String
+      ids: [String]
 		): [Post!]!
 		post(id: String!): Post!
 		postByCoach(coach_id: String!): Post!
@@ -54,13 +55,11 @@ const typeDefs = gql`
 		createAvailability(
 			start_hour: Int!
 			start_minute: Int!
-			coach: String!
-			bookingId: String
+			# coach: String!
+			# bookingId: String
 			year: Int!
 			month: Int!
 			day: Int!
-			isOpen: Boolean!
-			recurring: Boolean!
 		): Availability!
 
 		deleteAvailability(id: ID!): Availability!
@@ -116,6 +115,7 @@ const typeDefs = gql`
 		year: Int!
 		month: Int!
 		day: Int!
+		uniquecheck: String!
 		isOpen: Boolean!
 		recurring: Boolean!
 	}
@@ -129,6 +129,7 @@ const typeDefs = gql`
 		minute: Int!
 		coach: User!
 		seeker: User!
+		uniquecheck: String!
 		availability: [Availability]!
 		pending: Boolean
 		confirmed: Boolean

@@ -280,6 +280,8 @@ export type AvailabilityOrderByInput =
   | "month_DESC"
   | "day_ASC"
   | "day_DESC"
+  | "uniquecheck_ASC"
+  | "uniquecheck_DESC"
   | "isOpen_ASC"
   | "isOpen_DESC"
   | "recurring_ASC"
@@ -302,6 +304,8 @@ export type BookingOrderByInput =
   | "coach_DESC"
   | "seeker_ASC"
   | "seeker_DESC"
+  | "uniquecheck_ASC"
+  | "uniquecheck_DESC"
   | "pending_ASC"
   | "pending_DESC"
   | "confirmed_ASC"
@@ -325,7 +329,9 @@ export type PostOrderByInput =
   | "company_ASC"
   | "company_DESC"
   | "isPublished_ASC"
-  | "isPublished_DESC";
+  | "isPublished_DESC"
+  | "desc_lc_ASC"
+  | "desc_lc_DESC";
 
 export type TagOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
 
@@ -345,12 +351,14 @@ export interface AvailabilityUpdateManyDataInput {
   year?: Maybe<Int>;
   month?: Maybe<Int>;
   day?: Maybe<Int>;
+  uniquecheck?: Maybe<String>;
   isOpen?: Maybe<Boolean>;
   recurring?: Maybe<Boolean>;
 }
 
 export type AvailabilityWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  uniquecheck?: Maybe<String>;
 }>;
 
 export interface AvailabilityCreateInput {
@@ -362,6 +370,7 @@ export interface AvailabilityCreateInput {
   year: Int;
   month: Int;
   day: Int;
+  uniquecheck: String;
   isOpen: Boolean;
   recurring: Boolean;
 }
@@ -380,6 +389,7 @@ export interface AvailabilityUpdateInput {
   year?: Maybe<Int>;
   month?: Maybe<Int>;
   day?: Maybe<Int>;
+  uniquecheck?: Maybe<String>;
   isOpen?: Maybe<Boolean>;
   recurring?: Maybe<Boolean>;
 }
@@ -392,6 +402,7 @@ export interface PostCreateWithoutIndustryInput {
   coachID: String;
   company: String;
   isPublished?: Maybe<Boolean>;
+  desc_lc: String;
   tags?: Maybe<TagCreateManyWithoutPostsInput>;
 }
 
@@ -403,6 +414,7 @@ export interface AvailabilityUpdateManyMutationInput {
   year?: Maybe<Int>;
   month?: Maybe<Int>;
   day?: Maybe<Int>;
+  uniquecheck?: Maybe<String>;
   isOpen?: Maybe<Boolean>;
   recurring?: Maybe<Boolean>;
 }
@@ -444,6 +456,7 @@ export interface PostUpdateManyDataInput {
   coachID?: Maybe<String>;
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
 }
 
 export interface AvailabilityWhereInput {
@@ -529,6 +542,20 @@ export interface AvailabilityWhereInput {
   day_lte?: Maybe<Int>;
   day_gt?: Maybe<Int>;
   day_gte?: Maybe<Int>;
+  uniquecheck?: Maybe<String>;
+  uniquecheck_not?: Maybe<String>;
+  uniquecheck_in?: Maybe<String[] | String>;
+  uniquecheck_not_in?: Maybe<String[] | String>;
+  uniquecheck_lt?: Maybe<String>;
+  uniquecheck_lte?: Maybe<String>;
+  uniquecheck_gt?: Maybe<String>;
+  uniquecheck_gte?: Maybe<String>;
+  uniquecheck_contains?: Maybe<String>;
+  uniquecheck_not_contains?: Maybe<String>;
+  uniquecheck_starts_with?: Maybe<String>;
+  uniquecheck_not_starts_with?: Maybe<String>;
+  uniquecheck_ends_with?: Maybe<String>;
+  uniquecheck_not_ends_with?: Maybe<String>;
   isOpen?: Maybe<Boolean>;
   isOpen_not?: Maybe<Boolean>;
   recurring?: Maybe<Boolean>;
@@ -547,6 +574,7 @@ export interface BookingCreateInput {
   minute: Int;
   coach: String;
   seeker: String;
+  uniquecheck: String;
   availability?: Maybe<AvailabilityCreateManyInput>;
   pending?: Maybe<Boolean>;
   confirmed?: Maybe<Boolean>;
@@ -589,6 +617,7 @@ export interface BookingUpdateInput {
   minute?: Maybe<Int>;
   coach?: Maybe<String>;
   seeker?: Maybe<String>;
+  uniquecheck?: Maybe<String>;
   availability?: Maybe<AvailabilityUpdateManyInput>;
   pending?: Maybe<Boolean>;
   confirmed?: Maybe<Boolean>;
@@ -692,6 +721,20 @@ export interface PostWhereInput {
   company_not_ends_with?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
   isPublished_not?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
+  desc_lc_not?: Maybe<String>;
+  desc_lc_in?: Maybe<String[] | String>;
+  desc_lc_not_in?: Maybe<String[] | String>;
+  desc_lc_lt?: Maybe<String>;
+  desc_lc_lte?: Maybe<String>;
+  desc_lc_gt?: Maybe<String>;
+  desc_lc_gte?: Maybe<String>;
+  desc_lc_contains?: Maybe<String>;
+  desc_lc_not_contains?: Maybe<String>;
+  desc_lc_starts_with?: Maybe<String>;
+  desc_lc_not_starts_with?: Maybe<String>;
+  desc_lc_ends_with?: Maybe<String>;
+  desc_lc_not_ends_with?: Maybe<String>;
   tags_every?: Maybe<TagWhereInput>;
   tags_some?: Maybe<TagWhereInput>;
   tags_none?: Maybe<TagWhereInput>;
@@ -735,6 +778,7 @@ export interface PostUpdateWithoutTagsDataInput {
   coachID?: Maybe<String>;
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
 }
 
 export interface AvailabilityUpdateWithWhereUniqueNestedInput {
@@ -755,6 +799,7 @@ export interface AvailabilityUpdateDataInput {
   year?: Maybe<Int>;
   month?: Maybe<Int>;
   day?: Maybe<Int>;
+  uniquecheck?: Maybe<String>;
   isOpen?: Maybe<Boolean>;
   recurring?: Maybe<Boolean>;
 }
@@ -858,6 +903,20 @@ export interface AvailabilityScalarWhereInput {
   day_lte?: Maybe<Int>;
   day_gt?: Maybe<Int>;
   day_gte?: Maybe<Int>;
+  uniquecheck?: Maybe<String>;
+  uniquecheck_not?: Maybe<String>;
+  uniquecheck_in?: Maybe<String[] | String>;
+  uniquecheck_not_in?: Maybe<String[] | String>;
+  uniquecheck_lt?: Maybe<String>;
+  uniquecheck_lte?: Maybe<String>;
+  uniquecheck_gt?: Maybe<String>;
+  uniquecheck_gte?: Maybe<String>;
+  uniquecheck_contains?: Maybe<String>;
+  uniquecheck_not_contains?: Maybe<String>;
+  uniquecheck_starts_with?: Maybe<String>;
+  uniquecheck_not_starts_with?: Maybe<String>;
+  uniquecheck_ends_with?: Maybe<String>;
+  uniquecheck_not_ends_with?: Maybe<String>;
   isOpen?: Maybe<Boolean>;
   isOpen_not?: Maybe<Boolean>;
   recurring?: Maybe<Boolean>;
@@ -874,6 +933,7 @@ export interface PostUpdateManyMutationInput {
   coachID?: Maybe<String>;
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
 }
 
 export interface AvailabilityUpdateManyWithWhereNestedInput {
@@ -906,6 +966,7 @@ export interface BookingUpdateManyMutationInput {
   minute?: Maybe<Int>;
   coach?: Maybe<String>;
   seeker?: Maybe<String>;
+  uniquecheck?: Maybe<String>;
   pending?: Maybe<Boolean>;
   confirmed?: Maybe<Boolean>;
 }
@@ -935,6 +996,7 @@ export interface PostCreateManyWithoutIndustryInput {
 
 export type BookingWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  uniquecheck?: Maybe<String>;
 }>;
 
 export interface PostScalarWhereInput {
@@ -1034,6 +1096,20 @@ export interface PostScalarWhereInput {
   company_not_ends_with?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
   isPublished_not?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
+  desc_lc_not?: Maybe<String>;
+  desc_lc_in?: Maybe<String[] | String>;
+  desc_lc_not_in?: Maybe<String[] | String>;
+  desc_lc_lt?: Maybe<String>;
+  desc_lc_lte?: Maybe<String>;
+  desc_lc_gt?: Maybe<String>;
+  desc_lc_gte?: Maybe<String>;
+  desc_lc_contains?: Maybe<String>;
+  desc_lc_not_contains?: Maybe<String>;
+  desc_lc_starts_with?: Maybe<String>;
+  desc_lc_not_starts_with?: Maybe<String>;
+  desc_lc_ends_with?: Maybe<String>;
+  desc_lc_not_ends_with?: Maybe<String>;
   AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
@@ -1117,6 +1193,7 @@ export interface PostCreateWithoutTagsInput {
   coachID: String;
   company: String;
   isPublished?: Maybe<Boolean>;
+  desc_lc: String;
 }
 
 export interface PostUpdateManyWithoutIndustryInput {
@@ -1159,6 +1236,7 @@ export interface PostUpdateInput {
   coachID?: Maybe<String>;
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
   tags?: Maybe<TagUpdateManyWithoutPostsInput>;
 }
 
@@ -1169,6 +1247,7 @@ export interface PostUpdateWithoutIndustryDataInput {
   coachID?: Maybe<String>;
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
   tags?: Maybe<TagUpdateManyWithoutPostsInput>;
 }
 
@@ -1181,6 +1260,7 @@ export interface PostCreateInput {
   coachID: String;
   company: String;
   isPublished?: Maybe<Boolean>;
+  desc_lc: String;
   tags?: Maybe<TagCreateManyWithoutPostsInput>;
 }
 
@@ -1287,6 +1367,20 @@ export interface BookingWhereInput {
   seeker_not_starts_with?: Maybe<String>;
   seeker_ends_with?: Maybe<String>;
   seeker_not_ends_with?: Maybe<String>;
+  uniquecheck?: Maybe<String>;
+  uniquecheck_not?: Maybe<String>;
+  uniquecheck_in?: Maybe<String[] | String>;
+  uniquecheck_not_in?: Maybe<String[] | String>;
+  uniquecheck_lt?: Maybe<String>;
+  uniquecheck_lte?: Maybe<String>;
+  uniquecheck_gt?: Maybe<String>;
+  uniquecheck_gte?: Maybe<String>;
+  uniquecheck_contains?: Maybe<String>;
+  uniquecheck_not_contains?: Maybe<String>;
+  uniquecheck_starts_with?: Maybe<String>;
+  uniquecheck_not_starts_with?: Maybe<String>;
+  uniquecheck_ends_with?: Maybe<String>;
+  uniquecheck_not_ends_with?: Maybe<String>;
   availability_every?: Maybe<AvailabilityWhereInput>;
   availability_some?: Maybe<AvailabilityWhereInput>;
   availability_none?: Maybe<AvailabilityWhereInput>;
@@ -1511,44 +1605,23 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PostPreviousValues {
-  id: ID_Output;
-  price: Int;
-  position: String;
-  description: String;
-  coachID: String;
-  createdAt: DateTimeOutput;
-  lastUpdated: DateTimeOutput;
-  company: String;
-  isPublished: Boolean;
+export interface AvailabilityEdge {
+  node: Availability;
+  cursor: String;
 }
 
-export interface PostPreviousValuesPromise
-  extends Promise<PostPreviousValues>,
+export interface AvailabilityEdgePromise
+  extends Promise<AvailabilityEdge>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  price: () => Promise<Int>;
-  position: () => Promise<String>;
-  description: () => Promise<String>;
-  coachID: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  lastUpdated: () => Promise<DateTimeOutput>;
-  company: () => Promise<String>;
-  isPublished: () => Promise<Boolean>;
+  node: <T = AvailabilityPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface PostPreviousValuesSubscription
-  extends Promise<AsyncIterator<PostPreviousValues>>,
+export interface AvailabilityEdgeSubscription
+  extends Promise<AsyncIterator<AvailabilityEdge>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  price: () => Promise<AsyncIterator<Int>>;
-  position: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  coachID: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
-  company: () => Promise<AsyncIterator<String>>;
-  isPublished: () => Promise<AsyncIterator<Boolean>>;
+  node: <T = AvailabilitySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateAvailability {
@@ -1567,29 +1640,47 @@ export interface AggregateAvailabilitySubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PostSubscriptionPayload {
-  mutation: MutationType;
-  node: Post;
-  updatedFields: String[];
-  previousValues: PostPreviousValues;
+export interface PostPreviousValues {
+  id: ID_Output;
+  price: Int;
+  position: String;
+  description: String;
+  coachID: String;
+  createdAt: DateTimeOutput;
+  lastUpdated: DateTimeOutput;
+  company: String;
+  isPublished: Boolean;
+  desc_lc: String;
 }
 
-export interface PostSubscriptionPayloadPromise
-  extends Promise<PostSubscriptionPayload>,
+export interface PostPreviousValuesPromise
+  extends Promise<PostPreviousValues>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PostPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PostPreviousValuesPromise>() => T;
+  id: () => Promise<ID_Output>;
+  price: () => Promise<Int>;
+  position: () => Promise<String>;
+  description: () => Promise<String>;
+  coachID: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
+  company: () => Promise<String>;
+  isPublished: () => Promise<Boolean>;
+  desc_lc: () => Promise<String>;
 }
 
-export interface PostSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
+export interface PostPreviousValuesSubscription
+  extends Promise<AsyncIterator<PostPreviousValues>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PostSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PostPreviousValuesSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  price: () => Promise<AsyncIterator<Int>>;
+  position: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  coachID: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
+  company: () => Promise<AsyncIterator<String>>;
+  isPublished: () => Promise<AsyncIterator<Boolean>>;
+  desc_lc: () => Promise<AsyncIterator<String>>;
 }
 
 export interface Industry {
@@ -1746,62 +1837,29 @@ export interface PostConnectionSubscription
   aggregate: <T = AggregatePostSubscription>() => T;
 }
 
-export interface Availability {
-  id: ID_Output;
-  start_hour: Int;
-  start_minute: Int;
-  coach: String;
-  bookingID?: String;
-  year: Int;
-  month: Int;
-  day: Int;
-  isOpen: Boolean;
-  recurring: Boolean;
+export interface PostSubscriptionPayload {
+  mutation: MutationType;
+  node: Post;
+  updatedFields: String[];
+  previousValues: PostPreviousValues;
 }
 
-export interface AvailabilityPromise
-  extends Promise<Availability>,
+export interface PostSubscriptionPayloadPromise
+  extends Promise<PostSubscriptionPayload>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  start_hour: () => Promise<Int>;
-  start_minute: () => Promise<Int>;
-  coach: () => Promise<String>;
-  bookingID: () => Promise<String>;
-  year: () => Promise<Int>;
-  month: () => Promise<Int>;
-  day: () => Promise<Int>;
-  isOpen: () => Promise<Boolean>;
-  recurring: () => Promise<Boolean>;
+  mutation: () => Promise<MutationType>;
+  node: <T = PostPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PostPreviousValuesPromise>() => T;
 }
 
-export interface AvailabilitySubscription
-  extends Promise<AsyncIterator<Availability>>,
+export interface PostSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  start_hour: () => Promise<AsyncIterator<Int>>;
-  start_minute: () => Promise<AsyncIterator<Int>>;
-  coach: () => Promise<AsyncIterator<String>>;
-  bookingID: () => Promise<AsyncIterator<String>>;
-  year: () => Promise<AsyncIterator<Int>>;
-  month: () => Promise<AsyncIterator<Int>>;
-  day: () => Promise<AsyncIterator<Int>>;
-  isOpen: () => Promise<AsyncIterator<Boolean>>;
-  recurring: () => Promise<AsyncIterator<Boolean>>;
-}
-
-export interface AvailabilityNullablePromise
-  extends Promise<Availability | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  start_hour: () => Promise<Int>;
-  start_minute: () => Promise<Int>;
-  coach: () => Promise<String>;
-  bookingID: () => Promise<String>;
-  year: () => Promise<Int>;
-  month: () => Promise<Int>;
-  day: () => Promise<Int>;
-  isOpen: () => Promise<Boolean>;
-  recurring: () => Promise<Boolean>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PostSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PostPreviousValuesSubscription>() => T;
 }
 
 export interface IndustryEdge {
@@ -1848,6 +1906,114 @@ export interface AvailabilitySubscriptionPayloadSubscription
   previousValues: <T = AvailabilityPreviousValuesSubscription>() => T;
 }
 
+export interface Availability {
+  id: ID_Output;
+  start_hour: Int;
+  start_minute: Int;
+  coach: String;
+  bookingID?: String;
+  year: Int;
+  month: Int;
+  day: Int;
+  uniquecheck: String;
+  isOpen: Boolean;
+  recurring: Boolean;
+}
+
+export interface AvailabilityPromise
+  extends Promise<Availability>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  start_hour: () => Promise<Int>;
+  start_minute: () => Promise<Int>;
+  coach: () => Promise<String>;
+  bookingID: () => Promise<String>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  day: () => Promise<Int>;
+  uniquecheck: () => Promise<String>;
+  isOpen: () => Promise<Boolean>;
+  recurring: () => Promise<Boolean>;
+}
+
+export interface AvailabilitySubscription
+  extends Promise<AsyncIterator<Availability>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  start_hour: () => Promise<AsyncIterator<Int>>;
+  start_minute: () => Promise<AsyncIterator<Int>>;
+  coach: () => Promise<AsyncIterator<String>>;
+  bookingID: () => Promise<AsyncIterator<String>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  day: () => Promise<AsyncIterator<Int>>;
+  uniquecheck: () => Promise<AsyncIterator<String>>;
+  isOpen: () => Promise<AsyncIterator<Boolean>>;
+  recurring: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface AvailabilityNullablePromise
+  extends Promise<Availability | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  start_hour: () => Promise<Int>;
+  start_minute: () => Promise<Int>;
+  coach: () => Promise<String>;
+  bookingID: () => Promise<String>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  day: () => Promise<Int>;
+  uniquecheck: () => Promise<String>;
+  isOpen: () => Promise<Boolean>;
+  recurring: () => Promise<Boolean>;
+}
+
+export interface AvailabilityPreviousValues {
+  id: ID_Output;
+  start_hour: Int;
+  start_minute: Int;
+  coach: String;
+  bookingID?: String;
+  year: Int;
+  month: Int;
+  day: Int;
+  uniquecheck: String;
+  isOpen: Boolean;
+  recurring: Boolean;
+}
+
+export interface AvailabilityPreviousValuesPromise
+  extends Promise<AvailabilityPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  start_hour: () => Promise<Int>;
+  start_minute: () => Promise<Int>;
+  coach: () => Promise<String>;
+  bookingID: () => Promise<String>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  day: () => Promise<Int>;
+  uniquecheck: () => Promise<String>;
+  isOpen: () => Promise<Boolean>;
+  recurring: () => Promise<Boolean>;
+}
+
+export interface AvailabilityPreviousValuesSubscription
+  extends Promise<AsyncIterator<AvailabilityPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  start_hour: () => Promise<AsyncIterator<Int>>;
+  start_minute: () => Promise<AsyncIterator<Int>>;
+  coach: () => Promise<AsyncIterator<String>>;
+  bookingID: () => Promise<AsyncIterator<String>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  day: () => Promise<AsyncIterator<Int>>;
+  uniquecheck: () => Promise<AsyncIterator<String>>;
+  isOpen: () => Promise<AsyncIterator<Boolean>>;
+  recurring: () => Promise<AsyncIterator<Boolean>>;
+}
+
 export interface TagSubscriptionPayload {
   mutation: MutationType;
   node: Tag;
@@ -1871,68 +2037,6 @@ export interface TagSubscriptionPayloadSubscription
   node: <T = TagSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
   previousValues: <T = TagPreviousValuesSubscription>() => T;
-}
-
-export interface AvailabilityPreviousValues {
-  id: ID_Output;
-  start_hour: Int;
-  start_minute: Int;
-  coach: String;
-  bookingID?: String;
-  year: Int;
-  month: Int;
-  day: Int;
-  isOpen: Boolean;
-  recurring: Boolean;
-}
-
-export interface AvailabilityPreviousValuesPromise
-  extends Promise<AvailabilityPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  start_hour: () => Promise<Int>;
-  start_minute: () => Promise<Int>;
-  coach: () => Promise<String>;
-  bookingID: () => Promise<String>;
-  year: () => Promise<Int>;
-  month: () => Promise<Int>;
-  day: () => Promise<Int>;
-  isOpen: () => Promise<Boolean>;
-  recurring: () => Promise<Boolean>;
-}
-
-export interface AvailabilityPreviousValuesSubscription
-  extends Promise<AsyncIterator<AvailabilityPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  start_hour: () => Promise<AsyncIterator<Int>>;
-  start_minute: () => Promise<AsyncIterator<Int>>;
-  coach: () => Promise<AsyncIterator<String>>;
-  bookingID: () => Promise<AsyncIterator<String>>;
-  year: () => Promise<AsyncIterator<Int>>;
-  month: () => Promise<AsyncIterator<Int>>;
-  day: () => Promise<AsyncIterator<Int>>;
-  isOpen: () => Promise<AsyncIterator<Boolean>>;
-  recurring: () => Promise<AsyncIterator<Boolean>>;
-}
-
-export interface AvailabilityEdge {
-  node: Availability;
-  cursor: String;
-}
-
-export interface AvailabilityEdgePromise
-  extends Promise<AvailabilityEdge>,
-    Fragmentable {
-  node: <T = AvailabilityPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface AvailabilityEdgeSubscription
-  extends Promise<AsyncIterator<AvailabilityEdge>>,
-    Fragmentable {
-  node: <T = AvailabilitySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface BookingConnection {
@@ -2088,6 +2192,7 @@ export interface Booking {
   minute: Int;
   coach: String;
   seeker: String;
+  uniquecheck: String;
   pending?: Boolean;
   confirmed?: Boolean;
 }
@@ -2101,6 +2206,7 @@ export interface BookingPromise extends Promise<Booking>, Fragmentable {
   minute: () => Promise<Int>;
   coach: () => Promise<String>;
   seeker: () => Promise<String>;
+  uniquecheck: () => Promise<String>;
   availability: <T = FragmentableArray<Availability>>(args?: {
     where?: AvailabilityWhereInput;
     orderBy?: AvailabilityOrderByInput;
@@ -2125,6 +2231,7 @@ export interface BookingSubscription
   minute: () => Promise<AsyncIterator<Int>>;
   coach: () => Promise<AsyncIterator<String>>;
   seeker: () => Promise<AsyncIterator<String>>;
+  uniquecheck: () => Promise<AsyncIterator<String>>;
   availability: <T = Promise<AsyncIterator<AvailabilitySubscription>>>(args?: {
     where?: AvailabilityWhereInput;
     orderBy?: AvailabilityOrderByInput;
@@ -2149,6 +2256,7 @@ export interface BookingNullablePromise
   minute: () => Promise<Int>;
   coach: () => Promise<String>;
   seeker: () => Promise<String>;
+  uniquecheck: () => Promise<String>;
   availability: <T = FragmentableArray<Availability>>(args?: {
     where?: AvailabilityWhereInput;
     orderBy?: AvailabilityOrderByInput;
@@ -2171,6 +2279,7 @@ export interface BookingPreviousValues {
   minute: Int;
   coach: String;
   seeker: String;
+  uniquecheck: String;
   pending?: Boolean;
   confirmed?: Boolean;
 }
@@ -2186,6 +2295,7 @@ export interface BookingPreviousValuesPromise
   minute: () => Promise<Int>;
   coach: () => Promise<String>;
   seeker: () => Promise<String>;
+  uniquecheck: () => Promise<String>;
   pending: () => Promise<Boolean>;
   confirmed: () => Promise<Boolean>;
 }
@@ -2201,6 +2311,7 @@ export interface BookingPreviousValuesSubscription
   minute: () => Promise<AsyncIterator<Int>>;
   coach: () => Promise<AsyncIterator<String>>;
   seeker: () => Promise<AsyncIterator<String>>;
+  uniquecheck: () => Promise<AsyncIterator<String>>;
   pending: () => Promise<AsyncIterator<Boolean>>;
   confirmed: () => Promise<AsyncIterator<Boolean>>;
 }
@@ -2301,6 +2412,7 @@ export interface Post {
   lastUpdated: DateTimeOutput;
   company: String;
   isPublished: Boolean;
+  desc_lc: String;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
@@ -2314,6 +2426,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   lastUpdated: () => Promise<DateTimeOutput>;
   company: () => Promise<String>;
   isPublished: () => Promise<Boolean>;
+  desc_lc: () => Promise<String>;
   tags: <T = FragmentableArray<Tag>>(args?: {
     where?: TagWhereInput;
     orderBy?: TagOrderByInput;
@@ -2338,6 +2451,7 @@ export interface PostSubscription
   lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
   company: () => Promise<AsyncIterator<String>>;
   isPublished: () => Promise<AsyncIterator<Boolean>>;
+  desc_lc: () => Promise<AsyncIterator<String>>;
   tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
     where?: TagWhereInput;
     orderBy?: TagOrderByInput;
@@ -2362,6 +2476,7 @@ export interface PostNullablePromise
   lastUpdated: () => Promise<DateTimeOutput>;
   company: () => Promise<String>;
   isPublished: () => Promise<Boolean>;
+  desc_lc: () => Promise<String>;
   tags: <T = FragmentableArray<Tag>>(args?: {
     where?: TagWhereInput;
     orderBy?: TagOrderByInput;
@@ -2391,11 +2506,6 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 export type Int = number;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
-
-/*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
@@ -2405,6 +2515,11 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 /**
  * Model Metadata

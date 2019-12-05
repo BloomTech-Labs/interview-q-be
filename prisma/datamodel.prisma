@@ -9,6 +9,7 @@ type Post {
   lastUpdated: DateTime! @updatedAt
   company: String!
   isPublished: Boolean! @default(value: true)
+  desc_lc: String!
   tags: [Tag]!
   # coach: User @provides(fields: "email") @relation(link: TABLE name: "UserOnPost", onDelete: SET_NULL)
   # ratingsId: ID!
@@ -34,6 +35,7 @@ type Availability {
 	year: Int!
 	month: Int!
 	day: Int!
+  uniquecheck: String! @unique
 	isOpen: Boolean!
 	recurring: Boolean!
 }
@@ -47,6 +49,7 @@ type Booking {
   minute: Int!
   coach: String!
   seeker: String!
+  uniquecheck: String! @unique
   availability: [Availability]!
 	pending: Boolean
 	confirmed: Boolean
