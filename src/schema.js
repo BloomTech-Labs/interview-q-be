@@ -21,8 +21,6 @@ const typeDefs = gql`
 		bookings: [Booking]
 		bookingsByCoach(coach_id: String!): [Booking]
 		bookingsBySeeker(seeker_id: String!): [Booking]
-		# coachBookings: [Booking]
-		# seekerBookings: [Booking]
 	}
 
 	# ***************************************************
@@ -53,6 +51,36 @@ const typeDefs = gql`
 		): Post!
 
 		removeTagFromPost(id: ID!, tag: String): Post!
+
+		createAvailability(
+			start_hour: Int!
+			start_minute: Int!
+			coach: String!
+			bookingId: String
+			year: Int!
+			month: Int!
+			day: Int!
+			isOpen: Boolean!
+			recurring: Boolean!
+		): Availability!
+
+		deleteAvailability(id: ID!): Availability!
+
+		createBooking(
+			year: Int!
+			month: Int!
+			day: Int!
+			hour: Int!
+			minute: Int!
+			coach: String!
+			seeker: String!
+			availabilityA: String!
+			availabilityB: String!
+			pending: Boolean
+			confirmed: Boolean
+		): Booking!
+
+		deleteBooking(id: ID!): Booking!
 	}
 
 	# ***************************************************
