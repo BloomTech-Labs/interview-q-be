@@ -23,7 +23,7 @@ function post(_parent, args, context) {
 
 function posts(_parent, args, context) {
 	// Create filter here
-	let where = { AND: [{isPublished: true}] };
+	let where = { AND: [{ isPublished: true }] };
 	if (args.industry) {
 		where.AND.push({ industry: { name: args.industry } });
 	}
@@ -33,8 +33,8 @@ function posts(_parent, args, context) {
 		where.AND.push({ price_lte: Number(prices[1]) });
 	}
 	if (args.tags) {
-    args.tags = args.tags.toLowerCase();
-    let tags = args.tags.split(',');
+		args.tags = args.tags.toLowerCase();
+		let tags = args.tags.split(',');
 		let idx = where.AND.push({ tags_some: { OR: [] } });
 		tags.forEach(tag => {
 			where.AND[idx - 1].tags_some.OR.push({ name_contains: tag.trim() });
@@ -59,18 +59,18 @@ function industries(_parent, _args, context) {
 
 // Availabilities queries
 function availabilities(_parents, _args, context) {
-	console.log(context.prisma.availabilities());
+	// console.log(context.prisma.availabilities());
 	return context.prisma.availabilities();
 }
 
 function availabilitiesByCoach(_parents, args, context) {
-	console.log(args);
+	// console.log(args);
 	return context.prisma.availabilities({ where: { coach: args.coach_id } });
 }
 
 // Bookings queries
 function bookings(_parents, _args, context) {
-	console.log(context.prisma.bookings());
+	// console.log(context.prisma.bookings());
 	return context.prisma.bookings();
 }
 
