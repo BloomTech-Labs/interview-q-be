@@ -80,7 +80,6 @@ const typeDefs = gql`
 	}
 
 	type Availability {
-		# Availability slot by user
 		id: ID!
 		start_hour: Int!
 		start_minute: Int!
