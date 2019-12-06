@@ -52,10 +52,7 @@ const typeDefs = gql`
 			isPublished: Boolean
 		): Post!
 
-<<<<<<< HEAD
 		removeTagFromPost(id: ID!, tagID: String): Post!
-=======
-		removeTagFromPost(id: ID!, tag: String): Post!
 
 		createAvailability(
 			start_hour: Int!
@@ -85,7 +82,6 @@ const typeDefs = gql`
 		): Booking!
 
 		deleteBooking(id: ID!): Booking!
->>>>>>> b4b72a96f45ab737c774ad60e3c7047cec514767
 	}
 
 	# ***************************************************
