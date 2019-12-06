@@ -218,13 +218,45 @@ function deleteDisconnectedTags(context, tags) {
 }
 
 // Mutations/Operations for Availibilities
+async function createAvailability(_parent, args, context) {
+	const { year, month, day, start_hour, start_minute } = args;
+	const coach = getUserId(context);
+	const uniquecheck = coach + year + month + day + start_hour + start_minute;
 
-function createAvailability(parent, args, context) {}
+	return context.prisma.createAvailability({
+		...args,
+		coach,
+		isOpen: true,
+		uniquecheck,
+		recurring: false,
+	});
+}
 
-function deleteAvailability(parent, args, context) {}
+function deleteAvailability(_parent, args, context) {
+	return context.prisma.deleteAvailability({ id: args.id });
+}
 
 // Mutations/Operations for Bookings
 
-function createBooking(parent, args, context) {}
+function createBooking(parent, args, context) {
+	const {year, month, day, hour, minute, coach} = args;
+	const seeker = getUserId(context)
+	const uniquecheck = coach + seeker + year + month + day + hour + minute
 
-function deleteBooking(parent, args, context) {}
+	
+	return context.prisma.createBooking({
+		year,
+		month,
+		day,
+		hour,
+		minute,
+		coach,
+		seeker,
+		availability: { connect: [{id: args.availabilityA}, {id: args.availabilityB}]},
+		uniquecheck,
+	})
+}
+
+function deleteBooking(parent, args, context) {
+	return context.prisma.deleteBooking({id: args.id})
+}
