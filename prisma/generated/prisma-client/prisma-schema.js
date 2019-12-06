@@ -738,10 +738,12 @@ input IndustryUpdateManyMutationInput {
   name: String
 }
 
-input IndustryUpdateOneRequiredWithoutPostsInput {
+input IndustryUpdateOneWithoutPostsInput {
   create: IndustryCreateWithoutPostsInput
   update: IndustryUpdateWithoutPostsDataInput
   upsert: IndustryUpsertWithoutPostsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: IndustryWhereUniqueInput
 }
 
@@ -850,16 +852,18 @@ type PageInfo {
 
 type Post {
   id: ID!
-  price: Int!
-  position: String!
-  industry: Industry!
-  description: String!
+  price: Int
+  position: String
+  industry: Industry
+  description: String
   coachID: String!
   createdAt: DateTime!
   lastUpdated: DateTime!
-  company: String!
+  company: String
   isPublished: Boolean!
-  desc_lc: String!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
 }
 
@@ -871,14 +875,16 @@ type PostConnection {
 
 input PostCreateInput {
   id: ID
-  price: Int!
-  position: String!
-  industry: IndustryCreateOneWithoutPostsInput!
-  description: String!
+  price: Int
+  position: String
+  industry: IndustryCreateOneWithoutPostsInput
+  description: String
   coachID: String!
-  company: String!
+  company: String
   isPublished: Boolean
-  desc_lc: String!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: TagCreateManyWithoutPostsInput
 }
 
@@ -894,26 +900,30 @@ input PostCreateManyWithoutTagsInput {
 
 input PostCreateWithoutIndustryInput {
   id: ID
-  price: Int!
-  position: String!
-  description: String!
+  price: Int
+  position: String
+  description: String
   coachID: String!
-  company: String!
+  company: String
   isPublished: Boolean
-  desc_lc: String!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: TagCreateManyWithoutPostsInput
 }
 
 input PostCreateWithoutTagsInput {
   id: ID
-  price: Int!
-  position: String!
-  industry: IndustryCreateOneWithoutPostsInput!
-  description: String!
+  price: Int
+  position: String
+  industry: IndustryCreateOneWithoutPostsInput
+  description: String
   coachID: String!
-  company: String!
+  company: String
   isPublished: Boolean
-  desc_lc: String!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 type PostEdge {
@@ -942,19 +952,25 @@ enum PostOrderByInput {
   isPublished_DESC
   desc_lc_ASC
   desc_lc_DESC
+  company_lc_ASC
+  company_lc_DESC
+  position_lc_ASC
+  position_lc_DESC
 }
 
 type PostPreviousValues {
   id: ID!
-  price: Int!
-  position: String!
-  description: String!
+  price: Int
+  position: String
+  description: String
   coachID: String!
   createdAt: DateTime!
   lastUpdated: DateTime!
-  company: String!
+  company: String
   isPublished: Boolean!
-  desc_lc: String!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 input PostScalarWhereInput {
@@ -1068,6 +1084,34 @@ input PostScalarWhereInput {
   desc_lc_not_starts_with: String
   desc_lc_ends_with: String
   desc_lc_not_ends_with: String
+  company_lc: String
+  company_lc_not: String
+  company_lc_in: [String!]
+  company_lc_not_in: [String!]
+  company_lc_lt: String
+  company_lc_lte: String
+  company_lc_gt: String
+  company_lc_gte: String
+  company_lc_contains: String
+  company_lc_not_contains: String
+  company_lc_starts_with: String
+  company_lc_not_starts_with: String
+  company_lc_ends_with: String
+  company_lc_not_ends_with: String
+  position_lc: String
+  position_lc_not: String
+  position_lc_in: [String!]
+  position_lc_not_in: [String!]
+  position_lc_lt: String
+  position_lc_lte: String
+  position_lc_gt: String
+  position_lc_gte: String
+  position_lc_contains: String
+  position_lc_not_contains: String
+  position_lc_starts_with: String
+  position_lc_not_starts_with: String
+  position_lc_ends_with: String
+  position_lc_not_ends_with: String
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -1094,12 +1138,14 @@ input PostSubscriptionWhereInput {
 input PostUpdateInput {
   price: Int
   position: String
-  industry: IndustryUpdateOneRequiredWithoutPostsInput
+  industry: IndustryUpdateOneWithoutPostsInput
   description: String
   coachID: String
   company: String
   isPublished: Boolean
   desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: TagUpdateManyWithoutPostsInput
 }
 
@@ -1111,6 +1157,8 @@ input PostUpdateManyDataInput {
   company: String
   isPublished: Boolean
   desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 input PostUpdateManyMutationInput {
@@ -1121,6 +1169,8 @@ input PostUpdateManyMutationInput {
   company: String
   isPublished: Boolean
   desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 input PostUpdateManyWithoutIndustryInput {
@@ -1160,18 +1210,22 @@ input PostUpdateWithoutIndustryDataInput {
   company: String
   isPublished: Boolean
   desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: TagUpdateManyWithoutPostsInput
 }
 
 input PostUpdateWithoutTagsDataInput {
   price: Int
   position: String
-  industry: IndustryUpdateOneRequiredWithoutPostsInput
+  industry: IndustryUpdateOneWithoutPostsInput
   description: String
   coachID: String
   company: String
   isPublished: Boolean
   desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 input PostUpdateWithWhereUniqueWithoutIndustryInput {
@@ -1308,6 +1362,34 @@ input PostWhereInput {
   desc_lc_not_starts_with: String
   desc_lc_ends_with: String
   desc_lc_not_ends_with: String
+  company_lc: String
+  company_lc_not: String
+  company_lc_in: [String!]
+  company_lc_not_in: [String!]
+  company_lc_lt: String
+  company_lc_lte: String
+  company_lc_gt: String
+  company_lc_gte: String
+  company_lc_contains: String
+  company_lc_not_contains: String
+  company_lc_starts_with: String
+  company_lc_not_starts_with: String
+  company_lc_ends_with: String
+  company_lc_not_ends_with: String
+  position_lc: String
+  position_lc_not: String
+  position_lc_in: [String!]
+  position_lc_not_in: [String!]
+  position_lc_lt: String
+  position_lc_lte: String
+  position_lc_gt: String
+  position_lc_gte: String
+  position_lc_contains: String
+  position_lc_not_contains: String
+  position_lc_starts_with: String
+  position_lc_not_starts_with: String
+  position_lc_ends_with: String
+  position_lc_not_ends_with: String
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput

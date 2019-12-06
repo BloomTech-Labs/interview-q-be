@@ -28,12 +28,12 @@ const typeDefs = gql`
 	# The Mutation type lists all the different CUD (Create, Update, Delete) operations that front-end can make from this Endpoint
 	type Mutation {
 		createPost(
-			price: Int!
-			position: String!
-			industryName: String!
-			description: String!
+			price: Int
+			position: String
+			industryName: String
+			description: String
 			tagString: String
-			company: String!
+			company: String
 			isPublished: Boolean!
 		): Post!
 

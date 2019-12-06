@@ -24,11 +24,22 @@ async function createPost(_parent, args, context) {
 		company,
 		isPublished,
 	} = args;
-	const coachID = getUserId(context);
-
+  const coachID = getUserId(context);
 	if (isPublished) {
 		checkFields({ position, industryName, description, company });
 	}
+  let company_lc;
+  let desc_lc;
+  let position_lc;
+  if (company) {
+    company_lc = company.toLowerCase();
+  }
+  if (description) {
+    desc_lc = description.toLowerCase();
+  }
+  if (position) {
+    position_lc = position.toLowerCase();
+  }
 
 	if (tagString) {
 		tagString = tagString.toLowerCase();
@@ -38,10 +49,13 @@ async function createPost(_parent, args, context) {
 		return Promise.all(tagsObjArray).then(tags => {
 			return context.prisma.createPost({
 				price,
-				position,
-				description,
+        position,
+        position_lc,
+        description,
+        desc_lc,
 				coachID,
-				company,
+        company,
+        company_lc,
 				isPublished,
 				industry: { connect: { name: industryName } },
 				tags: { connect: tagArray },
@@ -49,12 +63,15 @@ async function createPost(_parent, args, context) {
 		});
 	} else {
 		return context.prisma.createPost({
-			price,
-			position,
-			description,
-			coachID,
-			company,
-			isPublished,
+      price,
+      position,
+      position_lc,
+      description,
+      desc_lc,
+      coachID,
+      company,
+      company_lc,
+      isPublished,
 			industry: { connect: { name: industryName } },
 		});
 	}
@@ -81,7 +98,8 @@ async function updatePost(_parent, args, context) {
 		tagString,
 		company,
 		isPublished,
-	} = args;
+  } = args;
+  
 	let updatedPost;
 	let foundPostTags;
 	if (tagString !== undefined) {
@@ -98,25 +116,26 @@ async function updatePost(_parent, args, context) {
 			},
 		});
 	}
-	if (tagString && industryName) {
-		tagString = tagString.toLowerCase();
-		const tagArray = splitAndTrimTags(tagString);
-		const tagsObjArray = await addNewTags(tagArray, context);
-		updatedPost = await context.prisma.updatePost({
-			data: {
-				price,
-				position,
-				description,
-				company,
-				isPublished,
-				industry: { connect: { name: industryName } },
-				tags: { connect: tagArray },
-			},
-			where: {
-				id,
-			},
-		});
-	} else if (tagString) {
+	// if (tagString && industryName) {
+	// 	tagString = tagString.toLowerCase();
+	// 	const tagArray = splitAndTrimTags(tagString);
+	// 	const tagsObjArray = await addNewTags(tagArray, context);
+	// 	updatedPost = await context.prisma.updatePost({
+	// 		data: {
+	// 			price,
+	// 			position,
+	// 			description,
+	// 			company,
+	// 			isPublished,
+	// 			industry: { connect: { name: industryName } },
+	// 			tags: { connect: tagArray },
+	// 		},
+	// 		where: {
+	// 			id,
+	// 		},
+	// 	});
+	// } else 
+	if (tagString) {
 		tagString = tagString.toLowerCase();
 		const tagArray = splitAndTrimTags(tagString);
 		const tagsObjArray = await addNewTags(tagArray, context);
@@ -148,9 +167,21 @@ async function updatePost(_parent, args, context) {
 			},
 		});
 	} else {
-		//If no industry and tagname
+    //If no industry and tagname
+    let company_lc;
+    let desc_lc;
+    let position_lc;
+    if (company) {
+      company_lc = company.toLowerCase();
+    }
+    if (description) {
+      desc_lc = description.toLowerCase();
+    }
+    if (position) {
+      position_lc = position.toLowerCase();
+    }
 		updatedPost = await context.prisma.updatePost({
-			data: { price, position, description, isPublished, company },
+			data: { price, position, position_lc, description, desc_lc, isPublished, company, company_lc },
 			where: {
 				id,
 			},
