@@ -9,8 +9,8 @@ const typeDefs = gql`
 			industry: String
 			price: String
 			orderBy: String
-      tags: String
-      ids: [String]
+			tags: String
+			ids: [String]
 		): [Post!]!
 		post(id: String!): Post!
 		postByCoach(coach_id: String!): Post!
@@ -60,6 +60,7 @@ const typeDefs = gql`
 			year: Int!
 			month: Int!
 			day: Int!
+			recurring: Boolean!
 		): Availability!
 
 		deleteAvailability(id: ID!): Availability!
