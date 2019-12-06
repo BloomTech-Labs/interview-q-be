@@ -66,7 +66,6 @@ describe('Availability Queries', () => {
 describe('Availability Mutations', () => {
 	const app = server.createHttpServer({});
 
-	let availabilityID;
 	let uniquecheck;
 
 	const randomInt = (a, b) => {
@@ -91,31 +90,30 @@ describe('Availability Mutations', () => {
 					1,
 					31,
 				)}, recurring: false) {
-            id
+          id
+            uniquecheck
           }
         }`,
 			});
 
-		availabilityID = response.body.data.createAvailability.id;
-		uniquecheck = response.body.data.uniquecheck;
+		uniquecheck = response.body.data.createAvailability.uniquecheck;
 
 		expect(response.body.data.createAvailability.id).toBeTruthy();
 	});
 
 	it('deletes an availability', async () => {
-		const response = await request(app)
+		const mutation = await request(app)
 			.post('/')
 			.set({ Authorization: token })
 			.send({
 				query: `mutation {
-        deleteAvailability(id: "${availabilityID}") {
+        deleteAvailability(uniquecheck: "${uniquecheck}") {
           id
-          uniquecheck
         }
       }`,
 			});
 
-		expect(response.body.data.deleteAvailability.id).toBeTruthy();
+		expect(mutation.body.data.deleteAvailability.id).toBeTruthy();
 
 		const query = await request(app)
 			.post('/')
