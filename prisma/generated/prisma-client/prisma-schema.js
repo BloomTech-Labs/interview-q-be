@@ -738,10 +738,12 @@ input IndustryUpdateManyMutationInput {
   name: String
 }
 
-input IndustryUpdateOneRequiredWithoutPostsInput {
+input IndustryUpdateOneWithoutPostsInput {
   create: IndustryCreateWithoutPostsInput
   update: IndustryUpdateWithoutPostsDataInput
   upsert: IndustryUpsertWithoutPostsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: IndustryWhereUniqueInput
 }
 
@@ -850,18 +852,18 @@ type PageInfo {
 
 type Post {
   id: ID!
-  price: Int!
-  position: String!
-  industry: Industry!
-  description: String!
+  price: Int
+  position: String
+  industry: Industry
+  description: String
   coachID: String!
   createdAt: DateTime!
   lastUpdated: DateTime!
-  company: String!
+  company: String
   isPublished: Boolean!
-  desc_lc: String!
-  company_lc: String!
-  position_lc: String!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
 }
 
@@ -873,16 +875,16 @@ type PostConnection {
 
 input PostCreateInput {
   id: ID
-  price: Int!
-  position: String!
-  industry: IndustryCreateOneWithoutPostsInput!
-  description: String!
+  price: Int
+  position: String
+  industry: IndustryCreateOneWithoutPostsInput
+  description: String
   coachID: String!
-  company: String!
+  company: String
   isPublished: Boolean
-  desc_lc: String!
-  company_lc: String!
-  position_lc: String!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: TagCreateManyWithoutPostsInput
 }
 
@@ -898,30 +900,30 @@ input PostCreateManyWithoutTagsInput {
 
 input PostCreateWithoutIndustryInput {
   id: ID
-  price: Int!
-  position: String!
-  description: String!
+  price: Int
+  position: String
+  description: String
   coachID: String!
-  company: String!
+  company: String
   isPublished: Boolean
-  desc_lc: String!
-  company_lc: String!
-  position_lc: String!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: TagCreateManyWithoutPostsInput
 }
 
 input PostCreateWithoutTagsInput {
   id: ID
-  price: Int!
-  position: String!
-  industry: IndustryCreateOneWithoutPostsInput!
-  description: String!
+  price: Int
+  position: String
+  industry: IndustryCreateOneWithoutPostsInput
+  description: String
   coachID: String!
-  company: String!
+  company: String
   isPublished: Boolean
-  desc_lc: String!
-  company_lc: String!
-  position_lc: String!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 type PostEdge {
@@ -958,17 +960,17 @@ enum PostOrderByInput {
 
 type PostPreviousValues {
   id: ID!
-  price: Int!
-  position: String!
-  description: String!
+  price: Int
+  position: String
+  description: String
   coachID: String!
   createdAt: DateTime!
   lastUpdated: DateTime!
-  company: String!
+  company: String
   isPublished: Boolean!
-  desc_lc: String!
-  company_lc: String!
-  position_lc: String!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 input PostScalarWhereInput {
@@ -1136,7 +1138,7 @@ input PostSubscriptionWhereInput {
 input PostUpdateInput {
   price: Int
   position: String
-  industry: IndustryUpdateOneRequiredWithoutPostsInput
+  industry: IndustryUpdateOneWithoutPostsInput
   description: String
   coachID: String
   company: String
@@ -1216,7 +1218,7 @@ input PostUpdateWithoutIndustryDataInput {
 input PostUpdateWithoutTagsDataInput {
   price: Int
   position: String
-  industry: IndustryUpdateOneRequiredWithoutPostsInput
+  industry: IndustryUpdateOneWithoutPostsInput
   description: String
   coachID: String
   company: String

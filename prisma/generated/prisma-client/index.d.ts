@@ -400,15 +400,15 @@ export interface AvailabilityUpdateInput {
 
 export interface PostCreateWithoutIndustryInput {
   id?: Maybe<ID_Input>;
-  price: Int;
-  position: String;
-  description: String;
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  description?: Maybe<String>;
   coachID: String;
-  company: String;
+  company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
-  desc_lc: String;
-  company_lc: String;
-  position_lc: String;
+  desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
   tags?: Maybe<TagCreateManyWithoutPostsInput>;
 }
 
@@ -809,7 +809,7 @@ export interface AvailabilityUpdateManyInput {
 export interface PostUpdateWithoutTagsDataInput {
   price?: Maybe<Int>;
   position?: Maybe<String>;
-  industry?: Maybe<IndustryUpdateOneRequiredWithoutPostsInput>;
+  industry?: Maybe<IndustryUpdateOneWithoutPostsInput>;
   description?: Maybe<String>;
   coachID?: Maybe<String>;
   company?: Maybe<String>;
@@ -991,10 +991,12 @@ export interface PostUpdateManyWithWhereNestedInput {
   data: PostUpdateManyDataInput;
 }
 
-export interface IndustryUpdateOneRequiredWithoutPostsInput {
+export interface IndustryUpdateOneWithoutPostsInput {
   create?: Maybe<IndustryCreateWithoutPostsInput>;
   update?: Maybe<IndustryUpdateWithoutPostsDataInput>;
   upsert?: Maybe<IndustryUpsertWithoutPostsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
   connect?: Maybe<IndustryWhereUniqueInput>;
 }
 
@@ -1254,16 +1256,16 @@ export interface IndustryUpdateInput {
 
 export interface PostCreateWithoutTagsInput {
   id?: Maybe<ID_Input>;
-  price: Int;
-  position: String;
-  industry: IndustryCreateOneWithoutPostsInput;
-  description: String;
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  industry?: Maybe<IndustryCreateOneWithoutPostsInput>;
+  description?: Maybe<String>;
   coachID: String;
-  company: String;
+  company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
-  desc_lc: String;
-  company_lc: String;
-  position_lc: String;
+  desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
 }
 
 export interface PostUpdateManyWithoutIndustryInput {
@@ -1301,7 +1303,7 @@ export interface PostUpdateWithWhereUniqueWithoutIndustryInput {
 export interface PostUpdateInput {
   price?: Maybe<Int>;
   position?: Maybe<String>;
-  industry?: Maybe<IndustryUpdateOneRequiredWithoutPostsInput>;
+  industry?: Maybe<IndustryUpdateOneWithoutPostsInput>;
   description?: Maybe<String>;
   coachID?: Maybe<String>;
   company?: Maybe<String>;
@@ -1327,16 +1329,16 @@ export interface PostUpdateWithoutIndustryDataInput {
 
 export interface PostCreateInput {
   id?: Maybe<ID_Input>;
-  price: Int;
-  position: String;
-  industry: IndustryCreateOneWithoutPostsInput;
-  description: String;
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  industry?: Maybe<IndustryCreateOneWithoutPostsInput>;
+  description?: Maybe<String>;
   coachID: String;
-  company: String;
+  company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
-  desc_lc: String;
-  company_lc: String;
-  position_lc: String;
+  desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
   tags?: Maybe<TagCreateManyWithoutPostsInput>;
 }
 
@@ -1718,17 +1720,17 @@ export interface AggregateAvailabilitySubscription
 
 export interface PostPreviousValues {
   id: ID_Output;
-  price: Int;
-  position: String;
-  description: String;
+  price?: Int;
+  position?: String;
+  description?: String;
   coachID: String;
   createdAt: DateTimeOutput;
   lastUpdated: DateTimeOutput;
-  company: String;
+  company?: String;
   isPublished: Boolean;
-  desc_lc: String;
-  company_lc: String;
-  position_lc: String;
+  desc_lc?: String;
+  company_lc?: String;
+  position_lc?: String;
 }
 
 export interface PostPreviousValuesPromise
@@ -2486,17 +2488,17 @@ export interface TagConnectionSubscription
 
 export interface Post {
   id: ID_Output;
-  price: Int;
-  position: String;
-  description: String;
+  price?: Int;
+  position?: String;
+  description?: String;
   coachID: String;
   createdAt: DateTimeOutput;
   lastUpdated: DateTimeOutput;
-  company: String;
+  company?: String;
   isPublished: Boolean;
-  desc_lc: String;
-  company_lc: String;
-  position_lc: String;
+  desc_lc?: String;
+  company_lc?: String;
+  position_lc?: String;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
