@@ -269,6 +269,25 @@ function deleteAvailability(_parent, args, context) {
 
 // Mutations/Operations for Bookings
 
-function createBooking(parent, args, context) {}
+function createBooking(parent, args, context) {
+	const {year, month, day, hour, minute, coach} = args;
+	const seeker = getUserId(context)
+	const uniquecheck = coach + seeker + year + month + day + hour + minute
 
-function deleteBooking(parent, args, context) {}
+	
+	return context.prisma.createBooking({
+		year,
+		month,
+		day,
+		hour,
+		minute,
+		coach,
+		seeker,
+		availability: { connect: [{id: args.availabilityA}, {id: args.availabilityB}]},
+		uniquecheck,
+	})
+}
+
+function deleteBooking(parent, args, context) {
+	return context.prisma.deleteBooking({id: args.id})
+}
