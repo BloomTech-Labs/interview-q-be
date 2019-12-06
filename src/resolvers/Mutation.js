@@ -260,7 +260,6 @@ async function createAvailability(_parent, args, context) {
 		coach,
 		isOpen: true,
 		uniquecheck,
-		recurring: false,
 	});
 }
 
@@ -270,12 +269,11 @@ function deleteAvailability(_parent, args, context) {
 
 // Mutations/Operations for Bookings
 
-function createBooking(parent, args, context) {
-	const {year, month, day, hour, minute, coach} = args;
-	const seeker = getUserId(context)
-	const uniquecheck = coach + seeker + year + month + day + hour + minute
+function createBooking(_parent, args, context) {
+	const { year, month, day, hour, minute, coach } = args;
+	const seeker = getUserId(context);
+	const uniquecheck = coach + seeker + year + month + day + hour + minute;
 
-	
 	return context.prisma.createBooking({
 		year,
 		month,
@@ -284,11 +282,13 @@ function createBooking(parent, args, context) {
 		minute,
 		coach,
 		seeker,
-		availability: { connect: [{id: args.availabilityA}, {id: args.availabilityB}]},
+		availability: {
+			connect: [{ id: args.availabilityA }, { id: args.availabilityB }],
+		},
 		uniquecheck,
-	})
+	});
 }
 
-function deleteBooking(parent, args, context) {
-	return context.prisma.deleteBooking({id: args.id})
+function deleteBooking(_parent, args, context) {
+	return context.prisma.deleteBooking({ id: args.id });
 }
