@@ -89,71 +89,39 @@ async function deletePost(_parent, _args, context) {
 }
 
 async function updatePost(_parent, args, context) {
-	let {
-		id,
-		price,
-		position,
-		description,
-		industryName,
-		tagString,
-		company,
-		isPublished,
-	} = args;
-
-	let updatedPost;
-	let foundPostTags;
-	if (tagString !== undefined) {
-		foundPostTags = await context.prisma
-			.post({ id })
-			.tags()
-			.id();
-		await context.prisma.updatePost({
-			data: {
-				tags: { disconnect: foundPostTags },
-			},
-			where: {
-				id,
-			},
-		});
-	}
+  let { id, price, position, description, industryName, tagString, company, isPublished } = args;
 	// if (tagString && industryName) {
-	// 	tagString = tagString.toLowerCase();
+  //   tagString = tagString.toLowerCase();
 	// 	const tagArray = splitAndTrimTags(tagString);
-	// 	const tagsObjArray = await addNewTags(tagArray, context);
-	// 	updatedPost = await context.prisma.updatePost({
-	// 		data: {
-	// 			price,
-	// 			position,
-	// 			description,
-	// 			company,
-	// 			isPublished,
-	// 			industry: { connect: { name: industryName } },
-	// 			tags: { connect: tagArray },
-	// 		},
-	// 		where: {
-	// 			id,
-	// 		},
-	// 	});
-	// } else
-	if (tagString) {
-		tagString = tagString.toLowerCase();
+  //   const tagsObjArray = await addNewTags(tagArray, context);
+  //   return await context.prisma.updatePost({
+  //     data: {
+  //       price,
+  //       position,
+  //       description,
+  //       company,
+  //       isPublished,
+  //       industry: { connect: { name: industryName } },
+  //       tags: { connect: tagArray },
+  //     },
+  //     where: {
+  //       id,
+  //     },
+  //   });
+  // } else 
+  if (tagString) {
+    tagString = tagString.toLowerCase();
 		const tagArray = splitAndTrimTags(tagString);
-		const tagsObjArray = await addNewTags(tagArray, context);
-		updatedPost = await context.prisma.updatePost({
-			data: {
-				price,
-				position,
-				description,
-				company,
-				isPublished,
-				tags: { connect: tagArray },
-			},
-			where: {
-				id,
-			},
-		});
+    const tagsObjArray = await addNewTags(tagArray, context);
+    return await context.prisma.updatePost({
+      data: { price, position, description, company, isPublished, tags: { connect: tagArray } },
+      where: {
+        id,
+      },
+    });
+
 	} else if (industryName) {
-		updatedPost = await context.prisma.updatePost({
+		return await context.prisma.updatePost({
 			data: {
 				price,
 				position,
@@ -167,39 +135,26 @@ async function updatePost(_parent, args, context) {
 			},
 		});
 	} else {
-		//If no industry and tagname
-		let company_lc;
-		let desc_lc;
-		let position_lc;
-		if (company) {
-			company_lc = company.toLowerCase();
-		}
-		if (description) {
-			desc_lc = description.toLowerCase();
-		}
-		if (position) {
-			position_lc = position.toLowerCase();
-		}
-		updatedPost = await context.prisma.updatePost({
-			data: {
-				price,
-				position,
-				position_lc,
-				description,
-				desc_lc,
-				isPublished,
-				company,
-				company_lc,
-			},
+    //If no industry and tagname
+    let company_lc;
+    let desc_lc;
+    let position_lc;
+    if (company) {
+      company_lc = company.toLowerCase();
+    }
+    if (description) {
+      desc_lc = description.toLowerCase();
+    }
+    if (position) {
+      position_lc = position.toLowerCase();
+    }
+		return await context.prisma.updatePost({
+			data: { price, position, position_lc, description, desc_lc, isPublished, company, company_lc },
 			where: {
 				id,
 			},
 		});
-	}
-	if (foundPostTags) {
-		deleteDisconnectedTags(context, foundPostTags);
-	}
-	return updatedPost;
+  }
 }
 
 // Mutations/Operations for Industry
@@ -216,6 +171,17 @@ function updateIndustry(_parent, args, context) {
 	});
 }
 
+async function removeTagFromPost(_parent, args, context) {
+	const { id, tagID } = args;
+
+	const updatedPost = await context.prisma.updatePost({
+		data: { tags: { disconnect: { id: tagID } } },
+		where: { id },
+  });
+  await deleteDisconnectedTags(context, [{id: tagID}]);
+  return updatedPost
+}
+
 // Mutations/Operations for Tag
 function addNewTags(array, context) {
 	return array.map(async tag => {
@@ -230,15 +196,6 @@ function addNewTags(array, context) {
 				name: tag.name,
 			},
 		});
-	});
-}
-
-function removeTagFromPost(_parent, args, context) {
-	const { id, tag } = args;
-
-	return context.prisma.updatePost({
-		data: { tags: { delete: { name: tag } } },
-		where: { id },
 	});
 }
 

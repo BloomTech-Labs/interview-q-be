@@ -52,7 +52,7 @@ const typeDefs = gql`
 			isPublished: Boolean
 		): Post!
 
-		removeTagFromPost(id: ID!, tag: String): Post!
+		removeTagFromPost(id: ID!, tagID: String): Post!
 
 		createAvailability(
 			start_hour: Int!
