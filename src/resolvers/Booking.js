@@ -2,7 +2,7 @@ module.exports = {
 	coach,
 	seeker,
 	__resolveReference,
-	availability
+	availability,
 };
 
 function coach(booking) {
@@ -20,4 +20,3 @@ function __resolveReference(booking, context) {
 function availability(parent, _args, context) {
 	return context.prisma.booking({id: parent.id}).availability()
 }
-

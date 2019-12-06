@@ -71,7 +71,7 @@ const typeDefs = gql`
 			hour: Int!
 			minute: Int!
 			coach: String!
-			seeker: String!
+			# seeker: String!
 			availabilityA: String!
 			availabilityB: String!
 			pending: Boolean
