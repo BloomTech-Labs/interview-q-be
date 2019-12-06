@@ -25,12 +25,16 @@ type AggregateTag {
 
 type Availability {
   id: ID!
-  dayOfWeek: String!
   start_hour: Int!
   start_minute: Int!
-  end_hour: Int!
-  end_minute: Int!
   coach: String!
+  bookingID: String
+  year: Int!
+  month: Int!
+  day: Int!
+  uniquecheck: String!
+  isOpen: Boolean!
+  recurring: Boolean!
 }
 
 type AvailabilityConnection {
@@ -41,12 +45,21 @@ type AvailabilityConnection {
 
 input AvailabilityCreateInput {
   id: ID
-  dayOfWeek: String!
   start_hour: Int!
   start_minute: Int!
-  end_hour: Int!
-  end_minute: Int!
   coach: String!
+  bookingID: String
+  year: Int!
+  month: Int!
+  day: Int!
+  uniquecheck: String!
+  isOpen: Boolean!
+  recurring: Boolean!
+}
+
+input AvailabilityCreateManyInput {
+  create: [AvailabilityCreateInput!]
+  connect: [AvailabilityWhereUniqueInput!]
 }
 
 type AvailabilityEdge {
@@ -57,28 +70,146 @@ type AvailabilityEdge {
 enum AvailabilityOrderByInput {
   id_ASC
   id_DESC
-  dayOfWeek_ASC
-  dayOfWeek_DESC
   start_hour_ASC
   start_hour_DESC
   start_minute_ASC
   start_minute_DESC
-  end_hour_ASC
-  end_hour_DESC
-  end_minute_ASC
-  end_minute_DESC
   coach_ASC
   coach_DESC
+  bookingID_ASC
+  bookingID_DESC
+  year_ASC
+  year_DESC
+  month_ASC
+  month_DESC
+  day_ASC
+  day_DESC
+  uniquecheck_ASC
+  uniquecheck_DESC
+  isOpen_ASC
+  isOpen_DESC
+  recurring_ASC
+  recurring_DESC
 }
 
 type AvailabilityPreviousValues {
   id: ID!
-  dayOfWeek: String!
   start_hour: Int!
   start_minute: Int!
-  end_hour: Int!
-  end_minute: Int!
   coach: String!
+  bookingID: String
+  year: Int!
+  month: Int!
+  day: Int!
+  uniquecheck: String!
+  isOpen: Boolean!
+  recurring: Boolean!
+}
+
+input AvailabilityScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  start_hour: Int
+  start_hour_not: Int
+  start_hour_in: [Int!]
+  start_hour_not_in: [Int!]
+  start_hour_lt: Int
+  start_hour_lte: Int
+  start_hour_gt: Int
+  start_hour_gte: Int
+  start_minute: Int
+  start_minute_not: Int
+  start_minute_in: [Int!]
+  start_minute_not_in: [Int!]
+  start_minute_lt: Int
+  start_minute_lte: Int
+  start_minute_gt: Int
+  start_minute_gte: Int
+  coach: String
+  coach_not: String
+  coach_in: [String!]
+  coach_not_in: [String!]
+  coach_lt: String
+  coach_lte: String
+  coach_gt: String
+  coach_gte: String
+  coach_contains: String
+  coach_not_contains: String
+  coach_starts_with: String
+  coach_not_starts_with: String
+  coach_ends_with: String
+  coach_not_ends_with: String
+  bookingID: String
+  bookingID_not: String
+  bookingID_in: [String!]
+  bookingID_not_in: [String!]
+  bookingID_lt: String
+  bookingID_lte: String
+  bookingID_gt: String
+  bookingID_gte: String
+  bookingID_contains: String
+  bookingID_not_contains: String
+  bookingID_starts_with: String
+  bookingID_not_starts_with: String
+  bookingID_ends_with: String
+  bookingID_not_ends_with: String
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  month: Int
+  month_not: Int
+  month_in: [Int!]
+  month_not_in: [Int!]
+  month_lt: Int
+  month_lte: Int
+  month_gt: Int
+  month_gte: Int
+  day: Int
+  day_not: Int
+  day_in: [Int!]
+  day_not_in: [Int!]
+  day_lt: Int
+  day_lte: Int
+  day_gt: Int
+  day_gte: Int
+  uniquecheck: String
+  uniquecheck_not: String
+  uniquecheck_in: [String!]
+  uniquecheck_not_in: [String!]
+  uniquecheck_lt: String
+  uniquecheck_lte: String
+  uniquecheck_gt: String
+  uniquecheck_gte: String
+  uniquecheck_contains: String
+  uniquecheck_not_contains: String
+  uniquecheck_starts_with: String
+  uniquecheck_not_starts_with: String
+  uniquecheck_ends_with: String
+  uniquecheck_not_ends_with: String
+  isOpen: Boolean
+  isOpen_not: Boolean
+  recurring: Boolean
+  recurring_not: Boolean
+  AND: [AvailabilityScalarWhereInput!]
+  OR: [AvailabilityScalarWhereInput!]
+  NOT: [AvailabilityScalarWhereInput!]
 }
 
 type AvailabilitySubscriptionPayload {
@@ -99,22 +230,84 @@ input AvailabilitySubscriptionWhereInput {
   NOT: [AvailabilitySubscriptionWhereInput!]
 }
 
-input AvailabilityUpdateInput {
-  dayOfWeek: String
+input AvailabilityUpdateDataInput {
   start_hour: Int
   start_minute: Int
-  end_hour: Int
-  end_minute: Int
   coach: String
+  bookingID: String
+  year: Int
+  month: Int
+  day: Int
+  uniquecheck: String
+  isOpen: Boolean
+  recurring: Boolean
+}
+
+input AvailabilityUpdateInput {
+  start_hour: Int
+  start_minute: Int
+  coach: String
+  bookingID: String
+  year: Int
+  month: Int
+  day: Int
+  uniquecheck: String
+  isOpen: Boolean
+  recurring: Boolean
+}
+
+input AvailabilityUpdateManyDataInput {
+  start_hour: Int
+  start_minute: Int
+  coach: String
+  bookingID: String
+  year: Int
+  month: Int
+  day: Int
+  uniquecheck: String
+  isOpen: Boolean
+  recurring: Boolean
+}
+
+input AvailabilityUpdateManyInput {
+  create: [AvailabilityCreateInput!]
+  update: [AvailabilityUpdateWithWhereUniqueNestedInput!]
+  upsert: [AvailabilityUpsertWithWhereUniqueNestedInput!]
+  delete: [AvailabilityWhereUniqueInput!]
+  connect: [AvailabilityWhereUniqueInput!]
+  set: [AvailabilityWhereUniqueInput!]
+  disconnect: [AvailabilityWhereUniqueInput!]
+  deleteMany: [AvailabilityScalarWhereInput!]
+  updateMany: [AvailabilityUpdateManyWithWhereNestedInput!]
 }
 
 input AvailabilityUpdateManyMutationInput {
-  dayOfWeek: String
   start_hour: Int
   start_minute: Int
-  end_hour: Int
-  end_minute: Int
   coach: String
+  bookingID: String
+  year: Int
+  month: Int
+  day: Int
+  uniquecheck: String
+  isOpen: Boolean
+  recurring: Boolean
+}
+
+input AvailabilityUpdateManyWithWhereNestedInput {
+  where: AvailabilityScalarWhereInput!
+  data: AvailabilityUpdateManyDataInput!
+}
+
+input AvailabilityUpdateWithWhereUniqueNestedInput {
+  where: AvailabilityWhereUniqueInput!
+  data: AvailabilityUpdateDataInput!
+}
+
+input AvailabilityUpsertWithWhereUniqueNestedInput {
+  where: AvailabilityWhereUniqueInput!
+  update: AvailabilityUpdateDataInput!
+  create: AvailabilityCreateInput!
 }
 
 input AvailabilityWhereInput {
@@ -132,20 +325,6 @@ input AvailabilityWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  dayOfWeek: String
-  dayOfWeek_not: String
-  dayOfWeek_in: [String!]
-  dayOfWeek_not_in: [String!]
-  dayOfWeek_lt: String
-  dayOfWeek_lte: String
-  dayOfWeek_gt: String
-  dayOfWeek_gte: String
-  dayOfWeek_contains: String
-  dayOfWeek_not_contains: String
-  dayOfWeek_starts_with: String
-  dayOfWeek_not_starts_with: String
-  dayOfWeek_ends_with: String
-  dayOfWeek_not_ends_with: String
   start_hour: Int
   start_hour_not: Int
   start_hour_in: [Int!]
@@ -162,22 +341,6 @@ input AvailabilityWhereInput {
   start_minute_lte: Int
   start_minute_gt: Int
   start_minute_gte: Int
-  end_hour: Int
-  end_hour_not: Int
-  end_hour_in: [Int!]
-  end_hour_not_in: [Int!]
-  end_hour_lt: Int
-  end_hour_lte: Int
-  end_hour_gt: Int
-  end_hour_gte: Int
-  end_minute: Int
-  end_minute_not: Int
-  end_minute_in: [Int!]
-  end_minute_not_in: [Int!]
-  end_minute_lt: Int
-  end_minute_lte: Int
-  end_minute_gt: Int
-  end_minute_gte: Int
   coach: String
   coach_not: String
   coach_in: [String!]
@@ -192,6 +355,62 @@ input AvailabilityWhereInput {
   coach_not_starts_with: String
   coach_ends_with: String
   coach_not_ends_with: String
+  bookingID: String
+  bookingID_not: String
+  bookingID_in: [String!]
+  bookingID_not_in: [String!]
+  bookingID_lt: String
+  bookingID_lte: String
+  bookingID_gt: String
+  bookingID_gte: String
+  bookingID_contains: String
+  bookingID_not_contains: String
+  bookingID_starts_with: String
+  bookingID_not_starts_with: String
+  bookingID_ends_with: String
+  bookingID_not_ends_with: String
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  month: Int
+  month_not: Int
+  month_in: [Int!]
+  month_not_in: [Int!]
+  month_lt: Int
+  month_lte: Int
+  month_gt: Int
+  month_gte: Int
+  day: Int
+  day_not: Int
+  day_in: [Int!]
+  day_not_in: [Int!]
+  day_lt: Int
+  day_lte: Int
+  day_gt: Int
+  day_gte: Int
+  uniquecheck: String
+  uniquecheck_not: String
+  uniquecheck_in: [String!]
+  uniquecheck_not_in: [String!]
+  uniquecheck_lt: String
+  uniquecheck_lte: String
+  uniquecheck_gt: String
+  uniquecheck_gte: String
+  uniquecheck_contains: String
+  uniquecheck_not_contains: String
+  uniquecheck_starts_with: String
+  uniquecheck_not_starts_with: String
+  uniquecheck_ends_with: String
+  uniquecheck_not_ends_with: String
+  isOpen: Boolean
+  isOpen_not: Boolean
+  recurring: Boolean
+  recurring_not: Boolean
   AND: [AvailabilityWhereInput!]
   OR: [AvailabilityWhereInput!]
   NOT: [AvailabilityWhereInput!]
@@ -199,6 +418,7 @@ input AvailabilityWhereInput {
 
 input AvailabilityWhereUniqueInput {
   id: ID
+  uniquecheck: String
 }
 
 type BatchPayload {
@@ -214,6 +434,10 @@ type Booking {
   minute: Int!
   coach: String!
   seeker: String!
+  uniquecheck: String!
+  availability(where: AvailabilityWhereInput, orderBy: AvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Availability!]
+  pending: Boolean
+  confirmed: Boolean
 }
 
 type BookingConnection {
@@ -231,6 +455,10 @@ input BookingCreateInput {
   minute: Int!
   coach: String!
   seeker: String!
+  uniquecheck: String!
+  availability: AvailabilityCreateManyInput
+  pending: Boolean
+  confirmed: Boolean
 }
 
 type BookingEdge {
@@ -255,6 +483,12 @@ enum BookingOrderByInput {
   coach_DESC
   seeker_ASC
   seeker_DESC
+  uniquecheck_ASC
+  uniquecheck_DESC
+  pending_ASC
+  pending_DESC
+  confirmed_ASC
+  confirmed_DESC
 }
 
 type BookingPreviousValues {
@@ -266,6 +500,9 @@ type BookingPreviousValues {
   minute: Int!
   coach: String!
   seeker: String!
+  uniquecheck: String!
+  pending: Boolean
+  confirmed: Boolean
 }
 
 type BookingSubscriptionPayload {
@@ -294,6 +531,10 @@ input BookingUpdateInput {
   minute: Int
   coach: String
   seeker: String
+  uniquecheck: String
+  availability: AvailabilityUpdateManyInput
+  pending: Boolean
+  confirmed: Boolean
 }
 
 input BookingUpdateManyMutationInput {
@@ -304,6 +545,9 @@ input BookingUpdateManyMutationInput {
   minute: Int
   coach: String
   seeker: String
+  uniquecheck: String
+  pending: Boolean
+  confirmed: Boolean
 }
 
 input BookingWhereInput {
@@ -389,6 +633,27 @@ input BookingWhereInput {
   seeker_not_starts_with: String
   seeker_ends_with: String
   seeker_not_ends_with: String
+  uniquecheck: String
+  uniquecheck_not: String
+  uniquecheck_in: [String!]
+  uniquecheck_not_in: [String!]
+  uniquecheck_lt: String
+  uniquecheck_lte: String
+  uniquecheck_gt: String
+  uniquecheck_gte: String
+  uniquecheck_contains: String
+  uniquecheck_not_contains: String
+  uniquecheck_starts_with: String
+  uniquecheck_not_starts_with: String
+  uniquecheck_ends_with: String
+  uniquecheck_not_ends_with: String
+  availability_every: AvailabilityWhereInput
+  availability_some: AvailabilityWhereInput
+  availability_none: AvailabilityWhereInput
+  pending: Boolean
+  pending_not: Boolean
+  confirmed: Boolean
+  confirmed_not: Boolean
   AND: [BookingWhereInput!]
   OR: [BookingWhereInput!]
   NOT: [BookingWhereInput!]
@@ -396,6 +661,7 @@ input BookingWhereInput {
 
 input BookingWhereUniqueInput {
   id: ID
+  uniquecheck: String
 }
 
 scalar DateTime
@@ -472,10 +738,12 @@ input IndustryUpdateManyMutationInput {
   name: String
 }
 
-input IndustryUpdateOneRequiredWithoutPostsInput {
+input IndustryUpdateOneWithoutPostsInput {
   create: IndustryCreateWithoutPostsInput
   update: IndustryUpdateWithoutPostsDataInput
   upsert: IndustryUpsertWithoutPostsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: IndustryWhereUniqueInput
 }
 
@@ -584,15 +852,18 @@ type PageInfo {
 
 type Post {
   id: ID!
-  price: Int!
-  position: String!
-  industry: Industry!
-  description: String!
+  price: Int
+  position: String
+  industry: Industry
+  description: String
   coachID: String!
   createdAt: DateTime!
   lastUpdated: DateTime!
-  company: String!
+  company: String
   isPublished: Boolean!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
 }
 
@@ -604,13 +875,16 @@ type PostConnection {
 
 input PostCreateInput {
   id: ID
-  price: Int!
-  position: String!
-  industry: IndustryCreateOneWithoutPostsInput!
-  description: String!
+  price: Int
+  position: String
+  industry: IndustryCreateOneWithoutPostsInput
+  description: String
   coachID: String!
-  company: String!
+  company: String
   isPublished: Boolean
+  desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: TagCreateManyWithoutPostsInput
 }
 
@@ -626,24 +900,30 @@ input PostCreateManyWithoutTagsInput {
 
 input PostCreateWithoutIndustryInput {
   id: ID
-  price: Int!
-  position: String!
-  description: String!
+  price: Int
+  position: String
+  description: String
   coachID: String!
-  company: String!
+  company: String
   isPublished: Boolean
+  desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: TagCreateManyWithoutPostsInput
 }
 
 input PostCreateWithoutTagsInput {
   id: ID
-  price: Int!
-  position: String!
-  industry: IndustryCreateOneWithoutPostsInput!
-  description: String!
+  price: Int
+  position: String
+  industry: IndustryCreateOneWithoutPostsInput
+  description: String
   coachID: String!
-  company: String!
+  company: String
   isPublished: Boolean
+  desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 type PostEdge {
@@ -670,18 +950,27 @@ enum PostOrderByInput {
   company_DESC
   isPublished_ASC
   isPublished_DESC
+  desc_lc_ASC
+  desc_lc_DESC
+  company_lc_ASC
+  company_lc_DESC
+  position_lc_ASC
+  position_lc_DESC
 }
 
 type PostPreviousValues {
   id: ID!
-  price: Int!
-  position: String!
-  description: String!
+  price: Int
+  position: String
+  description: String
   coachID: String!
   createdAt: DateTime!
   lastUpdated: DateTime!
-  company: String!
+  company: String
   isPublished: Boolean!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 input PostScalarWhereInput {
@@ -781,6 +1070,48 @@ input PostScalarWhereInput {
   company_not_ends_with: String
   isPublished: Boolean
   isPublished_not: Boolean
+  desc_lc: String
+  desc_lc_not: String
+  desc_lc_in: [String!]
+  desc_lc_not_in: [String!]
+  desc_lc_lt: String
+  desc_lc_lte: String
+  desc_lc_gt: String
+  desc_lc_gte: String
+  desc_lc_contains: String
+  desc_lc_not_contains: String
+  desc_lc_starts_with: String
+  desc_lc_not_starts_with: String
+  desc_lc_ends_with: String
+  desc_lc_not_ends_with: String
+  company_lc: String
+  company_lc_not: String
+  company_lc_in: [String!]
+  company_lc_not_in: [String!]
+  company_lc_lt: String
+  company_lc_lte: String
+  company_lc_gt: String
+  company_lc_gte: String
+  company_lc_contains: String
+  company_lc_not_contains: String
+  company_lc_starts_with: String
+  company_lc_not_starts_with: String
+  company_lc_ends_with: String
+  company_lc_not_ends_with: String
+  position_lc: String
+  position_lc_not: String
+  position_lc_in: [String!]
+  position_lc_not_in: [String!]
+  position_lc_lt: String
+  position_lc_lte: String
+  position_lc_gt: String
+  position_lc_gte: String
+  position_lc_contains: String
+  position_lc_not_contains: String
+  position_lc_starts_with: String
+  position_lc_not_starts_with: String
+  position_lc_ends_with: String
+  position_lc_not_ends_with: String
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -807,11 +1138,14 @@ input PostSubscriptionWhereInput {
 input PostUpdateInput {
   price: Int
   position: String
-  industry: IndustryUpdateOneRequiredWithoutPostsInput
+  industry: IndustryUpdateOneWithoutPostsInput
   description: String
   coachID: String
   company: String
   isPublished: Boolean
+  desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: TagUpdateManyWithoutPostsInput
 }
 
@@ -822,6 +1156,9 @@ input PostUpdateManyDataInput {
   coachID: String
   company: String
   isPublished: Boolean
+  desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 input PostUpdateManyMutationInput {
@@ -831,6 +1168,9 @@ input PostUpdateManyMutationInput {
   coachID: String
   company: String
   isPublished: Boolean
+  desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 input PostUpdateManyWithoutIndustryInput {
@@ -869,17 +1209,23 @@ input PostUpdateWithoutIndustryDataInput {
   coachID: String
   company: String
   isPublished: Boolean
+  desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: TagUpdateManyWithoutPostsInput
 }
 
 input PostUpdateWithoutTagsDataInput {
   price: Int
   position: String
-  industry: IndustryUpdateOneRequiredWithoutPostsInput
+  industry: IndustryUpdateOneWithoutPostsInput
   description: String
   coachID: String
   company: String
   isPublished: Boolean
+  desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 input PostUpdateWithWhereUniqueWithoutIndustryInput {
@@ -1002,6 +1348,48 @@ input PostWhereInput {
   company_not_ends_with: String
   isPublished: Boolean
   isPublished_not: Boolean
+  desc_lc: String
+  desc_lc_not: String
+  desc_lc_in: [String!]
+  desc_lc_not_in: [String!]
+  desc_lc_lt: String
+  desc_lc_lte: String
+  desc_lc_gt: String
+  desc_lc_gte: String
+  desc_lc_contains: String
+  desc_lc_not_contains: String
+  desc_lc_starts_with: String
+  desc_lc_not_starts_with: String
+  desc_lc_ends_with: String
+  desc_lc_not_ends_with: String
+  company_lc: String
+  company_lc_not: String
+  company_lc_in: [String!]
+  company_lc_not_in: [String!]
+  company_lc_lt: String
+  company_lc_lte: String
+  company_lc_gt: String
+  company_lc_gte: String
+  company_lc_contains: String
+  company_lc_not_contains: String
+  company_lc_starts_with: String
+  company_lc_not_starts_with: String
+  company_lc_ends_with: String
+  company_lc_not_ends_with: String
+  position_lc: String
+  position_lc_not: String
+  position_lc_in: [String!]
+  position_lc_not_in: [String!]
+  position_lc_lt: String
+  position_lc_lte: String
+  position_lc_gt: String
+  position_lc_gte: String
+  position_lc_contains: String
+  position_lc_not_contains: String
+  position_lc_starts_with: String
+  position_lc_not_starts_with: String
+  position_lc_ends_with: String
+  position_lc_not_ends_with: String
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput

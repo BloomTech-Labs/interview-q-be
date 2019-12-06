@@ -5,42 +5,72 @@ module.exports = {
 	deleteIndustry,
 	updateIndustry,
 	removeTagFromPost,
+	createAvailability,
+	deleteAvailability,
+	createBooking,
+	deleteBooking,
 };
 
 const { checkFields, splitAndTrimTags, getUserId } = require('../utils');
 
 // Mutations/Operations for Post
 async function createPost(_parent, args, context) {
-  let { price, position, industryName, description, tagString, company, isPublished } = args;
+	let {
+		price,
+		position,
+		industryName,
+		description,
+		tagString,
+		company,
+		isPublished,
+	} = args;
   const coachID = getUserId(context);
-  
-  if (isPublished) {
-    checkFields({ price, position, industryName, description, company });
+	if (isPublished) {
+		checkFields({ position, industryName, description, company });
+	}
+  let company_lc;
+  let desc_lc;
+  let position_lc;
+  if (company) {
+    company_lc = company.toLowerCase();
   }
+  if (description) {
+    desc_lc = description.toLowerCase();
+  }
+  if (position) {
+    position_lc = position.toLowerCase();
+  }
+
 	if (tagString) {
-    tagString = tagString.toLowerCase();
-    const tagArray = splitAndTrimTags(tagString);
+		tagString = tagString.toLowerCase();
+		const tagArray = splitAndTrimTags(tagString);
 		const tagsObjArray = await addNewTags(tagArray, context);
 
 		return Promise.all(tagsObjArray).then(tags => {
 			return context.prisma.createPost({
 				price,
-				position,
-				description,
-        coachID,
+        position,
+        position_lc,
+        description,
+        desc_lc,
+				coachID,
         company,
-        isPublished,
+        company_lc,
+				isPublished,
 				industry: { connect: { name: industryName } },
 				tags: { connect: tagArray },
 			});
 		});
 	} else {
 		return context.prisma.createPost({
-			price,
-			position,
-			description,
+      price,
+      position,
+      position_lc,
+      description,
+      desc_lc,
       coachID,
       company,
+      company_lc,
       isPublished,
 			industry: { connect: { name: industryName } },
 		});
@@ -48,34 +78,38 @@ async function createPost(_parent, args, context) {
 }
 
 async function deletePost(_parent, _args, context) {
-  const id = getUserId(context);
-  let foundPostTags = await context.prisma.post({coachID: id}).tags().id();
-  updatedPost = await context.prisma.deletePost({ coachID: id });
-  deleteDisconnectedTags(context, foundPostTags)
-  return updatedPost;
+	const id = getUserId(context);
+	let foundPostTags = await context.prisma
+		.post({ coachID: id })
+		.tags()
+		.id();
+	updatedPost = await context.prisma.deletePost({ coachID: id });
+	deleteDisconnectedTags(context, foundPostTags);
+	return updatedPost;
 }
 
 async function updatePost(_parent, args, context) {
   let { id, price, position, description, industryName, tagString, company, isPublished } = args;
-	if (tagString && industryName) {
-    tagString = tagString.toLowerCase();
-		const tagArray = splitAndTrimTags(tagString);
-    const tagsObjArray = await addNewTags(tagArray, context);
-    return await context.prisma.updatePost({
-      data: {
-        price,
-        position,
-        description,
-        company,
-        isPublished,
-        industry: { connect: { name: industryName } },
-        tags: { connect: tagArray },
-      },
-      where: {
-        id,
-      },
-    });
-	} else if (tagString) {
+	// if (tagString && industryName) {
+  //   tagString = tagString.toLowerCase();
+	// 	const tagArray = splitAndTrimTags(tagString);
+  //   const tagsObjArray = await addNewTags(tagArray, context);
+  //   return await context.prisma.updatePost({
+  //     data: {
+  //       price,
+  //       position,
+  //       description,
+  //       company,
+  //       isPublished,
+  //       industry: { connect: { name: industryName } },
+  //       tags: { connect: tagArray },
+  //     },
+  //     where: {
+  //       id,
+  //     },
+  //   });
+  // } else 
+  if (tagString) {
     tagString = tagString.toLowerCase();
 		const tagArray = splitAndTrimTags(tagString);
     const tagsObjArray = await addNewTags(tagArray, context);
@@ -91,9 +125,9 @@ async function updatePost(_parent, args, context) {
 			data: {
 				price,
 				position,
-        description,
-        isPublished,
-        company,
+				description,
+				isPublished,
+				company,
 				industry: { connect: { name: industryName } },
 			},
 			where: {
@@ -101,9 +135,21 @@ async function updatePost(_parent, args, context) {
 			},
 		});
 	} else {
-		//If no industry and tagname
+    //If no industry and tagname
+    let company_lc;
+    let desc_lc;
+    let position_lc;
+    if (company) {
+      company_lc = company.toLowerCase();
+    }
+    if (description) {
+      desc_lc = description.toLowerCase();
+    }
+    if (position) {
+      position_lc = position.toLowerCase();
+    }
 		return await context.prisma.updatePost({
-			data: { price, position, description, isPublished, company },
+			data: { price, position, position_lc, description, desc_lc, isPublished, company, company_lc },
 			where: {
 				id,
 			},
@@ -154,9 +200,60 @@ function addNewTags(array, context) {
 }
 
 function deleteDisconnectedTags(context, tags) {
-  return Promise.all(tags.map(async tag => {
-    if (await context.prisma.postsConnection({where: {tags_some: {id: tag.id}}}).aggregate().count() === 0) {
-      return await context.prisma.deleteTag({id: tag.id});
-    }
-  }));
+	return Promise.all(
+		tags.map(async tag => {
+			if (
+				(await context.prisma
+					.postsConnection({ where: { tags_some: { id: tag.id } } })
+					.aggregate()
+					.count()) === 0
+			) {
+				return await context.prisma.deleteTag({ id: tag.id });
+			}
+		}),
+	);
+}
+
+// Mutations/Operations for Availibilities
+async function createAvailability(_parent, args, context) {
+	const { year, month, day, start_hour, start_minute } = args;
+	const coach = getUserId(context);
+	const uniquecheck = coach + year + month + day + start_hour + start_minute;
+
+	return context.prisma.createAvailability({
+		...args,
+		coach,
+		isOpen: true,
+		uniquecheck,
+	});
+}
+
+function deleteAvailability(_parent, args, context) {
+	return context.prisma.deleteAvailability({ id: args.id });
+}
+
+// Mutations/Operations for Bookings
+
+function createBooking(_parent, args, context) {
+	const { year, month, day, hour, minute, coach } = args;
+	const seeker = getUserId(context);
+	const uniquecheck = coach + seeker + year + month + day + hour + minute;
+
+	return context.prisma.createBooking({
+		year,
+		month,
+		day,
+		hour,
+		minute,
+		coach,
+		seeker,
+		availability: {
+			connect: [{ id: args.availabilityA }, { id: args.availabilityB }],
+		},
+		uniquecheck,
+	});
+}
+
+function deleteBooking(_parent, args, context) {
+	return context.prisma.deleteBooking({ id: args.id });
 }
