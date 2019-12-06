@@ -860,6 +860,8 @@ type Post {
   company: String!
   isPublished: Boolean!
   desc_lc: String!
+  company_lc: String!
+  position_lc: String!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
 }
 
@@ -879,6 +881,8 @@ input PostCreateInput {
   company: String!
   isPublished: Boolean
   desc_lc: String!
+  company_lc: String!
+  position_lc: String!
   tags: TagCreateManyWithoutPostsInput
 }
 
@@ -901,6 +905,8 @@ input PostCreateWithoutIndustryInput {
   company: String!
   isPublished: Boolean
   desc_lc: String!
+  company_lc: String!
+  position_lc: String!
   tags: TagCreateManyWithoutPostsInput
 }
 
@@ -914,6 +920,8 @@ input PostCreateWithoutTagsInput {
   company: String!
   isPublished: Boolean
   desc_lc: String!
+  company_lc: String!
+  position_lc: String!
 }
 
 type PostEdge {
@@ -942,6 +950,10 @@ enum PostOrderByInput {
   isPublished_DESC
   desc_lc_ASC
   desc_lc_DESC
+  company_lc_ASC
+  company_lc_DESC
+  position_lc_ASC
+  position_lc_DESC
 }
 
 type PostPreviousValues {
@@ -955,6 +967,8 @@ type PostPreviousValues {
   company: String!
   isPublished: Boolean!
   desc_lc: String!
+  company_lc: String!
+  position_lc: String!
 }
 
 input PostScalarWhereInput {
@@ -1068,6 +1082,34 @@ input PostScalarWhereInput {
   desc_lc_not_starts_with: String
   desc_lc_ends_with: String
   desc_lc_not_ends_with: String
+  company_lc: String
+  company_lc_not: String
+  company_lc_in: [String!]
+  company_lc_not_in: [String!]
+  company_lc_lt: String
+  company_lc_lte: String
+  company_lc_gt: String
+  company_lc_gte: String
+  company_lc_contains: String
+  company_lc_not_contains: String
+  company_lc_starts_with: String
+  company_lc_not_starts_with: String
+  company_lc_ends_with: String
+  company_lc_not_ends_with: String
+  position_lc: String
+  position_lc_not: String
+  position_lc_in: [String!]
+  position_lc_not_in: [String!]
+  position_lc_lt: String
+  position_lc_lte: String
+  position_lc_gt: String
+  position_lc_gte: String
+  position_lc_contains: String
+  position_lc_not_contains: String
+  position_lc_starts_with: String
+  position_lc_not_starts_with: String
+  position_lc_ends_with: String
+  position_lc_not_ends_with: String
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -1100,6 +1142,8 @@ input PostUpdateInput {
   company: String
   isPublished: Boolean
   desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: TagUpdateManyWithoutPostsInput
 }
 
@@ -1111,6 +1155,8 @@ input PostUpdateManyDataInput {
   company: String
   isPublished: Boolean
   desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 input PostUpdateManyMutationInput {
@@ -1121,6 +1167,8 @@ input PostUpdateManyMutationInput {
   company: String
   isPublished: Boolean
   desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 input PostUpdateManyWithoutIndustryInput {
@@ -1160,6 +1208,8 @@ input PostUpdateWithoutIndustryDataInput {
   company: String
   isPublished: Boolean
   desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: TagUpdateManyWithoutPostsInput
 }
 
@@ -1172,6 +1222,8 @@ input PostUpdateWithoutTagsDataInput {
   company: String
   isPublished: Boolean
   desc_lc: String
+  company_lc: String
+  position_lc: String
 }
 
 input PostUpdateWithWhereUniqueWithoutIndustryInput {
@@ -1308,6 +1360,34 @@ input PostWhereInput {
   desc_lc_not_starts_with: String
   desc_lc_ends_with: String
   desc_lc_not_ends_with: String
+  company_lc: String
+  company_lc_not: String
+  company_lc_in: [String!]
+  company_lc_not_in: [String!]
+  company_lc_lt: String
+  company_lc_lte: String
+  company_lc_gt: String
+  company_lc_gte: String
+  company_lc_contains: String
+  company_lc_not_contains: String
+  company_lc_starts_with: String
+  company_lc_not_starts_with: String
+  company_lc_ends_with: String
+  company_lc_not_ends_with: String
+  position_lc: String
+  position_lc_not: String
+  position_lc_in: [String!]
+  position_lc_not_in: [String!]
+  position_lc_lt: String
+  position_lc_lte: String
+  position_lc_gt: String
+  position_lc_gte: String
+  position_lc_contains: String
+  position_lc_not_contains: String
+  position_lc_starts_with: String
+  position_lc_not_starts_with: String
+  position_lc_ends_with: String
+  position_lc_not_ends_with: String
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput

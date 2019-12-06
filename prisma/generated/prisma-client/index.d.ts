@@ -331,7 +331,11 @@ export type PostOrderByInput =
   | "isPublished_ASC"
   | "isPublished_DESC"
   | "desc_lc_ASC"
-  | "desc_lc_DESC";
+  | "desc_lc_DESC"
+  | "company_lc_ASC"
+  | "company_lc_DESC"
+  | "position_lc_ASC"
+  | "position_lc_DESC";
 
 export type TagOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
 
@@ -403,6 +407,8 @@ export interface PostCreateWithoutIndustryInput {
   company: String;
   isPublished?: Maybe<Boolean>;
   desc_lc: String;
+  company_lc: String;
+  position_lc: String;
   tags?: Maybe<TagCreateManyWithoutPostsInput>;
 }
 
@@ -457,6 +463,8 @@ export interface PostUpdateManyDataInput {
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
   desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
 }
 
 export interface AvailabilityWhereInput {
@@ -735,6 +743,34 @@ export interface PostWhereInput {
   desc_lc_not_starts_with?: Maybe<String>;
   desc_lc_ends_with?: Maybe<String>;
   desc_lc_not_ends_with?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  company_lc_not?: Maybe<String>;
+  company_lc_in?: Maybe<String[] | String>;
+  company_lc_not_in?: Maybe<String[] | String>;
+  company_lc_lt?: Maybe<String>;
+  company_lc_lte?: Maybe<String>;
+  company_lc_gt?: Maybe<String>;
+  company_lc_gte?: Maybe<String>;
+  company_lc_contains?: Maybe<String>;
+  company_lc_not_contains?: Maybe<String>;
+  company_lc_starts_with?: Maybe<String>;
+  company_lc_not_starts_with?: Maybe<String>;
+  company_lc_ends_with?: Maybe<String>;
+  company_lc_not_ends_with?: Maybe<String>;
+  position_lc?: Maybe<String>;
+  position_lc_not?: Maybe<String>;
+  position_lc_in?: Maybe<String[] | String>;
+  position_lc_not_in?: Maybe<String[] | String>;
+  position_lc_lt?: Maybe<String>;
+  position_lc_lte?: Maybe<String>;
+  position_lc_gt?: Maybe<String>;
+  position_lc_gte?: Maybe<String>;
+  position_lc_contains?: Maybe<String>;
+  position_lc_not_contains?: Maybe<String>;
+  position_lc_starts_with?: Maybe<String>;
+  position_lc_not_starts_with?: Maybe<String>;
+  position_lc_ends_with?: Maybe<String>;
+  position_lc_not_ends_with?: Maybe<String>;
   tags_every?: Maybe<TagWhereInput>;
   tags_some?: Maybe<TagWhereInput>;
   tags_none?: Maybe<TagWhereInput>;
@@ -779,6 +815,8 @@ export interface PostUpdateWithoutTagsDataInput {
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
   desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
 }
 
 export interface AvailabilityUpdateWithWhereUniqueNestedInput {
@@ -934,6 +972,8 @@ export interface PostUpdateManyMutationInput {
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
   desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
 }
 
 export interface AvailabilityUpdateManyWithWhereNestedInput {
@@ -1110,6 +1150,34 @@ export interface PostScalarWhereInput {
   desc_lc_not_starts_with?: Maybe<String>;
   desc_lc_ends_with?: Maybe<String>;
   desc_lc_not_ends_with?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  company_lc_not?: Maybe<String>;
+  company_lc_in?: Maybe<String[] | String>;
+  company_lc_not_in?: Maybe<String[] | String>;
+  company_lc_lt?: Maybe<String>;
+  company_lc_lte?: Maybe<String>;
+  company_lc_gt?: Maybe<String>;
+  company_lc_gte?: Maybe<String>;
+  company_lc_contains?: Maybe<String>;
+  company_lc_not_contains?: Maybe<String>;
+  company_lc_starts_with?: Maybe<String>;
+  company_lc_not_starts_with?: Maybe<String>;
+  company_lc_ends_with?: Maybe<String>;
+  company_lc_not_ends_with?: Maybe<String>;
+  position_lc?: Maybe<String>;
+  position_lc_not?: Maybe<String>;
+  position_lc_in?: Maybe<String[] | String>;
+  position_lc_not_in?: Maybe<String[] | String>;
+  position_lc_lt?: Maybe<String>;
+  position_lc_lte?: Maybe<String>;
+  position_lc_gt?: Maybe<String>;
+  position_lc_gte?: Maybe<String>;
+  position_lc_contains?: Maybe<String>;
+  position_lc_not_contains?: Maybe<String>;
+  position_lc_starts_with?: Maybe<String>;
+  position_lc_not_starts_with?: Maybe<String>;
+  position_lc_ends_with?: Maybe<String>;
+  position_lc_not_ends_with?: Maybe<String>;
   AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
@@ -1194,6 +1262,8 @@ export interface PostCreateWithoutTagsInput {
   company: String;
   isPublished?: Maybe<Boolean>;
   desc_lc: String;
+  company_lc: String;
+  position_lc: String;
 }
 
 export interface PostUpdateManyWithoutIndustryInput {
@@ -1237,6 +1307,8 @@ export interface PostUpdateInput {
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
   desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
   tags?: Maybe<TagUpdateManyWithoutPostsInput>;
 }
 
@@ -1248,6 +1320,8 @@ export interface PostUpdateWithoutIndustryDataInput {
   company?: Maybe<String>;
   isPublished?: Maybe<Boolean>;
   desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
   tags?: Maybe<TagUpdateManyWithoutPostsInput>;
 }
 
@@ -1261,6 +1335,8 @@ export interface PostCreateInput {
   company: String;
   isPublished?: Maybe<Boolean>;
   desc_lc: String;
+  company_lc: String;
+  position_lc: String;
   tags?: Maybe<TagCreateManyWithoutPostsInput>;
 }
 
@@ -1651,6 +1727,8 @@ export interface PostPreviousValues {
   company: String;
   isPublished: Boolean;
   desc_lc: String;
+  company_lc: String;
+  position_lc: String;
 }
 
 export interface PostPreviousValuesPromise
@@ -1666,6 +1744,8 @@ export interface PostPreviousValuesPromise
   company: () => Promise<String>;
   isPublished: () => Promise<Boolean>;
   desc_lc: () => Promise<String>;
+  company_lc: () => Promise<String>;
+  position_lc: () => Promise<String>;
 }
 
 export interface PostPreviousValuesSubscription
@@ -1681,6 +1761,8 @@ export interface PostPreviousValuesSubscription
   company: () => Promise<AsyncIterator<String>>;
   isPublished: () => Promise<AsyncIterator<Boolean>>;
   desc_lc: () => Promise<AsyncIterator<String>>;
+  company_lc: () => Promise<AsyncIterator<String>>;
+  position_lc: () => Promise<AsyncIterator<String>>;
 }
 
 export interface Industry {
@@ -2413,6 +2495,8 @@ export interface Post {
   company: String;
   isPublished: Boolean;
   desc_lc: String;
+  company_lc: String;
+  position_lc: String;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
@@ -2427,6 +2511,8 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   company: () => Promise<String>;
   isPublished: () => Promise<Boolean>;
   desc_lc: () => Promise<String>;
+  company_lc: () => Promise<String>;
+  position_lc: () => Promise<String>;
   tags: <T = FragmentableArray<Tag>>(args?: {
     where?: TagWhereInput;
     orderBy?: TagOrderByInput;
@@ -2452,6 +2538,8 @@ export interface PostSubscription
   company: () => Promise<AsyncIterator<String>>;
   isPublished: () => Promise<AsyncIterator<Boolean>>;
   desc_lc: () => Promise<AsyncIterator<String>>;
+  company_lc: () => Promise<AsyncIterator<String>>;
+  position_lc: () => Promise<AsyncIterator<String>>;
   tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
     where?: TagWhereInput;
     orderBy?: TagOrderByInput;
@@ -2477,6 +2565,8 @@ export interface PostNullablePromise
   company: () => Promise<String>;
   isPublished: () => Promise<Boolean>;
   desc_lc: () => Promise<String>;
+  company_lc: () => Promise<String>;
+  position_lc: () => Promise<String>;
   tags: <T = FragmentableArray<Tag>>(args?: {
     where?: TagWhereInput;
     orderBy?: TagOrderByInput;
