@@ -18,9 +18,11 @@ const typeDefs = gql`
 		industry(name: String!): [Post!]!
 		availabilities: [Availability]
 		availabilitiesByCoach(coach_id: String!): [Availability]
+		availabilityByUniquecheck(uniquecheck: String!): Availability!
 		bookings: [Booking]
 		bookingsByCoach(coach_id: String!): [Booking]
 		bookingsBySeeker(seeker_id: String!): [Booking]
+		bookingByUniquecheck(uniquecheck: String!): Availability!
 	}
 
 	# ***************************************************
