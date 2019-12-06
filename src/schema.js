@@ -65,7 +65,7 @@ const typeDefs = gql`
 			recurring: Boolean!
 		): Availability!
 
-		deleteAvailability(id: ID!): Availability!
+		deleteAvailability(uniquecheck: String!): Availability!
 
 		createBooking(
 			year: Int!
@@ -81,7 +81,7 @@ const typeDefs = gql`
 			confirmed: Boolean
 		): Booking!
 
-		deleteBooking(id: ID!): Booking!
+		deleteBooking(uniquecheck: String!): Booking!
 	}
 
 	# ***************************************************

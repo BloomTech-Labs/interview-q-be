@@ -24,22 +24,22 @@ async function createPost(_parent, args, context) {
 		company,
 		isPublished,
 	} = args;
-  const coachID = getUserId(context);
+	const coachID = getUserId(context);
 	if (isPublished) {
 		checkFields({ position, industryName, description, company });
 	}
-  let company_lc;
-  let desc_lc;
-  let position_lc;
-  if (company) {
-    company_lc = company.toLowerCase();
-  }
-  if (description) {
-    desc_lc = description.toLowerCase();
-  }
-  if (position) {
-    position_lc = position.toLowerCase();
-  }
+	let company_lc;
+	let desc_lc;
+	let position_lc;
+	if (company) {
+		company_lc = company.toLowerCase();
+	}
+	if (description) {
+		desc_lc = description.toLowerCase();
+	}
+	if (position) {
+		position_lc = position.toLowerCase();
+	}
 
 	if (tagString) {
 		tagString = tagString.toLowerCase();
@@ -49,13 +49,13 @@ async function createPost(_parent, args, context) {
 		return Promise.all(tagsObjArray).then(tags => {
 			return context.prisma.createPost({
 				price,
-        position,
-        position_lc,
-        description,
-        desc_lc,
+				position,
+				position_lc,
+				description,
+				desc_lc,
 				coachID,
-        company,
-        company_lc,
+				company,
+				company_lc,
 				isPublished,
 				industry: { connect: { name: industryName } },
 				tags: { connect: tagArray },
@@ -63,15 +63,15 @@ async function createPost(_parent, args, context) {
 		});
 	} else {
 		return context.prisma.createPost({
-      price,
-      position,
-      position_lc,
-      description,
-      desc_lc,
-      coachID,
-      company,
-      company_lc,
-      isPublished,
+			price,
+			position,
+			position_lc,
+			description,
+			desc_lc,
+			coachID,
+			company,
+			company_lc,
+			isPublished,
 			industry: { connect: { name: industryName } },
 		});
 	}
@@ -229,7 +229,7 @@ async function createAvailability(_parent, args, context) {
 }
 
 function deleteAvailability(_parent, args, context) {
-	return context.prisma.deleteAvailability({ id: args.id });
+	return context.prisma.deleteAvailability({ uniquecheck: args.uniquecheck });
 }
 
 // Mutations/Operations for Bookings
@@ -255,5 +255,5 @@ function createBooking(_parent, args, context) {
 }
 
 function deleteBooking(_parent, args, context) {
-	return context.prisma.deleteBooking({ id: args.id });
+	return context.prisma.deleteBooking({ uniquecheck: args.uniquecheck });
 }
