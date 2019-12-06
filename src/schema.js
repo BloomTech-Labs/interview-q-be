@@ -52,7 +52,7 @@ const typeDefs = gql`
 			isPublished: Boolean
 		): Post!
 
-		removeTagFromPost(id: ID!, tag: String): Post!
+		removeTagFromPost(id: ID!, tagID: String): Post!
 
 		createAvailability(
 			start_hour: Int!
@@ -65,7 +65,7 @@ const typeDefs = gql`
 			recurring: Boolean!
 		): Availability!
 
-		deleteAvailability(id: ID!): Availability!
+		deleteAvailability(uniquecheck: String!): Availability!
 
 		createBooking(
 			year: Int!
@@ -81,7 +81,7 @@ const typeDefs = gql`
 			confirmed: Boolean
 		): Booking!
 
-		deleteBooking(id: ID!): Booking!
+		deleteBooking(uniquecheck: String!): Booking!
 	}
 
 	# ***************************************************
