@@ -1,15 +1,17 @@
 type Post {
   id: ID! @id
-  price: Int!
-  position: String!
-  industry: Industry!
-  description: String!
+  price: Int
+  position: String
+  industry: Industry
+  description: String
   coachID: String! @unique
   createdAt: DateTime! @createdAt
   lastUpdated: DateTime! @updatedAt
-  company: String!
+  company: String
   isPublished: Boolean! @default(value: true)
-  desc_lc: String!
+  desc_lc: String
+  company_lc: String
+  position_lc: String
   tags: [Tag]!
   # coach: User @provides(fields: "email") @relation(link: TABLE name: "UserOnPost", onDelete: SET_NULL)
   # ratingsId: ID!

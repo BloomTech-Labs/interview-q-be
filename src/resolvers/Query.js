@@ -42,6 +42,8 @@ function posts(_parent, args, context) {
         tags.forEach(tag => {
             where.AND[idx - 1].OR[0].tags_some.OR.push({ name_contains: tag.trim() });
             where.AND[idx - 1].OR.push({ desc_lc_contains: tag.trim() })
+            where.AND[idx - 1].OR.push({ company_lc_starts_with: tag.trim() })
+            where.AND[idx - 1].OR.push({ position_lc_contains: tag.trim() })
         });
         if (args.ids) {
           args.ids.forEach(id => {
