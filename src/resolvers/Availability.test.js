@@ -18,14 +18,14 @@ describe('Availability Queries', () => {
 			.post('/')
 			.send({
 				query: `query {
-        availabilities {
-          id
-          uniquecheck
-          coach {
+          availabilities {
             id
+            uniquecheck
+            coach {
+              id
+            }
           }
-        }
-      }`,
+        }`,
 			});
 
 		coachID = response.body.data.availabilities[0].coach.id;
@@ -39,10 +39,10 @@ describe('Availability Queries', () => {
 			.post('/')
 			.send({
 				query: `query {
-	    availabilitiesByCoach(coach_id: "${coachID}") {
-        id
-      }
-	  }`,
+          availabilitiesByCoach(coach_id: "${coachID}") {
+            id
+          }
+        }`,
 			});
 
 		expect(response.body.data.availabilitiesByCoach).toBeTruthy();
@@ -53,10 +53,10 @@ describe('Availability Queries', () => {
 			.post('/')
 			.send({
 				query: `query {
-        availabilityByUniquecheck(uniquecheck: "${uniquecheck}") {
-          id
-        }
-      }`,
+          availabilityByUniquecheck(uniquecheck: "${uniquecheck}") {
+            id
+          }
+        }`,
 			});
 
 		expect(response.body.data.availabilityByUniquecheck).toBeTruthy();
@@ -80,17 +80,15 @@ describe('Availability Mutations', () => {
 			.set({ Authorization: token })
 			.send({
 				query: `mutation {
-          createAvailability(start_hour: ${randomInt(
-						1,
-						12,
-					)}, start_minute: ${randomInt(0, 60)}, year: ${randomInt(
-					2020,
-					2030,
-				)}, month: ${randomInt(1, 12)}, day: ${randomInt(
-					1,
-					31,
-				)}, recurring: false) {
-          id
+          createAvailability(
+            start_hour: ${randomInt(0, 23)}
+            start_minute: ${randomInt(0, 60)}
+            year: ${randomInt(2020, 2030)}
+            month: ${randomInt(1, 12)}
+            day: ${randomInt(1, 31)}
+            recurring: false
+          ) {
+            id
             uniquecheck
           }
         }`,
@@ -107,10 +105,10 @@ describe('Availability Mutations', () => {
 			.set({ Authorization: token })
 			.send({
 				query: `mutation {
-        deleteAvailability(uniquecheck: "${uniquecheck}") {
-          id
-        }
-      }`,
+          deleteAvailability(uniquecheck: "${uniquecheck}") {
+            id
+          }
+        }`,
 			});
 
 		expect(mutation.body.data.deleteAvailability.id).toBeTruthy();
@@ -119,10 +117,10 @@ describe('Availability Mutations', () => {
 			.post('/')
 			.send({
 				query: `query {
-        availabilityByUniquecheck(uniquecheck: "${uniquecheck}") {
-          id
-        }
-      }`,
+          availabilityByUniquecheck(uniquecheck: "${uniquecheck}") {
+            id
+          }
+        }`,
 			});
 
 		expect(query.body.data).toBeFalsy();
