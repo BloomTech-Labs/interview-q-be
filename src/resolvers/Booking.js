@@ -18,5 +18,5 @@ function __resolveReference(booking, context) {
 }
 
 function availability(parent, _args, context) {
-	return context.prisma.booking({id: parent.id}).availability()
+	return context.prisma.booking({ id: parent.id }).availability();
 }
