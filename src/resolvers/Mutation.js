@@ -265,13 +265,21 @@ function deleteAvailability(_parent, args, context) {
 }
 
 // Mutations/Operations for Bookings
-
-function createBooking(_parent, args, context) {
+async function createBooking(_parent, args, context) {
 	const { year, month, day, hour, minute, coach } = args;
 	const seeker = getUserId(context);
 	const uniquecheck = [coach, seeker, year, month, day, hour, minute].reduce(
 		(acc, val) => acc + '-' + val,
 	);
+
+	await context.prisma.updateAvailability({
+		data: { isOpen: false },
+		where: { uniquecheck: args.availabilityA },
+	});
+	await context.prisma.updateAvailability({
+		data: { isOpen: false },
+		where: { uniquecheck: args.availabilityB },
+	});
 
 	return context.prisma.createBooking({
 		year,
@@ -282,12 +290,30 @@ function createBooking(_parent, args, context) {
 		coach,
 		seeker,
 		availability: {
-			connect: [{ id: args.availabilityA }, { id: args.availabilityB }],
+			connect: [
+				{ uniquecheck: args.availabilityA },
+				{ uniquecheck: args.availabilityB },
+			],
 		},
 		uniquecheck,
 	});
 }
 
-function deleteBooking(_parent, args, context) {
+async function deleteBooking(_parent, args, context) {
+	const availability = await context.prisma
+		.booking({
+			uniquecheck: args.uniquecheck,
+		})
+		.availability();
+
+	await context.prisma.updateAvailability({
+		data: { isOpen: true },
+		where: { uniquecheck: availability[0].uniquecheck },
+	});
+	await context.prisma.updateAvailability({
+		data: { isOpen: true },
+		where: { uniquecheck: availability[1].uniquecheck },
+	});
+
 	return context.prisma.deleteBooking({ uniquecheck: args.uniquecheck });
 }
