@@ -22,7 +22,14 @@ const typeDefs = gql`
 		bookings: [Booking]
 		bookingsByCoach(coach_id: String!): [Booking]
 		bookingsBySeeker(seeker_id: String!): [Booking]
-		bookingByUniquecheck(uniquecheck: String!): Availability!
+		bookingByUniquecheck(uniquecheck: String!): Booking!
+		reviewsByCoach(coach_id: String!): [Review]
+		ratingByCoach(coach_id: String!): Float!
+		reviewByBooking(uniqueBooking: String!): Review
+		responseByBooking(uniqueBooking: String!): Response
+		reportsByCoach(coach_id: String!): [Report]
+		reportsBySeeker(seeker_id: String!): [Report]
+		reportByBooking(uniqueBooking: String!): Report
 	}
 
 	# ***************************************************
@@ -112,6 +119,28 @@ const typeDefs = gql`
 		lastUpdated: DateTime!
 	}
 
+	extend type User @key(fields: "id") {
+		id: ID! @external
+		post: Post
+		availability: [Availability]
+		coach_bookings: [Booking]
+		seeker_bookings: [Booking]
+	}
+
+	type Industry {
+		id: ID!
+		name: String!
+		posts: [Post]! # This is how GraphQL connects the Industry type with the Post type... it designates a key for an industry object that references an array of matching Posts
+
+		# This is a one to many relationship between Industry and Post
+	}
+
+	type Tag {
+		id: ID!
+		name: String!
+		posts: [Post]!
+	}
+
 	type Availability {
 		id: ID!
 		start_hour: Int!
@@ -144,26 +173,36 @@ const typeDefs = gql`
 		resumeURL: String
 	}
 
-	extend type User @key(fields: "id") {
-		id: ID! @external
-		post: Post
-		availability: [Availability]
-		coach_bookings: [Booking]
-		seeker_bookings: [Booking]
+	type Review {
+		id: ID!
+		coach: User!
+		seeker: User!
+		booking: Booking!
+		rating: Int!
+		review: String
+		createdAt: DateTime!
+		lastUpdated: DateTime!
+		response: String
 	}
 
-	type Industry {
+	type Response {
 		id: ID!
-		name: String!
-		posts: [Post]! # This is how GraphQL connects the Industry type with the Post type... it designates a key for an industry object that references an array of matching Posts
-
-		# This is a one to many relationship between Industry and Post
+		review: Review!
+		text: String!
+		createdAt: DateTime!
+		lastUpdated: DateTime!
 	}
 
-	type Tag {
+	type Report {
 		id: ID!
-		name: String!
-		posts: [Post]!
+		coach: User!
+		seeker: User!
+		booking: Booking!
+		strengths: String!
+		growthAreas: String!
+		suggestions: String!
+		additionalComments: String
+		createdAt: DateTime!
 	}
 `;
 

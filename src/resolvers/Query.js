@@ -12,6 +12,13 @@ module.exports = {
 	bookingsByCoach,
 	bookingsBySeeker,
 	bookingByUniquecheck,
+	reviewsByCoach,
+	ratingByCoach,
+	reviewByBooking,
+	responseByBooking,
+	reportsByCoach,
+	reportsBySeeker,
+	reportByBooking,
 };
 
 function interviewQinfo() {
@@ -105,3 +112,30 @@ function bookingByUniquecheck(_parents, args, context) {
 		uniquecheck: args.uniquecheck,
 	});
 }
+
+// Reviews queries
+function reviewsByCoach(_parents, args, context) {
+	return context.prisma.reviews({ where: { coach: args.coach_id } });
+}
+
+async function ratingByCoach(_parents, args, context) {
+	const ratings = await context.prisma.reviews({
+		where: { coach: args.coach_id },
+	});
+
+	console.log(ratings);
+}
+
+function reviewByBooking(parents, args, context) {
+	return context.prisma.review({});
+}
+
+// Response queries
+function responseByBooking(parents, args, context) {}
+
+// Reports queries
+function reportsByCoach(parents, args, context) {}
+
+function reportsBySeeker(parents, args, context) {}
+
+function reportByBooking(parents, args, context) {}
