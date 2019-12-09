@@ -23,6 +23,18 @@ var models = [
   {
     name: "Booking",
     embedded: false
+  },
+  {
+    name: "Review",
+    embedded: false
+  },
+  {
+    name: "Response",
+    embedded: false
+  },
+  {
+    name: "Report",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({

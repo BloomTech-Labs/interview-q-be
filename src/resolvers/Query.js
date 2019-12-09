@@ -12,6 +12,15 @@ module.exports = {
 	bookingsByCoach,
 	bookingsBySeeker,
 	bookingByUniquecheck,
+	reviewsByCoach,
+	ratingByCoach,
+	reviewsBySeeker,
+	reviewByBooking,
+	responseByBooking,
+	responseByReview,
+	reportsByCoach,
+	reportsBySeeker,
+	reportByBooking,
 };
 
 function interviewQinfo() {
@@ -71,12 +80,10 @@ function industries(_parent, _args, context) {
 
 // Availabilities queries
 function availabilities(_parents, _args, context) {
-	// console.log(context.prisma.availabilities());
 	return context.prisma.availabilities();
 }
 
 function availabilitiesByCoach(_parents, args, context) {
-	// console.log(args);
 	return context.prisma.availabilities({ where: { coach: args.coach_id } });
 }
 
@@ -88,7 +95,6 @@ function availabilityByUniquecheck(_parents, args, context) {
 
 // Bookings queries
 function bookings(_parents, _args, context) {
-	// console.log(context.prisma.bookings());
 	return context.prisma.bookings();
 }
 
@@ -104,4 +110,50 @@ function bookingByUniquecheck(_parents, args, context) {
 	return context.prisma.booking({
 		uniquecheck: args.uniquecheck,
 	});
+}
+
+// Reviews queries
+function reviewsByCoach(_parents, args, context) {
+	return context.prisma.reviews({ where: { coach: args.coach_id } });
+}
+
+async function ratingByCoach(_parents, args, context) {
+	const reviews = await context.prisma.reviews({
+		where: { coach: args.coach_id },
+	});
+
+	const avgRating =
+		reviews.reduce((acc, val) => acc + val.rating, 0) / reviews.length;
+
+	return avgRating;
+}
+
+function reviewsBySeeker(_parents, args, context) {
+	return context.prisma.reviews({ where: { seeker: args.seeker_id } });
+}
+
+function reviewByBooking(_parents, args, context) {
+	return context.prisma.booking({ uniquecheck: args.uniqueBooking }).review();
+}
+
+// Response queries
+function responseByBooking(_parents, args, context) {
+	return context.prisma.booking({ uniquecheck: args.uniqueBooking }).response();
+}
+
+function responseByReview(_parents, args, context) {
+	return context.prisma.review({ id: args.review_id }).response();
+}
+
+// Reports queries
+function reportsByCoach(_parents, args, context) {
+	return context.prisma.reports({ where: { coach: args.coach_id } });
+}
+
+function reportsBySeeker(_parents, args, context) {
+	return context.prisma.reports({ where: { seeker: args.seeker_id } });
+}
+
+function reportByBooking(_parents, args, context) {
+	return context.prisma.booking({ uniquecheck: args.uniqueBooking }).report();
 }
