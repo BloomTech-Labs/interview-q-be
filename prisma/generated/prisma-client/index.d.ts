@@ -514,9 +514,9 @@ export type ReviewOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface TagCreateManyWithoutPostsInput {
-  create?: Maybe<TagCreateWithoutPostsInput[] | TagCreateWithoutPostsInput>;
-  connect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+export interface ResponseUpdateWithoutReviewDataInput {
+  text?: Maybe<String>;
+  booking?: Maybe<BookingUpdateOneRequiredWithoutResponseInput>;
 }
 
 export type AvailabilityWhereUniqueInput = AtLeastOne<{
@@ -524,34 +524,91 @@ export type AvailabilityWhereUniqueInput = AtLeastOne<{
   uniquecheck?: Maybe<String>;
 }>;
 
-export interface BookingUpsertNestedInput {
-  update: BookingUpdateDataInput;
-  create: BookingCreateInput;
-}
-
-export interface BookingCreateOneInput {
-  create?: Maybe<BookingCreateInput>;
+export interface BookingCreateOneWithoutResponseInput {
+  create?: Maybe<BookingCreateWithoutResponseInput>;
   connect?: Maybe<BookingWhereUniqueInput>;
 }
 
-export interface TagUpdateManyWithoutPostsInput {
-  create?: Maybe<TagCreateWithoutPostsInput[] | TagCreateWithoutPostsInput>;
-  delete?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
-  connect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
-  set?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
-  disconnect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
-  update?: Maybe<
-    | TagUpdateWithWhereUniqueWithoutPostsInput[]
-    | TagUpdateWithWhereUniqueWithoutPostsInput
-  >;
-  upsert?: Maybe<
-    | TagUpsertWithWhereUniqueWithoutPostsInput[]
-    | TagUpsertWithWhereUniqueWithoutPostsInput
-  >;
-  deleteMany?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
-  updateMany?: Maybe<
-    TagUpdateManyWithWhereNestedInput[] | TagUpdateManyWithWhereNestedInput
-  >;
+export interface PostCreateInput {
+  id?: Maybe<ID_Input>;
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  industry?: Maybe<IndustryCreateOneWithoutPostsInput>;
+  description?: Maybe<String>;
+  coachID: String;
+  company?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
+  tags?: Maybe<TagCreateManyWithoutPostsInput>;
+}
+
+export interface BookingCreateWithoutResponseInput {
+  id?: Maybe<ID_Input>;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
+  coach: String;
+  seeker: String;
+  uniquecheck: String;
+  availability?: Maybe<AvailabilityCreateManyInput>;
+  pending?: Maybe<Boolean>;
+  confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+  review?: Maybe<ReviewCreateOneWithoutBookingInput>;
+  report?: Maybe<ReportCreateOneWithoutBookingInput>;
+}
+
+export interface BookingUpsertWithoutResponseInput {
+  update: BookingUpdateWithoutResponseDataInput;
+  create: BookingCreateWithoutResponseInput;
+}
+
+export interface ReportCreateOneWithoutBookingInput {
+  create?: Maybe<ReportCreateWithoutBookingInput>;
+  connect?: Maybe<ReportWhereUniqueInput>;
+}
+
+export interface ReviewSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ReviewWhereInput>;
+  AND?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
+  OR?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
+  NOT?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
+}
+
+export interface ReportCreateWithoutBookingInput {
+  id?: Maybe<ID_Input>;
+  coach: String;
+  seeker: String;
+  strengths: String;
+  growthAreas: String;
+  suggestions: String;
+  additionalComments?: Maybe<String>;
+}
+
+export interface ReportSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ReportWhereInput>;
+  AND?: Maybe<ReportSubscriptionWhereInput[] | ReportSubscriptionWhereInput>;
+  OR?: Maybe<ReportSubscriptionWhereInput[] | ReportSubscriptionWhereInput>;
+  NOT?: Maybe<ReportSubscriptionWhereInput[] | ReportSubscriptionWhereInput>;
+}
+
+export interface ResponseCreateOneWithoutBookingInput {
+  create?: Maybe<ResponseCreateWithoutBookingInput>;
+  connect?: Maybe<ResponseWhereUniqueInput>;
 }
 
 export interface BookingWhereInput {
@@ -700,958 +757,18 @@ export interface BookingWhereInput {
   resumeURL_not_starts_with?: Maybe<String>;
   resumeURL_ends_with?: Maybe<String>;
   resumeURL_not_ends_with?: Maybe<String>;
+  review?: Maybe<ReviewWhereInput>;
+  response?: Maybe<ResponseWhereInput>;
+  report?: Maybe<ReportWhereInput>;
   AND?: Maybe<BookingWhereInput[] | BookingWhereInput>;
   OR?: Maybe<BookingWhereInput[] | BookingWhereInput>;
   NOT?: Maybe<BookingWhereInput[] | BookingWhereInput>;
 }
 
-export interface AvailabilityCreateInput {
+export interface ResponseCreateWithoutBookingInput {
   id?: Maybe<ID_Input>;
-  start_hour: Int;
-  start_minute: Int;
-  coach: String;
-  bookingID?: Maybe<String>;
-  year: Int;
-  month: Int;
-  day: Int;
-  uniquecheck: String;
-  isOpen: Boolean;
-  recurring: Boolean;
-}
-
-export interface ResponseSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ResponseWhereInput>;
-  AND?: Maybe<
-    ResponseSubscriptionWhereInput[] | ResponseSubscriptionWhereInput
-  >;
-  OR?: Maybe<ResponseSubscriptionWhereInput[] | ResponseSubscriptionWhereInput>;
-  NOT?: Maybe<
-    ResponseSubscriptionWhereInput[] | ResponseSubscriptionWhereInput
-  >;
-}
-
-export interface AvailabilityUpdateInput {
-  start_hour?: Maybe<Int>;
-  start_minute?: Maybe<Int>;
-  coach?: Maybe<String>;
-  bookingID?: Maybe<String>;
-  year?: Maybe<Int>;
-  month?: Maybe<Int>;
-  day?: Maybe<Int>;
-  uniquecheck?: Maybe<String>;
-  isOpen?: Maybe<Boolean>;
-  recurring?: Maybe<Boolean>;
-}
-
-export interface PostSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<PostWhereInput>;
-  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-}
-
-export interface AvailabilityUpdateManyMutationInput {
-  start_hour?: Maybe<Int>;
-  start_minute?: Maybe<Int>;
-  coach?: Maybe<String>;
-  bookingID?: Maybe<String>;
-  year?: Maybe<Int>;
-  month?: Maybe<Int>;
-  day?: Maybe<Int>;
-  uniquecheck?: Maybe<String>;
-  isOpen?: Maybe<Boolean>;
-  recurring?: Maybe<Boolean>;
-}
-
-export interface IndustrySubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<IndustryWhereInput>;
-  AND?: Maybe<
-    IndustrySubscriptionWhereInput[] | IndustrySubscriptionWhereInput
-  >;
-  OR?: Maybe<IndustrySubscriptionWhereInput[] | IndustrySubscriptionWhereInput>;
-  NOT?: Maybe<
-    IndustrySubscriptionWhereInput[] | IndustrySubscriptionWhereInput
-  >;
-}
-
-export interface BookingUpdateDataInput {
-  year?: Maybe<Int>;
-  month?: Maybe<Int>;
-  day?: Maybe<Int>;
-  hour?: Maybe<Int>;
-  minute?: Maybe<Int>;
-  coach?: Maybe<String>;
-  seeker?: Maybe<String>;
-  uniquecheck?: Maybe<String>;
-  availability?: Maybe<AvailabilityUpdateManyInput>;
-  pending?: Maybe<Boolean>;
-  confirmed?: Maybe<Boolean>;
-  interviewGoals?: Maybe<String>;
-  interviewQuestions?: Maybe<String>;
-  resumeURL?: Maybe<String>;
-}
-
-export interface IndustryWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  posts_every?: Maybe<PostWhereInput>;
-  posts_some?: Maybe<PostWhereInput>;
-  posts_none?: Maybe<PostWhereInput>;
-  AND?: Maybe<IndustryWhereInput[] | IndustryWhereInput>;
-  OR?: Maybe<IndustryWhereInput[] | IndustryWhereInput>;
-  NOT?: Maybe<IndustryWhereInput[] | IndustryWhereInput>;
-}
-
-export interface BookingUpdateOneRequiredInput {
-  create?: Maybe<BookingCreateInput>;
-  update?: Maybe<BookingUpdateDataInput>;
-  upsert?: Maybe<BookingUpsertNestedInput>;
-  connect?: Maybe<BookingWhereUniqueInput>;
-}
-
-export interface TagWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  posts_every?: Maybe<PostWhereInput>;
-  posts_some?: Maybe<PostWhereInput>;
-  posts_none?: Maybe<PostWhereInput>;
-  AND?: Maybe<TagWhereInput[] | TagWhereInput>;
-  OR?: Maybe<TagWhereInput[] | TagWhereInput>;
-  NOT?: Maybe<TagWhereInput[] | TagWhereInput>;
-}
-
-export interface BookingCreateInput {
-  id?: Maybe<ID_Input>;
-  year: Int;
-  month: Int;
-  day: Int;
-  hour: Int;
-  minute: Int;
-  coach: String;
-  seeker: String;
-  uniquecheck: String;
-  availability?: Maybe<AvailabilityCreateManyInput>;
-  pending?: Maybe<Boolean>;
-  confirmed?: Maybe<Boolean>;
-  interviewGoals?: Maybe<String>;
-  interviewQuestions?: Maybe<String>;
-  resumeURL?: Maybe<String>;
-}
-
-export interface TagUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface AvailabilityCreateManyInput {
-  create?: Maybe<AvailabilityCreateInput[] | AvailabilityCreateInput>;
-  connect?: Maybe<
-    AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput
-  >;
-}
-
-export interface PostUpdateWithoutTagsDataInput {
-  price?: Maybe<Int>;
-  position?: Maybe<String>;
-  industry?: Maybe<IndustryUpdateOneWithoutPostsInput>;
-  description?: Maybe<String>;
-  coachID?: Maybe<String>;
-  company?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  desc_lc?: Maybe<String>;
-  company_lc?: Maybe<String>;
-  position_lc?: Maybe<String>;
-}
-
-export interface BookingUpdateInput {
-  year?: Maybe<Int>;
-  month?: Maybe<Int>;
-  day?: Maybe<Int>;
-  hour?: Maybe<Int>;
-  minute?: Maybe<Int>;
-  coach?: Maybe<String>;
-  seeker?: Maybe<String>;
-  uniquecheck?: Maybe<String>;
-  availability?: Maybe<AvailabilityUpdateManyInput>;
-  pending?: Maybe<Boolean>;
-  confirmed?: Maybe<Boolean>;
-  interviewGoals?: Maybe<String>;
-  interviewQuestions?: Maybe<String>;
-  resumeURL?: Maybe<String>;
-}
-
-export interface PostUpdateWithWhereUniqueWithoutTagsInput {
-  where: PostWhereUniqueInput;
-  data: PostUpdateWithoutTagsDataInput;
-}
-
-export interface AvailabilityUpdateManyInput {
-  create?: Maybe<AvailabilityCreateInput[] | AvailabilityCreateInput>;
-  update?: Maybe<
-    | AvailabilityUpdateWithWhereUniqueNestedInput[]
-    | AvailabilityUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | AvailabilityUpsertWithWhereUniqueNestedInput[]
-    | AvailabilityUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput>;
-  connect?: Maybe<
-    AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput
-  >;
-  set?: Maybe<AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput>;
-  disconnect?: Maybe<
-    AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput
-  >;
-  deleteMany?: Maybe<
-    AvailabilityScalarWhereInput[] | AvailabilityScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | AvailabilityUpdateManyWithWhereNestedInput[]
-    | AvailabilityUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TagUpdateInput {
-  name?: Maybe<String>;
-  posts?: Maybe<PostUpdateManyWithoutTagsInput>;
-}
-
-export interface AvailabilityUpdateWithWhereUniqueNestedInput {
-  where: AvailabilityWhereUniqueInput;
-  data: AvailabilityUpdateDataInput;
-}
-
-export interface PostCreateWithoutTagsInput {
-  id?: Maybe<ID_Input>;
-  price?: Maybe<Int>;
-  position?: Maybe<String>;
-  industry?: Maybe<IndustryCreateOneWithoutPostsInput>;
-  description?: Maybe<String>;
-  coachID: String;
-  company?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  desc_lc?: Maybe<String>;
-  company_lc?: Maybe<String>;
-  position_lc?: Maybe<String>;
-}
-
-export interface AvailabilityUpdateDataInput {
-  start_hour?: Maybe<Int>;
-  start_minute?: Maybe<Int>;
-  coach?: Maybe<String>;
-  bookingID?: Maybe<String>;
-  year?: Maybe<Int>;
-  month?: Maybe<Int>;
-  day?: Maybe<Int>;
-  uniquecheck?: Maybe<String>;
-  isOpen?: Maybe<Boolean>;
-  recurring?: Maybe<Boolean>;
-}
-
-export interface TagCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  posts?: Maybe<PostCreateManyWithoutTagsInput>;
-}
-
-export interface AvailabilityUpsertWithWhereUniqueNestedInput {
-  where: AvailabilityWhereUniqueInput;
-  update: AvailabilityUpdateDataInput;
-  create: AvailabilityCreateInput;
-}
-
-export interface ReviewUpdateManyMutationInput {
-  coach?: Maybe<String>;
-  seeker?: Maybe<String>;
-  rating?: Maybe<Int>;
-  review?: Maybe<String>;
-}
-
-export interface AvailabilityScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  start_hour?: Maybe<Int>;
-  start_hour_not?: Maybe<Int>;
-  start_hour_in?: Maybe<Int[] | Int>;
-  start_hour_not_in?: Maybe<Int[] | Int>;
-  start_hour_lt?: Maybe<Int>;
-  start_hour_lte?: Maybe<Int>;
-  start_hour_gt?: Maybe<Int>;
-  start_hour_gte?: Maybe<Int>;
-  start_minute?: Maybe<Int>;
-  start_minute_not?: Maybe<Int>;
-  start_minute_in?: Maybe<Int[] | Int>;
-  start_minute_not_in?: Maybe<Int[] | Int>;
-  start_minute_lt?: Maybe<Int>;
-  start_minute_lte?: Maybe<Int>;
-  start_minute_gt?: Maybe<Int>;
-  start_minute_gte?: Maybe<Int>;
-  coach?: Maybe<String>;
-  coach_not?: Maybe<String>;
-  coach_in?: Maybe<String[] | String>;
-  coach_not_in?: Maybe<String[] | String>;
-  coach_lt?: Maybe<String>;
-  coach_lte?: Maybe<String>;
-  coach_gt?: Maybe<String>;
-  coach_gte?: Maybe<String>;
-  coach_contains?: Maybe<String>;
-  coach_not_contains?: Maybe<String>;
-  coach_starts_with?: Maybe<String>;
-  coach_not_starts_with?: Maybe<String>;
-  coach_ends_with?: Maybe<String>;
-  coach_not_ends_with?: Maybe<String>;
-  bookingID?: Maybe<String>;
-  bookingID_not?: Maybe<String>;
-  bookingID_in?: Maybe<String[] | String>;
-  bookingID_not_in?: Maybe<String[] | String>;
-  bookingID_lt?: Maybe<String>;
-  bookingID_lte?: Maybe<String>;
-  bookingID_gt?: Maybe<String>;
-  bookingID_gte?: Maybe<String>;
-  bookingID_contains?: Maybe<String>;
-  bookingID_not_contains?: Maybe<String>;
-  bookingID_starts_with?: Maybe<String>;
-  bookingID_not_starts_with?: Maybe<String>;
-  bookingID_ends_with?: Maybe<String>;
-  bookingID_not_ends_with?: Maybe<String>;
-  year?: Maybe<Int>;
-  year_not?: Maybe<Int>;
-  year_in?: Maybe<Int[] | Int>;
-  year_not_in?: Maybe<Int[] | Int>;
-  year_lt?: Maybe<Int>;
-  year_lte?: Maybe<Int>;
-  year_gt?: Maybe<Int>;
-  year_gte?: Maybe<Int>;
-  month?: Maybe<Int>;
-  month_not?: Maybe<Int>;
-  month_in?: Maybe<Int[] | Int>;
-  month_not_in?: Maybe<Int[] | Int>;
-  month_lt?: Maybe<Int>;
-  month_lte?: Maybe<Int>;
-  month_gt?: Maybe<Int>;
-  month_gte?: Maybe<Int>;
-  day?: Maybe<Int>;
-  day_not?: Maybe<Int>;
-  day_in?: Maybe<Int[] | Int>;
-  day_not_in?: Maybe<Int[] | Int>;
-  day_lt?: Maybe<Int>;
-  day_lte?: Maybe<Int>;
-  day_gt?: Maybe<Int>;
-  day_gte?: Maybe<Int>;
-  uniquecheck?: Maybe<String>;
-  uniquecheck_not?: Maybe<String>;
-  uniquecheck_in?: Maybe<String[] | String>;
-  uniquecheck_not_in?: Maybe<String[] | String>;
-  uniquecheck_lt?: Maybe<String>;
-  uniquecheck_lte?: Maybe<String>;
-  uniquecheck_gt?: Maybe<String>;
-  uniquecheck_gte?: Maybe<String>;
-  uniquecheck_contains?: Maybe<String>;
-  uniquecheck_not_contains?: Maybe<String>;
-  uniquecheck_starts_with?: Maybe<String>;
-  uniquecheck_not_starts_with?: Maybe<String>;
-  uniquecheck_ends_with?: Maybe<String>;
-  uniquecheck_not_ends_with?: Maybe<String>;
-  isOpen?: Maybe<Boolean>;
-  isOpen_not?: Maybe<Boolean>;
-  recurring?: Maybe<Boolean>;
-  recurring_not?: Maybe<Boolean>;
-  AND?: Maybe<AvailabilityScalarWhereInput[] | AvailabilityScalarWhereInput>;
-  OR?: Maybe<AvailabilityScalarWhereInput[] | AvailabilityScalarWhereInput>;
-  NOT?: Maybe<AvailabilityScalarWhereInput[] | AvailabilityScalarWhereInput>;
-}
-
-export interface ResponseUpsertWithoutReviewInput {
-  update: ResponseUpdateWithoutReviewDataInput;
-  create: ResponseCreateWithoutReviewInput;
-}
-
-export interface AvailabilityUpdateManyWithWhereNestedInput {
-  where: AvailabilityScalarWhereInput;
-  data: AvailabilityUpdateManyDataInput;
-}
-
-export interface ResponseUpdateOneWithoutReviewInput {
-  create?: Maybe<ResponseCreateWithoutReviewInput>;
-  update?: Maybe<ResponseUpdateWithoutReviewDataInput>;
-  upsert?: Maybe<ResponseUpsertWithoutReviewInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<ResponseWhereUniqueInput>;
-}
-
-export interface AvailabilityUpdateManyDataInput {
-  start_hour?: Maybe<Int>;
-  start_minute?: Maybe<Int>;
-  coach?: Maybe<String>;
-  bookingID?: Maybe<String>;
-  year?: Maybe<Int>;
-  month?: Maybe<Int>;
-  day?: Maybe<Int>;
-  uniquecheck?: Maybe<String>;
-  isOpen?: Maybe<Boolean>;
-  recurring?: Maybe<Boolean>;
-}
-
-export type ResponseWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface BookingUpdateManyMutationInput {
-  year?: Maybe<Int>;
-  month?: Maybe<Int>;
-  day?: Maybe<Int>;
-  hour?: Maybe<Int>;
-  minute?: Maybe<Int>;
-  coach?: Maybe<String>;
-  seeker?: Maybe<String>;
-  uniquecheck?: Maybe<String>;
-  pending?: Maybe<Boolean>;
-  confirmed?: Maybe<Boolean>;
-  interviewGoals?: Maybe<String>;
-  interviewQuestions?: Maybe<String>;
-  resumeURL?: Maybe<String>;
-}
-
-export interface ResponseCreateOneWithoutReviewInput {
-  create?: Maybe<ResponseCreateWithoutReviewInput>;
-  connect?: Maybe<ResponseWhereUniqueInput>;
-}
-
-export interface IndustryCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  posts?: Maybe<PostCreateManyWithoutIndustryInput>;
-}
-
-export interface ReviewWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  coach?: Maybe<String>;
-  coach_not?: Maybe<String>;
-  coach_in?: Maybe<String[] | String>;
-  coach_not_in?: Maybe<String[] | String>;
-  coach_lt?: Maybe<String>;
-  coach_lte?: Maybe<String>;
-  coach_gt?: Maybe<String>;
-  coach_gte?: Maybe<String>;
-  coach_contains?: Maybe<String>;
-  coach_not_contains?: Maybe<String>;
-  coach_starts_with?: Maybe<String>;
-  coach_not_starts_with?: Maybe<String>;
-  coach_ends_with?: Maybe<String>;
-  coach_not_ends_with?: Maybe<String>;
-  seeker?: Maybe<String>;
-  seeker_not?: Maybe<String>;
-  seeker_in?: Maybe<String[] | String>;
-  seeker_not_in?: Maybe<String[] | String>;
-  seeker_lt?: Maybe<String>;
-  seeker_lte?: Maybe<String>;
-  seeker_gt?: Maybe<String>;
-  seeker_gte?: Maybe<String>;
-  seeker_contains?: Maybe<String>;
-  seeker_not_contains?: Maybe<String>;
-  seeker_starts_with?: Maybe<String>;
-  seeker_not_starts_with?: Maybe<String>;
-  seeker_ends_with?: Maybe<String>;
-  seeker_not_ends_with?: Maybe<String>;
-  booking?: Maybe<BookingWhereInput>;
-  rating?: Maybe<Int>;
-  rating_not?: Maybe<Int>;
-  rating_in?: Maybe<Int[] | Int>;
-  rating_not_in?: Maybe<Int[] | Int>;
-  rating_lt?: Maybe<Int>;
-  rating_lte?: Maybe<Int>;
-  rating_gt?: Maybe<Int>;
-  rating_gte?: Maybe<Int>;
-  review?: Maybe<String>;
-  review_not?: Maybe<String>;
-  review_in?: Maybe<String[] | String>;
-  review_not_in?: Maybe<String[] | String>;
-  review_lt?: Maybe<String>;
-  review_lte?: Maybe<String>;
-  review_gt?: Maybe<String>;
-  review_gte?: Maybe<String>;
-  review_contains?: Maybe<String>;
-  review_not_contains?: Maybe<String>;
-  review_starts_with?: Maybe<String>;
-  review_not_starts_with?: Maybe<String>;
-  review_ends_with?: Maybe<String>;
-  review_not_ends_with?: Maybe<String>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  lastUpdated?: Maybe<DateTimeInput>;
-  lastUpdated_not?: Maybe<DateTimeInput>;
-  lastUpdated_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  lastUpdated_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  lastUpdated_lt?: Maybe<DateTimeInput>;
-  lastUpdated_lte?: Maybe<DateTimeInput>;
-  lastUpdated_gt?: Maybe<DateTimeInput>;
-  lastUpdated_gte?: Maybe<DateTimeInput>;
-  response?: Maybe<ResponseWhereInput>;
-  AND?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
-  OR?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
-  NOT?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
-}
-
-export interface PostCreateManyWithoutIndustryInput {
-  create?: Maybe<
-    PostCreateWithoutIndustryInput[] | PostCreateWithoutIndustryInput
-  >;
-  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-}
-
-export interface ResponseUpdateManyMutationInput {
-  text?: Maybe<String>;
-}
-
-export interface PostCreateWithoutIndustryInput {
-  id?: Maybe<ID_Input>;
-  price?: Maybe<Int>;
-  position?: Maybe<String>;
-  description?: Maybe<String>;
-  coachID: String;
-  company?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  desc_lc?: Maybe<String>;
-  company_lc?: Maybe<String>;
-  position_lc?: Maybe<String>;
-  tags?: Maybe<TagCreateManyWithoutPostsInput>;
-}
-
-export interface ReviewUpdateWithoutResponseDataInput {
-  coach?: Maybe<String>;
-  seeker?: Maybe<String>;
-  booking?: Maybe<BookingUpdateOneRequiredInput>;
-  rating?: Maybe<Int>;
-  review?: Maybe<String>;
-}
-
-export interface ReportUpdateInput {
-  coach?: Maybe<String>;
-  seeker?: Maybe<String>;
-  booking?: Maybe<BookingUpdateOneRequiredInput>;
-  strengths?: Maybe<String>;
-  growthAreas?: Maybe<String>;
-  suggestions?: Maybe<String>;
-  additionalComments?: Maybe<String>;
-}
-
-export interface ReviewUpdateOneRequiredWithoutResponseInput {
-  create?: Maybe<ReviewCreateWithoutResponseInput>;
-  update?: Maybe<ReviewUpdateWithoutResponseDataInput>;
-  upsert?: Maybe<ReviewUpsertWithoutResponseInput>;
-  connect?: Maybe<ReviewWhereUniqueInput>;
-}
-
-export interface TagCreateWithoutPostsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-}
-
-export interface ReviewCreateWithoutResponseInput {
-  id?: Maybe<ID_Input>;
-  coach: String;
-  seeker: String;
-  booking: BookingCreateOneInput;
-  rating: Int;
-  review?: Maybe<String>;
-}
-
-export interface IndustryUpdateInput {
-  name?: Maybe<String>;
-  posts?: Maybe<PostUpdateManyWithoutIndustryInput>;
-}
-
-export type TagWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  name?: Maybe<String>;
-}>;
-
-export interface PostUpdateManyWithoutIndustryInput {
-  create?: Maybe<
-    PostCreateWithoutIndustryInput[] | PostCreateWithoutIndustryInput
-  >;
-  delete?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  set?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  disconnect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  update?: Maybe<
-    | PostUpdateWithWhereUniqueWithoutIndustryInput[]
-    | PostUpdateWithWhereUniqueWithoutIndustryInput
-  >;
-  upsert?: Maybe<
-    | PostUpsertWithWhereUniqueWithoutIndustryInput[]
-    | PostUpsertWithWhereUniqueWithoutIndustryInput
-  >;
-  deleteMany?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  updateMany?: Maybe<
-    PostUpdateManyWithWhereNestedInput[] | PostUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ReportUpdateManyMutationInput {
-  coach?: Maybe<String>;
-  seeker?: Maybe<String>;
-  strengths?: Maybe<String>;
-  growthAreas?: Maybe<String>;
-  suggestions?: Maybe<String>;
-  additionalComments?: Maybe<String>;
-}
-
-export interface PostUpdateWithWhereUniqueWithoutIndustryInput {
-  where: PostWhereUniqueInput;
-  data: PostUpdateWithoutIndustryDataInput;
-}
-
-export interface ReviewSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ReviewWhereInput>;
-  AND?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
-  OR?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
-  NOT?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
-}
-
-export interface PostUpdateWithoutIndustryDataInput {
-  price?: Maybe<Int>;
-  position?: Maybe<String>;
-  description?: Maybe<String>;
-  coachID?: Maybe<String>;
-  company?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  desc_lc?: Maybe<String>;
-  company_lc?: Maybe<String>;
-  position_lc?: Maybe<String>;
-  tags?: Maybe<TagUpdateManyWithoutPostsInput>;
-}
-
-export type IndustryWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  name?: Maybe<String>;
-}>;
-
-export type BookingWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  uniquecheck?: Maybe<String>;
-}>;
-
-export interface BookingSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<BookingWhereInput>;
-  AND?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
-  OR?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
-  NOT?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
-}
-
-export interface TagUpdateWithWhereUniqueWithoutPostsInput {
-  where: TagWhereUniqueInput;
-  data: TagUpdateWithoutPostsDataInput;
-}
-
-export interface PostUpsertWithWhereUniqueWithoutTagsInput {
-  where: PostWhereUniqueInput;
-  update: PostUpdateWithoutTagsDataInput;
-  create: PostCreateWithoutTagsInput;
-}
-
-export interface TagUpdateWithoutPostsDataInput {
-  name?: Maybe<String>;
-}
-
-export interface PostUpdateManyWithoutTagsInput {
-  create?: Maybe<PostCreateWithoutTagsInput[] | PostCreateWithoutTagsInput>;
-  delete?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  set?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  disconnect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-  update?: Maybe<
-    | PostUpdateWithWhereUniqueWithoutTagsInput[]
-    | PostUpdateWithWhereUniqueWithoutTagsInput
-  >;
-  upsert?: Maybe<
-    | PostUpsertWithWhereUniqueWithoutTagsInput[]
-    | PostUpsertWithWhereUniqueWithoutTagsInput
-  >;
-  deleteMany?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  updateMany?: Maybe<
-    PostUpdateManyWithWhereNestedInput[] | PostUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface TagUpsertWithWhereUniqueWithoutPostsInput {
-  where: TagWhereUniqueInput;
-  update: TagUpdateWithoutPostsDataInput;
-  create: TagCreateWithoutPostsInput;
-}
-
-export interface PostCreateManyWithoutTagsInput {
-  create?: Maybe<PostCreateWithoutTagsInput[] | PostCreateWithoutTagsInput>;
-  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-}
-
-export interface TagScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
-  OR?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
-  NOT?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
-}
-
-export interface ReportWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  coach?: Maybe<String>;
-  coach_not?: Maybe<String>;
-  coach_in?: Maybe<String[] | String>;
-  coach_not_in?: Maybe<String[] | String>;
-  coach_lt?: Maybe<String>;
-  coach_lte?: Maybe<String>;
-  coach_gt?: Maybe<String>;
-  coach_gte?: Maybe<String>;
-  coach_contains?: Maybe<String>;
-  coach_not_contains?: Maybe<String>;
-  coach_starts_with?: Maybe<String>;
-  coach_not_starts_with?: Maybe<String>;
-  coach_ends_with?: Maybe<String>;
-  coach_not_ends_with?: Maybe<String>;
-  seeker?: Maybe<String>;
-  seeker_not?: Maybe<String>;
-  seeker_in?: Maybe<String[] | String>;
-  seeker_not_in?: Maybe<String[] | String>;
-  seeker_lt?: Maybe<String>;
-  seeker_lte?: Maybe<String>;
-  seeker_gt?: Maybe<String>;
-  seeker_gte?: Maybe<String>;
-  seeker_contains?: Maybe<String>;
-  seeker_not_contains?: Maybe<String>;
-  seeker_starts_with?: Maybe<String>;
-  seeker_not_starts_with?: Maybe<String>;
-  seeker_ends_with?: Maybe<String>;
-  seeker_not_ends_with?: Maybe<String>;
-  booking?: Maybe<BookingWhereInput>;
-  strengths?: Maybe<String>;
-  strengths_not?: Maybe<String>;
-  strengths_in?: Maybe<String[] | String>;
-  strengths_not_in?: Maybe<String[] | String>;
-  strengths_lt?: Maybe<String>;
-  strengths_lte?: Maybe<String>;
-  strengths_gt?: Maybe<String>;
-  strengths_gte?: Maybe<String>;
-  strengths_contains?: Maybe<String>;
-  strengths_not_contains?: Maybe<String>;
-  strengths_starts_with?: Maybe<String>;
-  strengths_not_starts_with?: Maybe<String>;
-  strengths_ends_with?: Maybe<String>;
-  strengths_not_ends_with?: Maybe<String>;
-  growthAreas?: Maybe<String>;
-  growthAreas_not?: Maybe<String>;
-  growthAreas_in?: Maybe<String[] | String>;
-  growthAreas_not_in?: Maybe<String[] | String>;
-  growthAreas_lt?: Maybe<String>;
-  growthAreas_lte?: Maybe<String>;
-  growthAreas_gt?: Maybe<String>;
-  growthAreas_gte?: Maybe<String>;
-  growthAreas_contains?: Maybe<String>;
-  growthAreas_not_contains?: Maybe<String>;
-  growthAreas_starts_with?: Maybe<String>;
-  growthAreas_not_starts_with?: Maybe<String>;
-  growthAreas_ends_with?: Maybe<String>;
-  growthAreas_not_ends_with?: Maybe<String>;
-  suggestions?: Maybe<String>;
-  suggestions_not?: Maybe<String>;
-  suggestions_in?: Maybe<String[] | String>;
-  suggestions_not_in?: Maybe<String[] | String>;
-  suggestions_lt?: Maybe<String>;
-  suggestions_lte?: Maybe<String>;
-  suggestions_gt?: Maybe<String>;
-  suggestions_gte?: Maybe<String>;
-  suggestions_contains?: Maybe<String>;
-  suggestions_not_contains?: Maybe<String>;
-  suggestions_starts_with?: Maybe<String>;
-  suggestions_not_starts_with?: Maybe<String>;
-  suggestions_ends_with?: Maybe<String>;
-  suggestions_not_ends_with?: Maybe<String>;
-  additionalComments?: Maybe<String>;
-  additionalComments_not?: Maybe<String>;
-  additionalComments_in?: Maybe<String[] | String>;
-  additionalComments_not_in?: Maybe<String[] | String>;
-  additionalComments_lt?: Maybe<String>;
-  additionalComments_lte?: Maybe<String>;
-  additionalComments_gt?: Maybe<String>;
-  additionalComments_gte?: Maybe<String>;
-  additionalComments_contains?: Maybe<String>;
-  additionalComments_not_contains?: Maybe<String>;
-  additionalComments_starts_with?: Maybe<String>;
-  additionalComments_not_starts_with?: Maybe<String>;
-  additionalComments_ends_with?: Maybe<String>;
-  additionalComments_not_ends_with?: Maybe<String>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<ReportWhereInput[] | ReportWhereInput>;
-  OR?: Maybe<ReportWhereInput[] | ReportWhereInput>;
-  NOT?: Maybe<ReportWhereInput[] | ReportWhereInput>;
-}
-
-export interface TagUpdateManyWithWhereNestedInput {
-  where: TagScalarWhereInput;
-  data: TagUpdateManyDataInput;
-}
-
-export interface ReviewUpdateInput {
-  coach?: Maybe<String>;
-  seeker?: Maybe<String>;
-  booking?: Maybe<BookingUpdateOneRequiredInput>;
-  rating?: Maybe<Int>;
-  review?: Maybe<String>;
-  response?: Maybe<ResponseUpdateOneWithoutReviewInput>;
-}
-
-export interface TagUpdateManyDataInput {
-  name?: Maybe<String>;
+  review: ReviewCreateOneWithoutResponseInput;
+  text: String;
 }
 
 export interface ResponseWhereInput {
@@ -1700,207 +817,39 @@ export interface ResponseWhereInput {
   lastUpdated_lte?: Maybe<DateTimeInput>;
   lastUpdated_gt?: Maybe<DateTimeInput>;
   lastUpdated_gte?: Maybe<DateTimeInput>;
+  booking?: Maybe<BookingWhereInput>;
   AND?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
   OR?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
   NOT?: Maybe<ResponseWhereInput[] | ResponseWhereInput>;
 }
 
-export interface PostUpsertWithWhereUniqueWithoutIndustryInput {
-  where: PostWhereUniqueInput;
-  update: PostUpdateWithoutIndustryDataInput;
-  create: PostCreateWithoutIndustryInput;
+export interface ReviewCreateOneWithoutResponseInput {
+  create?: Maybe<ReviewCreateWithoutResponseInput>;
+  connect?: Maybe<ReviewWhereUniqueInput>;
 }
 
-export interface ReviewUpsertWithoutResponseInput {
-  update: ReviewUpdateWithoutResponseDataInput;
-  create: ReviewCreateWithoutResponseInput;
-}
-
-export interface PostScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  price?: Maybe<Int>;
-  price_not?: Maybe<Int>;
-  price_in?: Maybe<Int[] | Int>;
-  price_not_in?: Maybe<Int[] | Int>;
-  price_lt?: Maybe<Int>;
-  price_lte?: Maybe<Int>;
-  price_gt?: Maybe<Int>;
-  price_gte?: Maybe<Int>;
-  position?: Maybe<String>;
-  position_not?: Maybe<String>;
-  position_in?: Maybe<String[] | String>;
-  position_not_in?: Maybe<String[] | String>;
-  position_lt?: Maybe<String>;
-  position_lte?: Maybe<String>;
-  position_gt?: Maybe<String>;
-  position_gte?: Maybe<String>;
-  position_contains?: Maybe<String>;
-  position_not_contains?: Maybe<String>;
-  position_starts_with?: Maybe<String>;
-  position_not_starts_with?: Maybe<String>;
-  position_ends_with?: Maybe<String>;
-  position_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  coachID?: Maybe<String>;
-  coachID_not?: Maybe<String>;
-  coachID_in?: Maybe<String[] | String>;
-  coachID_not_in?: Maybe<String[] | String>;
-  coachID_lt?: Maybe<String>;
-  coachID_lte?: Maybe<String>;
-  coachID_gt?: Maybe<String>;
-  coachID_gte?: Maybe<String>;
-  coachID_contains?: Maybe<String>;
-  coachID_not_contains?: Maybe<String>;
-  coachID_starts_with?: Maybe<String>;
-  coachID_not_starts_with?: Maybe<String>;
-  coachID_ends_with?: Maybe<String>;
-  coachID_not_ends_with?: Maybe<String>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  lastUpdated?: Maybe<DateTimeInput>;
-  lastUpdated_not?: Maybe<DateTimeInput>;
-  lastUpdated_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  lastUpdated_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  lastUpdated_lt?: Maybe<DateTimeInput>;
-  lastUpdated_lte?: Maybe<DateTimeInput>;
-  lastUpdated_gt?: Maybe<DateTimeInput>;
-  lastUpdated_gte?: Maybe<DateTimeInput>;
-  company?: Maybe<String>;
-  company_not?: Maybe<String>;
-  company_in?: Maybe<String[] | String>;
-  company_not_in?: Maybe<String[] | String>;
-  company_lt?: Maybe<String>;
-  company_lte?: Maybe<String>;
-  company_gt?: Maybe<String>;
-  company_gte?: Maybe<String>;
-  company_contains?: Maybe<String>;
-  company_not_contains?: Maybe<String>;
-  company_starts_with?: Maybe<String>;
-  company_not_starts_with?: Maybe<String>;
-  company_ends_with?: Maybe<String>;
-  company_not_ends_with?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  isPublished_not?: Maybe<Boolean>;
-  desc_lc?: Maybe<String>;
-  desc_lc_not?: Maybe<String>;
-  desc_lc_in?: Maybe<String[] | String>;
-  desc_lc_not_in?: Maybe<String[] | String>;
-  desc_lc_lt?: Maybe<String>;
-  desc_lc_lte?: Maybe<String>;
-  desc_lc_gt?: Maybe<String>;
-  desc_lc_gte?: Maybe<String>;
-  desc_lc_contains?: Maybe<String>;
-  desc_lc_not_contains?: Maybe<String>;
-  desc_lc_starts_with?: Maybe<String>;
-  desc_lc_not_starts_with?: Maybe<String>;
-  desc_lc_ends_with?: Maybe<String>;
-  desc_lc_not_ends_with?: Maybe<String>;
-  company_lc?: Maybe<String>;
-  company_lc_not?: Maybe<String>;
-  company_lc_in?: Maybe<String[] | String>;
-  company_lc_not_in?: Maybe<String[] | String>;
-  company_lc_lt?: Maybe<String>;
-  company_lc_lte?: Maybe<String>;
-  company_lc_gt?: Maybe<String>;
-  company_lc_gte?: Maybe<String>;
-  company_lc_contains?: Maybe<String>;
-  company_lc_not_contains?: Maybe<String>;
-  company_lc_starts_with?: Maybe<String>;
-  company_lc_not_starts_with?: Maybe<String>;
-  company_lc_ends_with?: Maybe<String>;
-  company_lc_not_ends_with?: Maybe<String>;
-  position_lc?: Maybe<String>;
-  position_lc_not?: Maybe<String>;
-  position_lc_in?: Maybe<String[] | String>;
-  position_lc_not_in?: Maybe<String[] | String>;
-  position_lc_lt?: Maybe<String>;
-  position_lc_lte?: Maybe<String>;
-  position_lc_gt?: Maybe<String>;
-  position_lc_gte?: Maybe<String>;
-  position_lc_contains?: Maybe<String>;
-  position_lc_not_contains?: Maybe<String>;
-  position_lc_starts_with?: Maybe<String>;
-  position_lc_not_starts_with?: Maybe<String>;
-  position_lc_ends_with?: Maybe<String>;
-  position_lc_not_ends_with?: Maybe<String>;
-  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
-}
-
-export interface ResponseUpdateInput {
-  review?: Maybe<ReviewUpdateOneRequiredWithoutResponseInput>;
-  text?: Maybe<String>;
-}
-
-export interface PostUpdateManyWithWhereNestedInput {
-  where: PostScalarWhereInput;
-  data: PostUpdateManyDataInput;
-}
-
-export interface ResponseCreateInput {
-  id?: Maybe<ID_Input>;
-  review: ReviewCreateOneWithoutResponseInput;
-  text: String;
-}
-
-export interface PostUpdateManyDataInput {
-  price?: Maybe<Int>;
-  position?: Maybe<String>;
-  description?: Maybe<String>;
-  coachID?: Maybe<String>;
-  company?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  desc_lc?: Maybe<String>;
-  company_lc?: Maybe<String>;
-  position_lc?: Maybe<String>;
-}
-
-export interface ReportSubscriptionWhereInput {
+export interface IndustrySubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ReportWhereInput>;
-  AND?: Maybe<ReportSubscriptionWhereInput[] | ReportSubscriptionWhereInput>;
-  OR?: Maybe<ReportSubscriptionWhereInput[] | ReportSubscriptionWhereInput>;
-  NOT?: Maybe<ReportSubscriptionWhereInput[] | ReportSubscriptionWhereInput>;
+  node?: Maybe<IndustryWhereInput>;
+  AND?: Maybe<
+    IndustrySubscriptionWhereInput[] | IndustrySubscriptionWhereInput
+  >;
+  OR?: Maybe<IndustrySubscriptionWhereInput[] | IndustrySubscriptionWhereInput>;
+  NOT?: Maybe<
+    IndustrySubscriptionWhereInput[] | IndustrySubscriptionWhereInput
+  >;
 }
 
-export interface IndustryUpdateManyMutationInput {
-  name?: Maybe<String>;
+export interface ReviewCreateWithoutResponseInput {
+  id?: Maybe<ID_Input>;
+  coach: String;
+  seeker: String;
+  booking: BookingCreateOneWithoutReviewInput;
+  rating: Int;
+  review?: Maybe<String>;
 }
 
 export interface AvailabilitySubscriptionWhereInput {
@@ -1920,76 +869,34 @@ export interface AvailabilitySubscriptionWhereInput {
   >;
 }
 
-export interface PostCreateInput {
-  id?: Maybe<ID_Input>;
-  price?: Maybe<Int>;
-  position?: Maybe<String>;
-  industry?: Maybe<IndustryCreateOneWithoutPostsInput>;
-  description?: Maybe<String>;
-  coachID: String;
-  company?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  desc_lc?: Maybe<String>;
-  company_lc?: Maybe<String>;
-  position_lc?: Maybe<String>;
-  tags?: Maybe<TagCreateManyWithoutPostsInput>;
+export interface BookingCreateOneWithoutReviewInput {
+  create?: Maybe<BookingCreateWithoutReviewInput>;
+  connect?: Maybe<BookingWhereUniqueInput>;
 }
 
-export type PostWhereUniqueInput = AtLeastOne<{
+export type IndustryWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
-  coachID?: Maybe<String>;
+  name?: Maybe<String>;
 }>;
 
-export interface IndustryCreateOneWithoutPostsInput {
-  create?: Maybe<IndustryCreateWithoutPostsInput>;
-  connect?: Maybe<IndustryWhereUniqueInput>;
-}
-
-export interface ResponseUpdateWithoutReviewDataInput {
-  text?: Maybe<String>;
-}
-
-export interface IndustryCreateWithoutPostsInput {
+export interface BookingCreateWithoutReviewInput {
   id?: Maybe<ID_Input>;
-  name: String;
-}
-
-export interface ReviewCreateInput {
-  id?: Maybe<ID_Input>;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
   coach: String;
   seeker: String;
-  booking: BookingCreateOneInput;
-  rating: Int;
-  review?: Maybe<String>;
-  response?: Maybe<ResponseCreateOneWithoutReviewInput>;
-}
-
-export interface PostUpdateInput {
-  price?: Maybe<Int>;
-  position?: Maybe<String>;
-  industry?: Maybe<IndustryUpdateOneWithoutPostsInput>;
-  description?: Maybe<String>;
-  coachID?: Maybe<String>;
-  company?: Maybe<String>;
-  isPublished?: Maybe<Boolean>;
-  desc_lc?: Maybe<String>;
-  company_lc?: Maybe<String>;
-  position_lc?: Maybe<String>;
-  tags?: Maybe<TagUpdateManyWithoutPostsInput>;
-}
-
-export interface ReviewCreateOneWithoutResponseInput {
-  create?: Maybe<ReviewCreateWithoutResponseInput>;
-  connect?: Maybe<ReviewWhereUniqueInput>;
-}
-
-export interface IndustryUpdateOneWithoutPostsInput {
-  create?: Maybe<IndustryCreateWithoutPostsInput>;
-  update?: Maybe<IndustryUpdateWithoutPostsDataInput>;
-  upsert?: Maybe<IndustryUpsertWithoutPostsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<IndustryWhereUniqueInput>;
+  uniquecheck: String;
+  availability?: Maybe<AvailabilityCreateManyInput>;
+  pending?: Maybe<Boolean>;
+  confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+  response?: Maybe<ResponseCreateOneWithoutBookingInput>;
+  report?: Maybe<ReportCreateOneWithoutBookingInput>;
 }
 
 export interface PostWhereInput {
@@ -2140,15 +1047,858 @@ export interface PostWhereInput {
   NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
 }
 
+export interface BookingUpdateInput {
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  uniquecheck?: Maybe<String>;
+  availability?: Maybe<AvailabilityUpdateManyInput>;
+  pending?: Maybe<Boolean>;
+  confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+  review?: Maybe<ReviewUpdateOneWithoutBookingInput>;
+  response?: Maybe<ResponseUpdateOneWithoutBookingInput>;
+  report?: Maybe<ReportUpdateOneWithoutBookingInput>;
+}
+
+export interface TagWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  posts_every?: Maybe<PostWhereInput>;
+  posts_some?: Maybe<PostWhereInput>;
+  posts_none?: Maybe<PostWhereInput>;
+  AND?: Maybe<TagWhereInput[] | TagWhereInput>;
+  OR?: Maybe<TagWhereInput[] | TagWhereInput>;
+  NOT?: Maybe<TagWhereInput[] | TagWhereInput>;
+}
+
+export interface AvailabilityUpdateManyInput {
+  create?: Maybe<AvailabilityCreateInput[] | AvailabilityCreateInput>;
+  update?: Maybe<
+    | AvailabilityUpdateWithWhereUniqueNestedInput[]
+    | AvailabilityUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | AvailabilityUpsertWithWhereUniqueNestedInput[]
+    | AvailabilityUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput>;
+  connect?: Maybe<
+    AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput
+  >;
+  set?: Maybe<AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput>;
+  disconnect?: Maybe<
+    AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput
+  >;
+  deleteMany?: Maybe<
+    AvailabilityScalarWhereInput[] | AvailabilityScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | AvailabilityUpdateManyWithWhereNestedInput[]
+    | AvailabilityUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface PostUpdateWithWhereUniqueWithoutTagsInput {
+  where: PostWhereUniqueInput;
+  data: PostUpdateWithoutTagsDataInput;
+}
+
+export interface AvailabilityUpdateWithWhereUniqueNestedInput {
+  where: AvailabilityWhereUniqueInput;
+  data: AvailabilityUpdateDataInput;
+}
+
+export interface TagUpdateInput {
+  name?: Maybe<String>;
+  posts?: Maybe<PostUpdateManyWithoutTagsInput>;
+}
+
+export interface AvailabilityUpdateDataInput {
+  start_hour?: Maybe<Int>;
+  start_minute?: Maybe<Int>;
+  coach?: Maybe<String>;
+  bookingID?: Maybe<String>;
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  uniquecheck?: Maybe<String>;
+  isOpen?: Maybe<Boolean>;
+  recurring?: Maybe<Boolean>;
+}
+
+export interface PostCreateWithoutTagsInput {
+  id?: Maybe<ID_Input>;
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  industry?: Maybe<IndustryCreateOneWithoutPostsInput>;
+  description?: Maybe<String>;
+  coachID: String;
+  company?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
+}
+
+export interface AvailabilityUpsertWithWhereUniqueNestedInput {
+  where: AvailabilityWhereUniqueInput;
+  update: AvailabilityUpdateDataInput;
+  create: AvailabilityCreateInput;
+}
+
+export interface TagCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  posts?: Maybe<PostCreateManyWithoutTagsInput>;
+}
+
+export interface AvailabilityScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  start_hour?: Maybe<Int>;
+  start_hour_not?: Maybe<Int>;
+  start_hour_in?: Maybe<Int[] | Int>;
+  start_hour_not_in?: Maybe<Int[] | Int>;
+  start_hour_lt?: Maybe<Int>;
+  start_hour_lte?: Maybe<Int>;
+  start_hour_gt?: Maybe<Int>;
+  start_hour_gte?: Maybe<Int>;
+  start_minute?: Maybe<Int>;
+  start_minute_not?: Maybe<Int>;
+  start_minute_in?: Maybe<Int[] | Int>;
+  start_minute_not_in?: Maybe<Int[] | Int>;
+  start_minute_lt?: Maybe<Int>;
+  start_minute_lte?: Maybe<Int>;
+  start_minute_gt?: Maybe<Int>;
+  start_minute_gte?: Maybe<Int>;
+  coach?: Maybe<String>;
+  coach_not?: Maybe<String>;
+  coach_in?: Maybe<String[] | String>;
+  coach_not_in?: Maybe<String[] | String>;
+  coach_lt?: Maybe<String>;
+  coach_lte?: Maybe<String>;
+  coach_gt?: Maybe<String>;
+  coach_gte?: Maybe<String>;
+  coach_contains?: Maybe<String>;
+  coach_not_contains?: Maybe<String>;
+  coach_starts_with?: Maybe<String>;
+  coach_not_starts_with?: Maybe<String>;
+  coach_ends_with?: Maybe<String>;
+  coach_not_ends_with?: Maybe<String>;
+  bookingID?: Maybe<String>;
+  bookingID_not?: Maybe<String>;
+  bookingID_in?: Maybe<String[] | String>;
+  bookingID_not_in?: Maybe<String[] | String>;
+  bookingID_lt?: Maybe<String>;
+  bookingID_lte?: Maybe<String>;
+  bookingID_gt?: Maybe<String>;
+  bookingID_gte?: Maybe<String>;
+  bookingID_contains?: Maybe<String>;
+  bookingID_not_contains?: Maybe<String>;
+  bookingID_starts_with?: Maybe<String>;
+  bookingID_not_starts_with?: Maybe<String>;
+  bookingID_ends_with?: Maybe<String>;
+  bookingID_not_ends_with?: Maybe<String>;
+  year?: Maybe<Int>;
+  year_not?: Maybe<Int>;
+  year_in?: Maybe<Int[] | Int>;
+  year_not_in?: Maybe<Int[] | Int>;
+  year_lt?: Maybe<Int>;
+  year_lte?: Maybe<Int>;
+  year_gt?: Maybe<Int>;
+  year_gte?: Maybe<Int>;
+  month?: Maybe<Int>;
+  month_not?: Maybe<Int>;
+  month_in?: Maybe<Int[] | Int>;
+  month_not_in?: Maybe<Int[] | Int>;
+  month_lt?: Maybe<Int>;
+  month_lte?: Maybe<Int>;
+  month_gt?: Maybe<Int>;
+  month_gte?: Maybe<Int>;
+  day?: Maybe<Int>;
+  day_not?: Maybe<Int>;
+  day_in?: Maybe<Int[] | Int>;
+  day_not_in?: Maybe<Int[] | Int>;
+  day_lt?: Maybe<Int>;
+  day_lte?: Maybe<Int>;
+  day_gt?: Maybe<Int>;
+  day_gte?: Maybe<Int>;
+  uniquecheck?: Maybe<String>;
+  uniquecheck_not?: Maybe<String>;
+  uniquecheck_in?: Maybe<String[] | String>;
+  uniquecheck_not_in?: Maybe<String[] | String>;
+  uniquecheck_lt?: Maybe<String>;
+  uniquecheck_lte?: Maybe<String>;
+  uniquecheck_gt?: Maybe<String>;
+  uniquecheck_gte?: Maybe<String>;
+  uniquecheck_contains?: Maybe<String>;
+  uniquecheck_not_contains?: Maybe<String>;
+  uniquecheck_starts_with?: Maybe<String>;
+  uniquecheck_not_starts_with?: Maybe<String>;
+  uniquecheck_ends_with?: Maybe<String>;
+  uniquecheck_not_ends_with?: Maybe<String>;
+  isOpen?: Maybe<Boolean>;
+  isOpen_not?: Maybe<Boolean>;
+  recurring?: Maybe<Boolean>;
+  recurring_not?: Maybe<Boolean>;
+  AND?: Maybe<AvailabilityScalarWhereInput[] | AvailabilityScalarWhereInput>;
+  OR?: Maybe<AvailabilityScalarWhereInput[] | AvailabilityScalarWhereInput>;
+  NOT?: Maybe<AvailabilityScalarWhereInput[] | AvailabilityScalarWhereInput>;
+}
+
+export interface ReviewUpdateManyMutationInput {
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  rating?: Maybe<Int>;
+  review?: Maybe<String>;
+}
+
+export interface AvailabilityUpdateManyWithWhereNestedInput {
+  where: AvailabilityScalarWhereInput;
+  data: AvailabilityUpdateManyDataInput;
+}
+
+export interface ReviewCreateInput {
+  id?: Maybe<ID_Input>;
+  coach: String;
+  seeker: String;
+  booking: BookingCreateOneWithoutReviewInput;
+  rating: Int;
+  review?: Maybe<String>;
+  response?: Maybe<ResponseCreateOneWithoutReviewInput>;
+}
+
+export interface AvailabilityUpdateManyDataInput {
+  start_hour?: Maybe<Int>;
+  start_minute?: Maybe<Int>;
+  coach?: Maybe<String>;
+  bookingID?: Maybe<String>;
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  uniquecheck?: Maybe<String>;
+  isOpen?: Maybe<Boolean>;
+  recurring?: Maybe<Boolean>;
+}
+
+export interface ResponseUpdateManyMutationInput {
+  text?: Maybe<String>;
+}
+
+export interface ReviewUpdateOneWithoutBookingInput {
+  create?: Maybe<ReviewCreateWithoutBookingInput>;
+  update?: Maybe<ReviewUpdateWithoutBookingDataInput>;
+  upsert?: Maybe<ReviewUpsertWithoutBookingInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ReviewWhereUniqueInput>;
+}
+
+export interface ResponseCreateInput {
+  id?: Maybe<ID_Input>;
+  review: ReviewCreateOneWithoutResponseInput;
+  text: String;
+  booking: BookingCreateOneWithoutResponseInput;
+}
+
+export interface ReviewUpdateWithoutBookingDataInput {
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  rating?: Maybe<Int>;
+  review?: Maybe<String>;
+  response?: Maybe<ResponseUpdateOneWithoutReviewInput>;
+}
+
+export type ResponseWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ResponseUpdateOneWithoutReviewInput {
+  create?: Maybe<ResponseCreateWithoutReviewInput>;
+  update?: Maybe<ResponseUpdateWithoutReviewDataInput>;
+  upsert?: Maybe<ResponseUpsertWithoutReviewInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ResponseWhereUniqueInput>;
+}
+
+export interface BookingUpdateWithoutReportDataInput {
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  uniquecheck?: Maybe<String>;
+  availability?: Maybe<AvailabilityUpdateManyInput>;
+  pending?: Maybe<Boolean>;
+  confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+  review?: Maybe<ReviewUpdateOneWithoutBookingInput>;
+  response?: Maybe<ResponseUpdateOneWithoutBookingInput>;
+}
+
+export interface IndustryCreateOneWithoutPostsInput {
+  create?: Maybe<IndustryCreateWithoutPostsInput>;
+  connect?: Maybe<IndustryWhereUniqueInput>;
+}
+
+export interface ReportUpdateInput {
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  booking?: Maybe<BookingUpdateOneRequiredWithoutReportInput>;
+  strengths?: Maybe<String>;
+  growthAreas?: Maybe<String>;
+  suggestions?: Maybe<String>;
+  additionalComments?: Maybe<String>;
+}
+
+export interface BookingUpdateOneRequiredWithoutResponseInput {
+  create?: Maybe<BookingCreateWithoutResponseInput>;
+  update?: Maybe<BookingUpdateWithoutResponseDataInput>;
+  upsert?: Maybe<BookingUpsertWithoutResponseInput>;
+  connect?: Maybe<BookingWhereUniqueInput>;
+}
+
+export interface BookingCreateWithoutReportInput {
+  id?: Maybe<ID_Input>;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
+  coach: String;
+  seeker: String;
+  uniquecheck: String;
+  availability?: Maybe<AvailabilityCreateManyInput>;
+  pending?: Maybe<Boolean>;
+  confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+  review?: Maybe<ReviewCreateOneWithoutBookingInput>;
+  response?: Maybe<ResponseCreateOneWithoutBookingInput>;
+}
+
+export interface BookingUpdateWithoutResponseDataInput {
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  uniquecheck?: Maybe<String>;
+  availability?: Maybe<AvailabilityUpdateManyInput>;
+  pending?: Maybe<Boolean>;
+  confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+  review?: Maybe<ReviewUpdateOneWithoutBookingInput>;
+  report?: Maybe<ReportUpdateOneWithoutBookingInput>;
+}
+
 export interface ReportCreateInput {
   id?: Maybe<ID_Input>;
   coach: String;
   seeker: String;
-  booking: BookingCreateOneInput;
+  booking: BookingCreateOneWithoutReportInput;
   strengths: String;
   growthAreas: String;
   suggestions: String;
   additionalComments?: Maybe<String>;
+}
+
+export interface ReportUpdateOneWithoutBookingInput {
+  create?: Maybe<ReportCreateWithoutBookingInput>;
+  update?: Maybe<ReportUpdateWithoutBookingDataInput>;
+  upsert?: Maybe<ReportUpsertWithoutBookingInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ReportWhereUniqueInput>;
+}
+
+export type TagWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
+export interface ReportUpdateWithoutBookingDataInput {
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  strengths?: Maybe<String>;
+  growthAreas?: Maybe<String>;
+  suggestions?: Maybe<String>;
+  additionalComments?: Maybe<String>;
+}
+
+export interface IndustryUpdateWithoutPostsDataInput {
+  name?: Maybe<String>;
+}
+
+export interface ReportUpsertWithoutBookingInput {
+  update: ReportUpdateWithoutBookingDataInput;
+  create: ReportCreateWithoutBookingInput;
+}
+
+export interface AvailabilityUpdateInput {
+  start_hour?: Maybe<Int>;
+  start_minute?: Maybe<Int>;
+  coach?: Maybe<String>;
+  bookingID?: Maybe<String>;
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  uniquecheck?: Maybe<String>;
+  isOpen?: Maybe<Boolean>;
+  recurring?: Maybe<Boolean>;
+}
+
+export type BookingWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  uniquecheck?: Maybe<String>;
+}>;
+
+export interface PostUpdateInput {
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  industry?: Maybe<IndustryUpdateOneWithoutPostsInput>;
+  description?: Maybe<String>;
+  coachID?: Maybe<String>;
+  company?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
+  tags?: Maybe<TagUpdateManyWithoutPostsInput>;
+}
+
+export interface ResponseUpsertWithoutReviewInput {
+  update: ResponseUpdateWithoutReviewDataInput;
+  create: ResponseCreateWithoutReviewInput;
+}
+
+export interface BookingCreateInput {
+  id?: Maybe<ID_Input>;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
+  coach: String;
+  seeker: String;
+  uniquecheck: String;
+  availability?: Maybe<AvailabilityCreateManyInput>;
+  pending?: Maybe<Boolean>;
+  confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+  review?: Maybe<ReviewCreateOneWithoutBookingInput>;
+  response?: Maybe<ResponseCreateOneWithoutBookingInput>;
+  report?: Maybe<ReportCreateOneWithoutBookingInput>;
+}
+
+export interface ReviewUpsertWithoutBookingInput {
+  update: ReviewUpdateWithoutBookingDataInput;
+  create: ReviewCreateWithoutBookingInput;
+}
+
+export interface ReviewCreateOneWithoutBookingInput {
+  create?: Maybe<ReviewCreateWithoutBookingInput>;
+  connect?: Maybe<ReviewWhereUniqueInput>;
+}
+
+export interface ResponseUpdateOneWithoutBookingInput {
+  create?: Maybe<ResponseCreateWithoutBookingInput>;
+  update?: Maybe<ResponseUpdateWithoutBookingDataInput>;
+  upsert?: Maybe<ResponseUpsertWithoutBookingInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ResponseWhereUniqueInput>;
+}
+
+export interface ResponseCreateOneWithoutReviewInput {
+  create?: Maybe<ResponseCreateWithoutReviewInput>;
+  connect?: Maybe<ResponseWhereUniqueInput>;
+}
+
+export interface ResponseUpdateWithoutBookingDataInput {
+  review?: Maybe<ReviewUpdateOneRequiredWithoutResponseInput>;
+  text?: Maybe<String>;
+}
+
+export interface TagSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TagWhereInput>;
+  AND?: Maybe<TagSubscriptionWhereInput[] | TagSubscriptionWhereInput>;
+  OR?: Maybe<TagSubscriptionWhereInput[] | TagSubscriptionWhereInput>;
+  NOT?: Maybe<TagSubscriptionWhereInput[] | TagSubscriptionWhereInput>;
+}
+
+export interface ReviewUpdateOneRequiredWithoutResponseInput {
+  create?: Maybe<ReviewCreateWithoutResponseInput>;
+  update?: Maybe<ReviewUpdateWithoutResponseDataInput>;
+  upsert?: Maybe<ReviewUpsertWithoutResponseInput>;
+  connect?: Maybe<ReviewWhereUniqueInput>;
+}
+
+export interface PostSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<PostWhereInput>;
+  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+}
+
+export interface ReviewUpdateWithoutResponseDataInput {
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  booking?: Maybe<BookingUpdateOneRequiredWithoutReviewInput>;
+  rating?: Maybe<Int>;
+  review?: Maybe<String>;
+}
+
+export interface ReportWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  coach?: Maybe<String>;
+  coach_not?: Maybe<String>;
+  coach_in?: Maybe<String[] | String>;
+  coach_not_in?: Maybe<String[] | String>;
+  coach_lt?: Maybe<String>;
+  coach_lte?: Maybe<String>;
+  coach_gt?: Maybe<String>;
+  coach_gte?: Maybe<String>;
+  coach_contains?: Maybe<String>;
+  coach_not_contains?: Maybe<String>;
+  coach_starts_with?: Maybe<String>;
+  coach_not_starts_with?: Maybe<String>;
+  coach_ends_with?: Maybe<String>;
+  coach_not_ends_with?: Maybe<String>;
+  seeker?: Maybe<String>;
+  seeker_not?: Maybe<String>;
+  seeker_in?: Maybe<String[] | String>;
+  seeker_not_in?: Maybe<String[] | String>;
+  seeker_lt?: Maybe<String>;
+  seeker_lte?: Maybe<String>;
+  seeker_gt?: Maybe<String>;
+  seeker_gte?: Maybe<String>;
+  seeker_contains?: Maybe<String>;
+  seeker_not_contains?: Maybe<String>;
+  seeker_starts_with?: Maybe<String>;
+  seeker_not_starts_with?: Maybe<String>;
+  seeker_ends_with?: Maybe<String>;
+  seeker_not_ends_with?: Maybe<String>;
+  booking?: Maybe<BookingWhereInput>;
+  strengths?: Maybe<String>;
+  strengths_not?: Maybe<String>;
+  strengths_in?: Maybe<String[] | String>;
+  strengths_not_in?: Maybe<String[] | String>;
+  strengths_lt?: Maybe<String>;
+  strengths_lte?: Maybe<String>;
+  strengths_gt?: Maybe<String>;
+  strengths_gte?: Maybe<String>;
+  strengths_contains?: Maybe<String>;
+  strengths_not_contains?: Maybe<String>;
+  strengths_starts_with?: Maybe<String>;
+  strengths_not_starts_with?: Maybe<String>;
+  strengths_ends_with?: Maybe<String>;
+  strengths_not_ends_with?: Maybe<String>;
+  growthAreas?: Maybe<String>;
+  growthAreas_not?: Maybe<String>;
+  growthAreas_in?: Maybe<String[] | String>;
+  growthAreas_not_in?: Maybe<String[] | String>;
+  growthAreas_lt?: Maybe<String>;
+  growthAreas_lte?: Maybe<String>;
+  growthAreas_gt?: Maybe<String>;
+  growthAreas_gte?: Maybe<String>;
+  growthAreas_contains?: Maybe<String>;
+  growthAreas_not_contains?: Maybe<String>;
+  growthAreas_starts_with?: Maybe<String>;
+  growthAreas_not_starts_with?: Maybe<String>;
+  growthAreas_ends_with?: Maybe<String>;
+  growthAreas_not_ends_with?: Maybe<String>;
+  suggestions?: Maybe<String>;
+  suggestions_not?: Maybe<String>;
+  suggestions_in?: Maybe<String[] | String>;
+  suggestions_not_in?: Maybe<String[] | String>;
+  suggestions_lt?: Maybe<String>;
+  suggestions_lte?: Maybe<String>;
+  suggestions_gt?: Maybe<String>;
+  suggestions_gte?: Maybe<String>;
+  suggestions_contains?: Maybe<String>;
+  suggestions_not_contains?: Maybe<String>;
+  suggestions_starts_with?: Maybe<String>;
+  suggestions_not_starts_with?: Maybe<String>;
+  suggestions_ends_with?: Maybe<String>;
+  suggestions_not_ends_with?: Maybe<String>;
+  additionalComments?: Maybe<String>;
+  additionalComments_not?: Maybe<String>;
+  additionalComments_in?: Maybe<String[] | String>;
+  additionalComments_not_in?: Maybe<String[] | String>;
+  additionalComments_lt?: Maybe<String>;
+  additionalComments_lte?: Maybe<String>;
+  additionalComments_gt?: Maybe<String>;
+  additionalComments_gte?: Maybe<String>;
+  additionalComments_contains?: Maybe<String>;
+  additionalComments_not_contains?: Maybe<String>;
+  additionalComments_starts_with?: Maybe<String>;
+  additionalComments_not_starts_with?: Maybe<String>;
+  additionalComments_ends_with?: Maybe<String>;
+  additionalComments_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<ReportWhereInput[] | ReportWhereInput>;
+  OR?: Maybe<ReportWhereInput[] | ReportWhereInput>;
+  NOT?: Maybe<ReportWhereInput[] | ReportWhereInput>;
+}
+
+export interface BookingUpdateOneRequiredWithoutReviewInput {
+  create?: Maybe<BookingCreateWithoutReviewInput>;
+  update?: Maybe<BookingUpdateWithoutReviewDataInput>;
+  upsert?: Maybe<BookingUpsertWithoutReviewInput>;
+  connect?: Maybe<BookingWhereUniqueInput>;
+}
+
+export interface TagUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface BookingUpdateWithoutReviewDataInput {
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  uniquecheck?: Maybe<String>;
+  availability?: Maybe<AvailabilityUpdateManyInput>;
+  pending?: Maybe<Boolean>;
+  confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+  response?: Maybe<ResponseUpdateOneWithoutBookingInput>;
+  report?: Maybe<ReportUpdateOneWithoutBookingInput>;
+}
+
+export interface IndustryWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  posts_every?: Maybe<PostWhereInput>;
+  posts_some?: Maybe<PostWhereInput>;
+  posts_none?: Maybe<PostWhereInput>;
+  AND?: Maybe<IndustryWhereInput[] | IndustryWhereInput>;
+  OR?: Maybe<IndustryWhereInput[] | IndustryWhereInput>;
+  NOT?: Maybe<IndustryWhereInput[] | IndustryWhereInput>;
+}
+
+export interface BookingUpsertWithoutReviewInput {
+  update: BookingUpdateWithoutReviewDataInput;
+  create: BookingCreateWithoutReviewInput;
+}
+
+export interface PostUpdateManyWithoutTagsInput {
+  create?: Maybe<PostCreateWithoutTagsInput[] | PostCreateWithoutTagsInput>;
+  delete?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  set?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  disconnect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  update?: Maybe<
+    | PostUpdateWithWhereUniqueWithoutTagsInput[]
+    | PostUpdateWithWhereUniqueWithoutTagsInput
+  >;
+  upsert?: Maybe<
+    | PostUpsertWithWhereUniqueWithoutTagsInput[]
+    | PostUpsertWithWhereUniqueWithoutTagsInput
+  >;
+  deleteMany?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  updateMany?: Maybe<
+    PostUpdateManyWithWhereNestedInput[] | PostUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ReviewUpsertWithoutResponseInput {
+  update: ReviewUpdateWithoutResponseDataInput;
+  create: ReviewCreateWithoutResponseInput;
+}
+
+export interface PostCreateManyWithoutTagsInput {
+  create?: Maybe<PostCreateWithoutTagsInput[] | PostCreateWithoutTagsInput>;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+}
+
+export interface ResponseUpsertWithoutBookingInput {
+  update: ResponseUpdateWithoutBookingDataInput;
+  create: ResponseCreateWithoutBookingInput;
+}
+
+export interface ReviewUpdateInput {
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  booking?: Maybe<BookingUpdateOneRequiredWithoutReviewInput>;
+  rating?: Maybe<Int>;
+  review?: Maybe<String>;
+  response?: Maybe<ResponseUpdateOneWithoutReviewInput>;
+}
+
+export interface BookingUpdateManyMutationInput {
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  uniquecheck?: Maybe<String>;
+  pending?: Maybe<Boolean>;
+  confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+}
+
+export interface ResponseUpdateInput {
+  review?: Maybe<ReviewUpdateOneRequiredWithoutResponseInput>;
+  text?: Maybe<String>;
+  booking?: Maybe<BookingUpdateOneRequiredWithoutResponseInput>;
+}
+
+export interface IndustryCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  posts?: Maybe<PostCreateManyWithoutIndustryInput>;
+}
+
+export interface BookingUpsertWithoutReportInput {
+  update: BookingUpdateWithoutReportDataInput;
+  create: BookingCreateWithoutReportInput;
+}
+
+export interface PostCreateManyWithoutIndustryInput {
+  create?: Maybe<
+    PostCreateWithoutIndustryInput[] | PostCreateWithoutIndustryInput
+  >;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+}
+
+export type ReviewWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface PostCreateWithoutIndustryInput {
+  id?: Maybe<ID_Input>;
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  description?: Maybe<String>;
+  coachID: String;
+  company?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
+  tags?: Maybe<TagCreateManyWithoutPostsInput>;
 }
 
 export interface PostUpdateManyMutationInput {
@@ -2163,13 +1913,208 @@ export interface PostUpdateManyMutationInput {
   position_lc?: Maybe<String>;
 }
 
-export interface IndustryUpsertWithoutPostsInput {
-  update: IndustryUpdateWithoutPostsDataInput;
-  create: IndustryCreateWithoutPostsInput;
+export interface TagCreateManyWithoutPostsInput {
+  create?: Maybe<TagCreateWithoutPostsInput[] | TagCreateWithoutPostsInput>;
+  connect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
 }
 
-export interface IndustryUpdateWithoutPostsDataInput {
+export interface IndustryUpdateOneWithoutPostsInput {
+  create?: Maybe<IndustryCreateWithoutPostsInput>;
+  update?: Maybe<IndustryUpdateWithoutPostsDataInput>;
+  upsert?: Maybe<IndustryUpsertWithoutPostsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<IndustryWhereUniqueInput>;
+}
+
+export interface TagCreateWithoutPostsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface AvailabilityUpdateManyMutationInput {
+  start_hour?: Maybe<Int>;
+  start_minute?: Maybe<Int>;
+  coach?: Maybe<String>;
+  bookingID?: Maybe<String>;
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  uniquecheck?: Maybe<String>;
+  isOpen?: Maybe<Boolean>;
+  recurring?: Maybe<Boolean>;
+}
+
+export interface IndustryUpdateInput {
   name?: Maybe<String>;
+  posts?: Maybe<PostUpdateManyWithoutIndustryInput>;
+}
+
+export interface AvailabilityCreateManyInput {
+  create?: Maybe<AvailabilityCreateInput[] | AvailabilityCreateInput>;
+  connect?: Maybe<
+    AvailabilityWhereUniqueInput[] | AvailabilityWhereUniqueInput
+  >;
+}
+
+export interface PostUpdateManyWithoutIndustryInput {
+  create?: Maybe<
+    PostCreateWithoutIndustryInput[] | PostCreateWithoutIndustryInput
+  >;
+  delete?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  set?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  disconnect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
+  update?: Maybe<
+    | PostUpdateWithWhereUniqueWithoutIndustryInput[]
+    | PostUpdateWithWhereUniqueWithoutIndustryInput
+  >;
+  upsert?: Maybe<
+    | PostUpsertWithWhereUniqueWithoutIndustryInput[]
+    | PostUpsertWithWhereUniqueWithoutIndustryInput
+  >;
+  deleteMany?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  updateMany?: Maybe<
+    PostUpdateManyWithWhereNestedInput[] | PostUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ResponseCreateWithoutReviewInput {
+  id?: Maybe<ID_Input>;
+  text: String;
+  booking: BookingCreateOneWithoutResponseInput;
+}
+
+export interface PostUpdateWithWhereUniqueWithoutIndustryInput {
+  where: PostWhereUniqueInput;
+  data: PostUpdateWithoutIndustryDataInput;
+}
+
+export interface ReviewWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  coach?: Maybe<String>;
+  coach_not?: Maybe<String>;
+  coach_in?: Maybe<String[] | String>;
+  coach_not_in?: Maybe<String[] | String>;
+  coach_lt?: Maybe<String>;
+  coach_lte?: Maybe<String>;
+  coach_gt?: Maybe<String>;
+  coach_gte?: Maybe<String>;
+  coach_contains?: Maybe<String>;
+  coach_not_contains?: Maybe<String>;
+  coach_starts_with?: Maybe<String>;
+  coach_not_starts_with?: Maybe<String>;
+  coach_ends_with?: Maybe<String>;
+  coach_not_ends_with?: Maybe<String>;
+  seeker?: Maybe<String>;
+  seeker_not?: Maybe<String>;
+  seeker_in?: Maybe<String[] | String>;
+  seeker_not_in?: Maybe<String[] | String>;
+  seeker_lt?: Maybe<String>;
+  seeker_lte?: Maybe<String>;
+  seeker_gt?: Maybe<String>;
+  seeker_gte?: Maybe<String>;
+  seeker_contains?: Maybe<String>;
+  seeker_not_contains?: Maybe<String>;
+  seeker_starts_with?: Maybe<String>;
+  seeker_not_starts_with?: Maybe<String>;
+  seeker_ends_with?: Maybe<String>;
+  seeker_not_ends_with?: Maybe<String>;
+  booking?: Maybe<BookingWhereInput>;
+  rating?: Maybe<Int>;
+  rating_not?: Maybe<Int>;
+  rating_in?: Maybe<Int[] | Int>;
+  rating_not_in?: Maybe<Int[] | Int>;
+  rating_lt?: Maybe<Int>;
+  rating_lte?: Maybe<Int>;
+  rating_gt?: Maybe<Int>;
+  rating_gte?: Maybe<Int>;
+  review?: Maybe<String>;
+  review_not?: Maybe<String>;
+  review_in?: Maybe<String[] | String>;
+  review_not_in?: Maybe<String[] | String>;
+  review_lt?: Maybe<String>;
+  review_lte?: Maybe<String>;
+  review_gt?: Maybe<String>;
+  review_gte?: Maybe<String>;
+  review_contains?: Maybe<String>;
+  review_not_contains?: Maybe<String>;
+  review_starts_with?: Maybe<String>;
+  review_not_starts_with?: Maybe<String>;
+  review_ends_with?: Maybe<String>;
+  review_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  lastUpdated?: Maybe<DateTimeInput>;
+  lastUpdated_not?: Maybe<DateTimeInput>;
+  lastUpdated_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastUpdated_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastUpdated_lt?: Maybe<DateTimeInput>;
+  lastUpdated_lte?: Maybe<DateTimeInput>;
+  lastUpdated_gt?: Maybe<DateTimeInput>;
+  lastUpdated_gte?: Maybe<DateTimeInput>;
+  response?: Maybe<ResponseWhereInput>;
+  AND?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
+  OR?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
+  NOT?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
+}
+
+export interface PostUpdateWithoutIndustryDataInput {
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  description?: Maybe<String>;
+  coachID?: Maybe<String>;
+  company?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
+  tags?: Maybe<TagUpdateManyWithoutPostsInput>;
+}
+
+export interface PostUpsertWithWhereUniqueWithoutTagsInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutTagsDataInput;
+  create: PostCreateWithoutTagsInput;
+}
+
+export interface TagUpdateManyWithoutPostsInput {
+  create?: Maybe<TagCreateWithoutPostsInput[] | TagCreateWithoutPostsInput>;
+  delete?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  connect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  set?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  disconnect?: Maybe<TagWhereUniqueInput[] | TagWhereUniqueInput>;
+  update?: Maybe<
+    | TagUpdateWithWhereUniqueWithoutPostsInput[]
+    | TagUpdateWithWhereUniqueWithoutPostsInput
+  >;
+  upsert?: Maybe<
+    | TagUpsertWithWhereUniqueWithoutPostsInput[]
+    | TagUpsertWithWhereUniqueWithoutPostsInput
+  >;
+  deleteMany?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+  updateMany?: Maybe<
+    TagUpdateManyWithWhereNestedInput[] | TagUpdateManyWithWhereNestedInput
+  >;
 }
 
 export interface AvailabilityWhereInput {
@@ -2278,29 +2223,336 @@ export interface AvailabilityWhereInput {
   NOT?: Maybe<AvailabilityWhereInput[] | AvailabilityWhereInput>;
 }
 
-export interface TagSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<TagWhereInput>;
-  AND?: Maybe<TagSubscriptionWhereInput[] | TagSubscriptionWhereInput>;
-  OR?: Maybe<TagSubscriptionWhereInput[] | TagSubscriptionWhereInput>;
-  NOT?: Maybe<TagSubscriptionWhereInput[] | TagSubscriptionWhereInput>;
-}
-
-export type ReviewWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ResponseCreateWithoutReviewInput {
-  id?: Maybe<ID_Input>;
-  text: String;
+export interface TagUpdateWithWhereUniqueWithoutPostsInput {
+  where: TagWhereUniqueInput;
+  data: TagUpdateWithoutPostsDataInput;
 }
 
 export type ReportWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
+
+export interface TagUpdateWithoutPostsDataInput {
+  name?: Maybe<String>;
+}
+
+export interface BookingUpdateOneRequiredWithoutReportInput {
+  create?: Maybe<BookingCreateWithoutReportInput>;
+  update?: Maybe<BookingUpdateWithoutReportDataInput>;
+  upsert?: Maybe<BookingUpsertWithoutReportInput>;
+  connect?: Maybe<BookingWhereUniqueInput>;
+}
+
+export interface TagUpsertWithWhereUniqueWithoutPostsInput {
+  where: TagWhereUniqueInput;
+  update: TagUpdateWithoutPostsDataInput;
+  create: TagCreateWithoutPostsInput;
+}
+
+export interface IndustryUpsertWithoutPostsInput {
+  update: IndustryUpdateWithoutPostsDataInput;
+  create: IndustryCreateWithoutPostsInput;
+}
+
+export interface TagScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+  OR?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+  NOT?: Maybe<TagScalarWhereInput[] | TagScalarWhereInput>;
+}
+
+export interface IndustryCreateWithoutPostsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface TagUpdateManyWithWhereNestedInput {
+  where: TagScalarWhereInput;
+  data: TagUpdateManyDataInput;
+}
+
+export interface ResponseSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ResponseWhereInput>;
+  AND?: Maybe<
+    ResponseSubscriptionWhereInput[] | ResponseSubscriptionWhereInput
+  >;
+  OR?: Maybe<ResponseSubscriptionWhereInput[] | ResponseSubscriptionWhereInput>;
+  NOT?: Maybe<
+    ResponseSubscriptionWhereInput[] | ResponseSubscriptionWhereInput
+  >;
+}
+
+export interface TagUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface PostUpdateWithoutTagsDataInput {
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  industry?: Maybe<IndustryUpdateOneWithoutPostsInput>;
+  description?: Maybe<String>;
+  coachID?: Maybe<String>;
+  company?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
+}
+
+export interface PostUpsertWithWhereUniqueWithoutIndustryInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutIndustryDataInput;
+  create: PostCreateWithoutIndustryInput;
+}
+
+export interface ReportUpdateManyMutationInput {
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  strengths?: Maybe<String>;
+  growthAreas?: Maybe<String>;
+  suggestions?: Maybe<String>;
+  additionalComments?: Maybe<String>;
+}
+
+export interface IndustryUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface PostUpdateManyDataInput {
+  price?: Maybe<Int>;
+  position?: Maybe<String>;
+  description?: Maybe<String>;
+  coachID?: Maybe<String>;
+  company?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  position_lc?: Maybe<String>;
+}
+
+export interface PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput;
+  data: PostUpdateManyDataInput;
+}
+
+export interface PostScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  price?: Maybe<Int>;
+  price_not?: Maybe<Int>;
+  price_in?: Maybe<Int[] | Int>;
+  price_not_in?: Maybe<Int[] | Int>;
+  price_lt?: Maybe<Int>;
+  price_lte?: Maybe<Int>;
+  price_gt?: Maybe<Int>;
+  price_gte?: Maybe<Int>;
+  position?: Maybe<String>;
+  position_not?: Maybe<String>;
+  position_in?: Maybe<String[] | String>;
+  position_not_in?: Maybe<String[] | String>;
+  position_lt?: Maybe<String>;
+  position_lte?: Maybe<String>;
+  position_gt?: Maybe<String>;
+  position_gte?: Maybe<String>;
+  position_contains?: Maybe<String>;
+  position_not_contains?: Maybe<String>;
+  position_starts_with?: Maybe<String>;
+  position_not_starts_with?: Maybe<String>;
+  position_ends_with?: Maybe<String>;
+  position_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  coachID?: Maybe<String>;
+  coachID_not?: Maybe<String>;
+  coachID_in?: Maybe<String[] | String>;
+  coachID_not_in?: Maybe<String[] | String>;
+  coachID_lt?: Maybe<String>;
+  coachID_lte?: Maybe<String>;
+  coachID_gt?: Maybe<String>;
+  coachID_gte?: Maybe<String>;
+  coachID_contains?: Maybe<String>;
+  coachID_not_contains?: Maybe<String>;
+  coachID_starts_with?: Maybe<String>;
+  coachID_not_starts_with?: Maybe<String>;
+  coachID_ends_with?: Maybe<String>;
+  coachID_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  lastUpdated?: Maybe<DateTimeInput>;
+  lastUpdated_not?: Maybe<DateTimeInput>;
+  lastUpdated_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastUpdated_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  lastUpdated_lt?: Maybe<DateTimeInput>;
+  lastUpdated_lte?: Maybe<DateTimeInput>;
+  lastUpdated_gt?: Maybe<DateTimeInput>;
+  lastUpdated_gte?: Maybe<DateTimeInput>;
+  company?: Maybe<String>;
+  company_not?: Maybe<String>;
+  company_in?: Maybe<String[] | String>;
+  company_not_in?: Maybe<String[] | String>;
+  company_lt?: Maybe<String>;
+  company_lte?: Maybe<String>;
+  company_gt?: Maybe<String>;
+  company_gte?: Maybe<String>;
+  company_contains?: Maybe<String>;
+  company_not_contains?: Maybe<String>;
+  company_starts_with?: Maybe<String>;
+  company_not_starts_with?: Maybe<String>;
+  company_ends_with?: Maybe<String>;
+  company_not_ends_with?: Maybe<String>;
+  isPublished?: Maybe<Boolean>;
+  isPublished_not?: Maybe<Boolean>;
+  desc_lc?: Maybe<String>;
+  desc_lc_not?: Maybe<String>;
+  desc_lc_in?: Maybe<String[] | String>;
+  desc_lc_not_in?: Maybe<String[] | String>;
+  desc_lc_lt?: Maybe<String>;
+  desc_lc_lte?: Maybe<String>;
+  desc_lc_gt?: Maybe<String>;
+  desc_lc_gte?: Maybe<String>;
+  desc_lc_contains?: Maybe<String>;
+  desc_lc_not_contains?: Maybe<String>;
+  desc_lc_starts_with?: Maybe<String>;
+  desc_lc_not_starts_with?: Maybe<String>;
+  desc_lc_ends_with?: Maybe<String>;
+  desc_lc_not_ends_with?: Maybe<String>;
+  company_lc?: Maybe<String>;
+  company_lc_not?: Maybe<String>;
+  company_lc_in?: Maybe<String[] | String>;
+  company_lc_not_in?: Maybe<String[] | String>;
+  company_lc_lt?: Maybe<String>;
+  company_lc_lte?: Maybe<String>;
+  company_lc_gt?: Maybe<String>;
+  company_lc_gte?: Maybe<String>;
+  company_lc_contains?: Maybe<String>;
+  company_lc_not_contains?: Maybe<String>;
+  company_lc_starts_with?: Maybe<String>;
+  company_lc_not_starts_with?: Maybe<String>;
+  company_lc_ends_with?: Maybe<String>;
+  company_lc_not_ends_with?: Maybe<String>;
+  position_lc?: Maybe<String>;
+  position_lc_not?: Maybe<String>;
+  position_lc_in?: Maybe<String[] | String>;
+  position_lc_not_in?: Maybe<String[] | String>;
+  position_lc_lt?: Maybe<String>;
+  position_lc_lte?: Maybe<String>;
+  position_lc_gt?: Maybe<String>;
+  position_lc_gte?: Maybe<String>;
+  position_lc_contains?: Maybe<String>;
+  position_lc_not_contains?: Maybe<String>;
+  position_lc_starts_with?: Maybe<String>;
+  position_lc_not_starts_with?: Maybe<String>;
+  position_lc_ends_with?: Maybe<String>;
+  position_lc_not_ends_with?: Maybe<String>;
+  AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+  NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
+}
+
+export interface BookingCreateOneWithoutReportInput {
+  create?: Maybe<BookingCreateWithoutReportInput>;
+  connect?: Maybe<BookingWhereUniqueInput>;
+}
+
+export type PostWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  coachID?: Maybe<String>;
+}>;
+
+export interface BookingSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<BookingWhereInput>;
+  AND?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
+  OR?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
+  NOT?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
+}
+
+export interface ReviewCreateWithoutBookingInput {
+  id?: Maybe<ID_Input>;
+  coach: String;
+  seeker: String;
+  rating: Int;
+  review?: Maybe<String>;
+  response?: Maybe<ResponseCreateOneWithoutReviewInput>;
+}
+
+export interface AvailabilityCreateInput {
+  id?: Maybe<ID_Input>;
+  start_hour: Int;
+  start_minute: Int;
+  coach: String;
+  bookingID?: Maybe<String>;
+  year: Int;
+  month: Int;
+  day: Int;
+  uniquecheck: String;
+  isOpen: Boolean;
+  recurring: Boolean;
+}
 
 export interface NodeNode {
   id: ID_Output;
@@ -2325,219 +2577,6 @@ export interface TagPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
 }
 
-export interface Tag {
-  id: ID_Output;
-  name: String;
-}
-
-export interface TagPromise extends Promise<Tag>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  posts: <T = FragmentableArray<Post>>(args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface TagSubscription
-  extends Promise<AsyncIterator<Tag>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface TagNullablePromise extends Promise<Tag | null>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  posts: <T = FragmentableArray<Post>>(args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface AggregateAvailability {
-  count: Int;
-}
-
-export interface AggregateAvailabilityPromise
-  extends Promise<AggregateAvailability>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateAvailabilitySubscription
-  extends Promise<AsyncIterator<AggregateAvailability>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface AvailabilityConnection {
-  pageInfo: PageInfo;
-  edges: AvailabilityEdge[];
-}
-
-export interface AvailabilityConnectionPromise
-  extends Promise<AvailabilityConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<AvailabilityEdge>>() => T;
-  aggregate: <T = AggregateAvailabilityPromise>() => T;
-}
-
-export interface AvailabilityConnectionSubscription
-  extends Promise<AsyncIterator<AvailabilityConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<AvailabilityEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateAvailabilitySubscription>() => T;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface Post {
-  id: ID_Output;
-  price?: Int;
-  position?: String;
-  description?: String;
-  coachID: String;
-  createdAt: DateTimeOutput;
-  lastUpdated: DateTimeOutput;
-  company?: String;
-  isPublished: Boolean;
-  desc_lc?: String;
-  company_lc?: String;
-  position_lc?: String;
-}
-
-export interface PostPromise extends Promise<Post>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  price: () => Promise<Int>;
-  position: () => Promise<String>;
-  industry: <T = IndustryPromise>() => T;
-  description: () => Promise<String>;
-  coachID: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  lastUpdated: () => Promise<DateTimeOutput>;
-  company: () => Promise<String>;
-  isPublished: () => Promise<Boolean>;
-  desc_lc: () => Promise<String>;
-  company_lc: () => Promise<String>;
-  position_lc: () => Promise<String>;
-  tags: <T = FragmentableArray<Tag>>(args?: {
-    where?: TagWhereInput;
-    orderBy?: TagOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface PostSubscription
-  extends Promise<AsyncIterator<Post>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  price: () => Promise<AsyncIterator<Int>>;
-  position: () => Promise<AsyncIterator<String>>;
-  industry: <T = IndustrySubscription>() => T;
-  description: () => Promise<AsyncIterator<String>>;
-  coachID: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
-  company: () => Promise<AsyncIterator<String>>;
-  isPublished: () => Promise<AsyncIterator<Boolean>>;
-  desc_lc: () => Promise<AsyncIterator<String>>;
-  company_lc: () => Promise<AsyncIterator<String>>;
-  position_lc: () => Promise<AsyncIterator<String>>;
-  tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
-    where?: TagWhereInput;
-    orderBy?: TagOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface PostNullablePromise
-  extends Promise<Post | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  price: () => Promise<Int>;
-  position: () => Promise<String>;
-  industry: <T = IndustryPromise>() => T;
-  description: () => Promise<String>;
-  coachID: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  lastUpdated: () => Promise<DateTimeOutput>;
-  company: () => Promise<String>;
-  isPublished: () => Promise<Boolean>;
-  desc_lc: () => Promise<String>;
-  company_lc: () => Promise<String>;
-  position_lc: () => Promise<String>;
-  tags: <T = FragmentableArray<Tag>>(args?: {
-    where?: TagWhereInput;
-    orderBy?: TagOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface TagEdge {
-  node: Tag;
-  cursor: String;
-}
-
-export interface TagEdgePromise extends Promise<TagEdge>, Fragmentable {
-  node: <T = TagPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface TagEdgeSubscription
-  extends Promise<AsyncIterator<TagEdge>>,
-    Fragmentable {
-  node: <T = TagSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
 export interface PageInfo {
   hasNextPage: Boolean;
   hasPreviousPage: Boolean;
@@ -2559,6 +2598,139 @@ export interface PageInfoSubscription
   hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
   startCursor: () => Promise<AsyncIterator<String>>;
   endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateAvailability {
+  count: Int;
+}
+
+export interface AggregateAvailabilityPromise
+  extends Promise<AggregateAvailability>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAvailabilitySubscription
+  extends Promise<AsyncIterator<AggregateAvailability>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Industry {
+  id: ID_Output;
+  name: String;
+}
+
+export interface IndustryPromise extends Promise<Industry>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface IndustrySubscription
+  extends Promise<AsyncIterator<Industry>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface IndustryNullablePromise
+  extends Promise<Industry | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface AggregateBooking {
+  count: Int;
+}
+
+export interface AggregateBookingPromise
+  extends Promise<AggregateBooking>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateBookingSubscription
+  extends Promise<AsyncIterator<AggregateBooking>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TagEdge {
+  node: Tag;
+  cursor: String;
+}
+
+export interface TagEdgePromise extends Promise<TagEdge>, Fragmentable {
+  node: <T = TagPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TagEdgeSubscription
+  extends Promise<AsyncIterator<TagEdge>>,
+    Fragmentable {
+  node: <T = TagSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface BookingEdge {
+  node: Booking;
+  cursor: String;
+}
+
+export interface BookingEdgePromise extends Promise<BookingEdge>, Fragmentable {
+  node: <T = BookingPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface BookingEdgeSubscription
+  extends Promise<AsyncIterator<BookingEdge>>,
+    Fragmentable {
+  node: <T = BookingSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateReview {
@@ -2598,23 +2770,54 @@ export interface TagConnectionSubscription
   aggregate: <T = AggregateTagSubscription>() => T;
 }
 
-export interface AvailabilityEdge {
-  node: Availability;
-  cursor: String;
+export interface Review {
+  id: ID_Output;
+  coach: String;
+  seeker: String;
+  rating: Int;
+  review?: String;
+  createdAt: DateTimeOutput;
+  lastUpdated: DateTimeOutput;
 }
 
-export interface AvailabilityEdgePromise
-  extends Promise<AvailabilityEdge>,
-    Fragmentable {
-  node: <T = AvailabilityPromise>() => T;
-  cursor: () => Promise<String>;
+export interface ReviewPromise extends Promise<Review>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  coach: () => Promise<String>;
+  seeker: () => Promise<String>;
+  booking: <T = BookingPromise>() => T;
+  rating: () => Promise<Int>;
+  review: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
+  response: <T = ResponsePromise>() => T;
 }
 
-export interface AvailabilityEdgeSubscription
-  extends Promise<AsyncIterator<AvailabilityEdge>>,
+export interface ReviewSubscription
+  extends Promise<AsyncIterator<Review>>,
     Fragmentable {
-  node: <T = AvailabilitySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  coach: () => Promise<AsyncIterator<String>>;
+  seeker: () => Promise<AsyncIterator<String>>;
+  booking: <T = BookingSubscription>() => T;
+  rating: () => Promise<AsyncIterator<Int>>;
+  review: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
+  response: <T = ResponseSubscription>() => T;
+}
+
+export interface ReviewNullablePromise
+  extends Promise<Review | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  coach: () => Promise<String>;
+  seeker: () => Promise<String>;
+  booking: <T = BookingPromise>() => T;
+  rating: () => Promise<Int>;
+  review: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
+  response: <T = ResponsePromise>() => T;
 }
 
 export interface ReviewEdge {
@@ -2832,66 +3035,6 @@ export interface AvailabilityPreviousValuesSubscription
   recurring: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface Response {
-  id: ID_Output;
-  text: String;
-  createdAt: DateTimeOutput;
-  lastUpdated: DateTimeOutput;
-}
-
-export interface ResponsePromise extends Promise<Response>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  review: <T = ReviewPromise>() => T;
-  text: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  lastUpdated: () => Promise<DateTimeOutput>;
-}
-
-export interface ResponseSubscription
-  extends Promise<AsyncIterator<Response>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  review: <T = ReviewSubscription>() => T;
-  text: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface ResponseNullablePromise
-  extends Promise<Response | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  review: <T = ReviewPromise>() => T;
-  text: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  lastUpdated: () => Promise<DateTimeOutput>;
-}
-
-export interface ReviewSubscriptionPayload {
-  mutation: MutationType;
-  node: Review;
-  updatedFields: String[];
-  previousValues: ReviewPreviousValues;
-}
-
-export interface ReviewSubscriptionPayloadPromise
-  extends Promise<ReviewSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = ReviewPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = ReviewPreviousValuesPromise>() => T;
-}
-
-export interface ReviewSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ReviewSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ReviewSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ReviewPreviousValuesSubscription>() => T;
-}
-
 export interface ReportEdge {
   node: Report;
   cursor: String;
@@ -2909,29 +3052,25 @@ export interface ReportEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface BookingSubscriptionPayload {
-  mutation: MutationType;
-  node: Booking;
-  updatedFields: String[];
-  previousValues: BookingPreviousValues;
+export interface BookingConnection {
+  pageInfo: PageInfo;
+  edges: BookingEdge[];
 }
 
-export interface BookingSubscriptionPayloadPromise
-  extends Promise<BookingSubscriptionPayload>,
+export interface BookingConnectionPromise
+  extends Promise<BookingConnection>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = BookingPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = BookingPreviousValuesPromise>() => T;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<BookingEdge>>() => T;
+  aggregate: <T = AggregateBookingPromise>() => T;
 }
 
-export interface BookingSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<BookingSubscriptionPayload>>,
+export interface BookingConnectionSubscription
+  extends Promise<AsyncIterator<BookingConnection>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = BookingSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = BookingPreviousValuesSubscription>() => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<BookingEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateBookingSubscription>() => T;
 }
 
 export interface Booking {
@@ -2975,6 +3114,9 @@ export interface BookingPromise extends Promise<Booking>, Fragmentable {
   interviewGoals: () => Promise<String>;
   interviewQuestions: () => Promise<String>;
   resumeURL: () => Promise<String>;
+  review: <T = ReviewPromise>() => T;
+  response: <T = ResponsePromise>() => T;
+  report: <T = ReportPromise>() => T;
 }
 
 export interface BookingSubscription
@@ -3003,6 +3145,9 @@ export interface BookingSubscription
   interviewGoals: () => Promise<AsyncIterator<String>>;
   interviewQuestions: () => Promise<AsyncIterator<String>>;
   resumeURL: () => Promise<AsyncIterator<String>>;
+  review: <T = ReviewSubscription>() => T;
+  response: <T = ResponseSubscription>() => T;
+  report: <T = ReportSubscription>() => T;
 }
 
 export interface BookingNullablePromise
@@ -3031,6 +3176,51 @@ export interface BookingNullablePromise
   interviewGoals: () => Promise<String>;
   interviewQuestions: () => Promise<String>;
   resumeURL: () => Promise<String>;
+  review: <T = ReviewPromise>() => T;
+  response: <T = ResponsePromise>() => T;
+  report: <T = ReportPromise>() => T;
+}
+
+export interface BookingSubscriptionPayload {
+  mutation: MutationType;
+  node: Booking;
+  updatedFields: String[];
+  previousValues: BookingPreviousValues;
+}
+
+export interface BookingSubscriptionPayloadPromise
+  extends Promise<BookingSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = BookingPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = BookingPreviousValuesPromise>() => T;
+}
+
+export interface BookingSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<BookingSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = BookingSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = BookingPreviousValuesSubscription>() => T;
+}
+
+export interface PostEdge {
+  node: Post;
+  cursor: String;
+}
+
+export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
+  node: <T = PostPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PostEdgeSubscription
+  extends Promise<AsyncIterator<PostEdge>>,
+    Fragmentable {
+  node: <T = PostSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface BookingPreviousValues {
@@ -3088,92 +3278,60 @@ export interface BookingPreviousValuesSubscription
   resumeURL: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregatePost {
+export interface AggregateIndustry {
   count: Int;
 }
 
-export interface AggregatePostPromise
-  extends Promise<AggregatePost>,
+export interface AggregateIndustryPromise
+  extends Promise<AggregateIndustry>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregatePostSubscription
-  extends Promise<AsyncIterator<AggregatePost>>,
+export interface AggregateIndustrySubscription
+  extends Promise<AsyncIterator<AggregateIndustry>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface Industry {
-  id: ID_Output;
-  name: String;
+export interface AvailabilityEdge {
+  node: Availability;
+  cursor: String;
 }
 
-export interface IndustryPromise extends Promise<Industry>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  posts: <T = FragmentableArray<Post>>(args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface IndustrySubscription
-  extends Promise<AsyncIterator<Industry>>,
+export interface AvailabilityEdgePromise
+  extends Promise<AvailabilityEdge>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  node: <T = AvailabilityPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface IndustryNullablePromise
-  extends Promise<Industry | null>,
+export interface AvailabilityEdgeSubscription
+  extends Promise<AsyncIterator<AvailabilityEdge>>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  posts: <T = FragmentableArray<Post>>(args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  node: <T = AvailabilitySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PostConnection {
+export interface IndustryConnection {
   pageInfo: PageInfo;
-  edges: PostEdge[];
+  edges: IndustryEdge[];
 }
 
-export interface PostConnectionPromise
-  extends Promise<PostConnection>,
+export interface IndustryConnectionPromise
+  extends Promise<IndustryConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PostEdge>>() => T;
-  aggregate: <T = AggregatePostPromise>() => T;
+  edges: <T = FragmentableArray<IndustryEdge>>() => T;
+  aggregate: <T = AggregateIndustryPromise>() => T;
 }
 
-export interface PostConnectionSubscription
-  extends Promise<AsyncIterator<PostConnection>>,
+export interface IndustryConnectionSubscription
+  extends Promise<AsyncIterator<IndustryConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePostSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<IndustryEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateIndustrySubscription>() => T;
 }
 
 export interface IndustrySubscriptionPayload {
@@ -3201,23 +3359,25 @@ export interface IndustrySubscriptionPayloadSubscription
   previousValues: <T = IndustryPreviousValuesSubscription>() => T;
 }
 
-export interface IndustryEdge {
-  node: Industry;
-  cursor: String;
+export interface AvailabilityConnection {
+  pageInfo: PageInfo;
+  edges: AvailabilityEdge[];
 }
 
-export interface IndustryEdgePromise
-  extends Promise<IndustryEdge>,
+export interface AvailabilityConnectionPromise
+  extends Promise<AvailabilityConnection>,
     Fragmentable {
-  node: <T = IndustryPromise>() => T;
-  cursor: () => Promise<String>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AvailabilityEdge>>() => T;
+  aggregate: <T = AggregateAvailabilityPromise>() => T;
 }
 
-export interface IndustryEdgeSubscription
-  extends Promise<AsyncIterator<IndustryEdge>>,
+export interface AvailabilityConnectionSubscription
+  extends Promise<AsyncIterator<AvailabilityConnection>>,
     Fragmentable {
-  node: <T = IndustrySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AvailabilityEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAvailabilitySubscription>() => T;
 }
 
 export interface IndustryPreviousValues {
@@ -3273,20 +3433,55 @@ export interface ReviewPreviousValuesSubscription
   lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface AggregateBooking {
-  count: Int;
+export interface Report {
+  id: ID_Output;
+  coach: String;
+  seeker: String;
+  strengths: String;
+  growthAreas: String;
+  suggestions: String;
+  additionalComments?: String;
+  createdAt: DateTimeOutput;
 }
 
-export interface AggregateBookingPromise
-  extends Promise<AggregateBooking>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface ReportPromise extends Promise<Report>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  coach: () => Promise<String>;
+  seeker: () => Promise<String>;
+  booking: <T = BookingPromise>() => T;
+  strengths: () => Promise<String>;
+  growthAreas: () => Promise<String>;
+  suggestions: () => Promise<String>;
+  additionalComments: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
-export interface AggregateBookingSubscription
-  extends Promise<AsyncIterator<AggregateBooking>>,
+export interface ReportSubscription
+  extends Promise<AsyncIterator<Report>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  coach: () => Promise<AsyncIterator<String>>;
+  seeker: () => Promise<AsyncIterator<String>>;
+  booking: <T = BookingSubscription>() => T;
+  strengths: () => Promise<AsyncIterator<String>>;
+  growthAreas: () => Promise<AsyncIterator<String>>;
+  suggestions: () => Promise<AsyncIterator<String>>;
+  additionalComments: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface ReportNullablePromise
+  extends Promise<Report | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  coach: () => Promise<String>;
+  seeker: () => Promise<String>;
+  booking: <T = BookingPromise>() => T;
+  strengths: () => Promise<String>;
+  growthAreas: () => Promise<String>;
+  suggestions: () => Promise<String>;
+  additionalComments: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface AggregateResponse {
@@ -3330,54 +3525,20 @@ export interface PostSubscriptionPayloadSubscription
   previousValues: <T = PostPreviousValuesSubscription>() => T;
 }
 
-export interface Review {
-  id: ID_Output;
-  coach: String;
-  seeker: String;
-  rating: Int;
-  review?: String;
-  createdAt: DateTimeOutput;
-  lastUpdated: DateTimeOutput;
+export interface AggregateReport {
+  count: Int;
 }
 
-export interface ReviewPromise extends Promise<Review>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  coach: () => Promise<String>;
-  seeker: () => Promise<String>;
-  booking: <T = BookingPromise>() => T;
-  rating: () => Promise<Int>;
-  review: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  lastUpdated: () => Promise<DateTimeOutput>;
-  response: <T = ResponsePromise>() => T;
-}
-
-export interface ReviewSubscription
-  extends Promise<AsyncIterator<Review>>,
+export interface AggregateReportPromise
+  extends Promise<AggregateReport>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  coach: () => Promise<AsyncIterator<String>>;
-  seeker: () => Promise<AsyncIterator<String>>;
-  booking: <T = BookingSubscription>() => T;
-  rating: () => Promise<AsyncIterator<Int>>;
-  review: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
-  response: <T = ResponseSubscription>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface ReviewNullablePromise
-  extends Promise<Review | null>,
+export interface AggregateReportSubscription
+  extends Promise<AsyncIterator<AggregateReport>>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  coach: () => Promise<String>;
-  seeker: () => Promise<String>;
-  booking: <T = BookingPromise>() => T;
-  rating: () => Promise<Int>;
-  review: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
-  lastUpdated: () => Promise<DateTimeOutput>;
-  response: <T = ResponsePromise>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface PostPreviousValues {
@@ -3429,58 +3590,76 @@ export interface PostPreviousValuesSubscription
   position_lc: () => Promise<AsyncIterator<String>>;
 }
 
-export interface ReportConnection {
-  pageInfo: PageInfo;
-  edges: ReportEdge[];
+export interface AggregatePost {
+  count: Int;
 }
 
-export interface ReportConnectionPromise
-  extends Promise<ReportConnection>,
+export interface AggregatePostPromise
+  extends Promise<AggregatePost>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ReportEdge>>() => T;
-  aggregate: <T = AggregateReportPromise>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface ReportConnectionSubscription
-  extends Promise<AsyncIterator<ReportConnection>>,
+export interface AggregatePostSubscription
+  extends Promise<AsyncIterator<AggregatePost>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ReportEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateReportSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface BookingEdge {
-  node: Booking;
+export interface Response {
+  id: ID_Output;
+  text: String;
+  createdAt: DateTimeOutput;
+  lastUpdated: DateTimeOutput;
+}
+
+export interface ResponsePromise extends Promise<Response>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  review: <T = ReviewPromise>() => T;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
+  booking: <T = BookingPromise>() => T;
+}
+
+export interface ResponseSubscription
+  extends Promise<AsyncIterator<Response>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  review: <T = ReviewSubscription>() => T;
+  text: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
+  booking: <T = BookingSubscription>() => T;
+}
+
+export interface ResponseNullablePromise
+  extends Promise<Response | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  review: <T = ReviewPromise>() => T;
+  text: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
+  booking: <T = BookingPromise>() => T;
+}
+
+export interface IndustryEdge {
+  node: Industry;
   cursor: String;
 }
 
-export interface BookingEdgePromise extends Promise<BookingEdge>, Fragmentable {
-  node: <T = BookingPromise>() => T;
+export interface IndustryEdgePromise
+  extends Promise<IndustryEdge>,
+    Fragmentable {
+  node: <T = IndustryPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface BookingEdgeSubscription
-  extends Promise<AsyncIterator<BookingEdge>>,
+export interface IndustryEdgeSubscription
+  extends Promise<AsyncIterator<IndustryEdge>>,
     Fragmentable {
-  node: <T = BookingSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface PostEdge {
-  node: Post;
-  cursor: String;
-}
-
-export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
-  node: <T = PostPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PostEdgeSubscription
-  extends Promise<AsyncIterator<PostEdge>>,
-    Fragmentable {
-  node: <T = PostSubscription>() => T;
+  node: <T = IndustrySubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
@@ -3509,25 +3688,98 @@ export interface ReportSubscriptionPayloadSubscription
   previousValues: <T = ReportPreviousValuesSubscription>() => T;
 }
 
-export interface IndustryConnection {
-  pageInfo: PageInfo;
-  edges: IndustryEdge[];
+export interface Post {
+  id: ID_Output;
+  price?: Int;
+  position?: String;
+  description?: String;
+  coachID: String;
+  createdAt: DateTimeOutput;
+  lastUpdated: DateTimeOutput;
+  company?: String;
+  isPublished: Boolean;
+  desc_lc?: String;
+  company_lc?: String;
+  position_lc?: String;
 }
 
-export interface IndustryConnectionPromise
-  extends Promise<IndustryConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<IndustryEdge>>() => T;
-  aggregate: <T = AggregateIndustryPromise>() => T;
+export interface PostPromise extends Promise<Post>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  price: () => Promise<Int>;
+  position: () => Promise<String>;
+  industry: <T = IndustryPromise>() => T;
+  description: () => Promise<String>;
+  coachID: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
+  company: () => Promise<String>;
+  isPublished: () => Promise<Boolean>;
+  desc_lc: () => Promise<String>;
+  company_lc: () => Promise<String>;
+  position_lc: () => Promise<String>;
+  tags: <T = FragmentableArray<Tag>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface IndustryConnectionSubscription
-  extends Promise<AsyncIterator<IndustryConnection>>,
+export interface PostSubscription
+  extends Promise<AsyncIterator<Post>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<IndustryEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateIndustrySubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  price: () => Promise<AsyncIterator<Int>>;
+  position: () => Promise<AsyncIterator<String>>;
+  industry: <T = IndustrySubscription>() => T;
+  description: () => Promise<AsyncIterator<String>>;
+  coachID: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  lastUpdated: () => Promise<AsyncIterator<DateTimeOutput>>;
+  company: () => Promise<AsyncIterator<String>>;
+  isPublished: () => Promise<AsyncIterator<Boolean>>;
+  desc_lc: () => Promise<AsyncIterator<String>>;
+  company_lc: () => Promise<AsyncIterator<String>>;
+  position_lc: () => Promise<AsyncIterator<String>>;
+  tags: <T = Promise<AsyncIterator<TagSubscription>>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PostNullablePromise
+  extends Promise<Post | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  price: () => Promise<Int>;
+  position: () => Promise<String>;
+  industry: <T = IndustryPromise>() => T;
+  description: () => Promise<String>;
+  coachID: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  lastUpdated: () => Promise<DateTimeOutput>;
+  company: () => Promise<String>;
+  isPublished: () => Promise<Boolean>;
+  desc_lc: () => Promise<String>;
+  company_lc: () => Promise<String>;
+  position_lc: () => Promise<String>;
+  tags: <T = FragmentableArray<Tag>>(args?: {
+    where?: TagWhereInput;
+    orderBy?: TagOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface ResponseConnection {
@@ -3601,25 +3853,29 @@ export interface ResponseSubscriptionPayloadSubscription
   previousValues: <T = ResponsePreviousValuesSubscription>() => T;
 }
 
-export interface BookingConnection {
-  pageInfo: PageInfo;
-  edges: BookingEdge[];
+export interface ReviewSubscriptionPayload {
+  mutation: MutationType;
+  node: Review;
+  updatedFields: String[];
+  previousValues: ReviewPreviousValues;
 }
 
-export interface BookingConnectionPromise
-  extends Promise<BookingConnection>,
+export interface ReviewSubscriptionPayloadPromise
+  extends Promise<ReviewSubscriptionPayload>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<BookingEdge>>() => T;
-  aggregate: <T = AggregateBookingPromise>() => T;
+  mutation: () => Promise<MutationType>;
+  node: <T = ReviewPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ReviewPreviousValuesPromise>() => T;
 }
 
-export interface BookingConnectionSubscription
-  extends Promise<AsyncIterator<BookingConnection>>,
+export interface ReviewSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ReviewSubscriptionPayload>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<BookingEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateBookingSubscription>() => T;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ReviewSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ReviewPreviousValuesSubscription>() => T;
 }
 
 export interface ReportPreviousValues {
@@ -3659,20 +3915,25 @@ export interface ReportPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface AggregateReport {
-  count: Int;
+export interface ReportConnection {
+  pageInfo: PageInfo;
+  edges: ReportEdge[];
 }
 
-export interface AggregateReportPromise
-  extends Promise<AggregateReport>,
+export interface ReportConnectionPromise
+  extends Promise<ReportConnection>,
     Fragmentable {
-  count: () => Promise<Int>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ReportEdge>>() => T;
+  aggregate: <T = AggregateReportPromise>() => T;
 }
 
-export interface AggregateReportSubscription
-  extends Promise<AsyncIterator<AggregateReport>>,
+export interface ReportConnectionSubscription
+  extends Promise<AsyncIterator<ReportConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ReportEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateReportSubscription>() => T;
 }
 
 export interface AggregateTag {
@@ -3691,71 +3952,74 @@ export interface AggregateTagSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface AggregateIndustry {
-  count: Int;
-}
-
-export interface AggregateIndustryPromise
-  extends Promise<AggregateIndustry>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateIndustrySubscription
-  extends Promise<AsyncIterator<AggregateIndustry>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface Report {
+export interface Tag {
   id: ID_Output;
-  coach: String;
-  seeker: String;
-  strengths: String;
-  growthAreas: String;
-  suggestions: String;
-  additionalComments?: String;
-  createdAt: DateTimeOutput;
+  name: String;
 }
 
-export interface ReportPromise extends Promise<Report>, Fragmentable {
+export interface TagPromise extends Promise<Tag>, Fragmentable {
   id: () => Promise<ID_Output>;
-  coach: () => Promise<String>;
-  seeker: () => Promise<String>;
-  booking: <T = BookingPromise>() => T;
-  strengths: () => Promise<String>;
-  growthAreas: () => Promise<String>;
-  suggestions: () => Promise<String>;
-  additionalComments: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface ReportSubscription
-  extends Promise<AsyncIterator<Report>>,
+export interface TagSubscription
+  extends Promise<AsyncIterator<Tag>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  coach: () => Promise<AsyncIterator<String>>;
-  seeker: () => Promise<AsyncIterator<String>>;
-  booking: <T = BookingSubscription>() => T;
-  strengths: () => Promise<AsyncIterator<String>>;
-  growthAreas: () => Promise<AsyncIterator<String>>;
-  suggestions: () => Promise<AsyncIterator<String>>;
-  additionalComments: () => Promise<AsyncIterator<String>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  name: () => Promise<AsyncIterator<String>>;
+  posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface ReportNullablePromise
-  extends Promise<Report | null>,
-    Fragmentable {
+export interface TagNullablePromise extends Promise<Tag | null>, Fragmentable {
   id: () => Promise<ID_Output>;
-  coach: () => Promise<String>;
-  seeker: () => Promise<String>;
-  booking: <T = BookingPromise>() => T;
-  strengths: () => Promise<String>;
-  growthAreas: () => Promise<String>;
-  suggestions: () => Promise<String>;
-  additionalComments: () => Promise<String>;
-  createdAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  posts: <T = FragmentableArray<Post>>(args?: {
+    where?: PostWhereInput;
+    orderBy?: PostOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PostConnection {
+  pageInfo: PageInfo;
+  edges: PostEdge[];
+}
+
+export interface PostConnectionPromise
+  extends Promise<PostConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PostEdge>>() => T;
+  aggregate: <T = AggregatePostPromise>() => T;
+}
+
+export interface PostConnectionSubscription
+  extends Promise<AsyncIterator<PostConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePostSubscription>() => T;
 }
 
 /*

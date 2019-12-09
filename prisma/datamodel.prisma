@@ -58,6 +58,9 @@ type Booking {
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
+  review: Review @relation(link: INLINE)
+  response: Response @relation(link: INLINE)
+  report: Report @relation(link: INLINE)
 }
 
 type Review {
@@ -78,6 +81,7 @@ type Response {
   text: String!
   createdAt: DateTime! @createdAt
   lastUpdated: DateTime! @updatedAt
+  booking: Booking! @unique
 }
 
 type Report {
@@ -91,12 +95,3 @@ type Report {
   additionalComments: String
   createdAt: DateTime! @createdAt
 }
-
-# type User {
-#  id: ID! @id
-#  email: String! @unique
-#  post: Post @relation(name: "UserOnPost", onDelete: CASCADE)
- # coach_bookings: [Booking] @relation(name: "CoachBookings", onDelete: CASCADE)
-  # seeker_bookings: [Booking] @relation(name: "SeekerBookings", onDelete: CASCADE)
-  # availability: [Availability]
-# }

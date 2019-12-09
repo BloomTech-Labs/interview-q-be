@@ -8,6 +8,6 @@ function seeker(report) {
 	return { __typename: 'User', id: report.seeker };
 }
 
-function booking(parent, args, context) {
+function booking(parent, _args, context) {
 	return context.prisma.report({ id: parent.id }).booking();
 }

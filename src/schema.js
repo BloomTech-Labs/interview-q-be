@@ -25,8 +25,10 @@ const typeDefs = gql`
 		bookingByUniquecheck(uniquecheck: String!): Booking!
 		reviewsByCoach(coach_id: String!): [Review]
 		ratingByCoach(coach_id: String!): Float!
+		reviewsBySeeker(seeker_id: String!): [Review]
 		reviewByBooking(uniqueBooking: String!): Review
 		responseByBooking(uniqueBooking: String!): Response
+		responseByReview(review_id: String!): Response
 		reportsByCoach(coach_id: String!): [Report]
 		reportsBySeeker(seeker_id: String!): [Report]
 		reportByBooking(uniqueBooking: String!): Report
@@ -92,6 +94,40 @@ const typeDefs = gql`
 		): Booking!
 
 		deleteBooking(uniquecheck: String!): Booking!
+
+		createReview(
+			# coach: String!
+			# seeker: String!
+			uniqueBooking: String!
+			rating: Int!
+			review: String
+		): Review!
+
+		updateReview(id: String!, rating: Int, review: String): Review!
+
+		deleteReview(id: String!): Review!
+
+		createResponse(
+			reviewID: String!
+			text: String!
+			uniqueBooking: String!
+		): Response!
+
+		updateResponse(id: String!, text: String): Response!
+
+		deleteResponse(id: String!): Response!
+
+		createReport(
+			# coach: String!
+			# seeker: String!
+			uniqueBooking: String!
+			strengths: String!
+			growthAreas: String!
+			suggestions: String!
+			additionalComments: String
+		): Report!
+
+		updateReport(id: String!): Report!
 	}
 
 	# ***************************************************
@@ -107,8 +143,6 @@ const typeDefs = gql`
 		id: ID!
 		price: Int!
 		position: String!
-		# A post is connected to one industry. We connect them via a String of the unique name of the industry
-		# An alternate method could be connecting them via ID, but since both are unique, we chose name
 		industry: Industry!
 		description: String!
 		tags: [Tag]!
@@ -130,9 +164,7 @@ const typeDefs = gql`
 	type Industry {
 		id: ID!
 		name: String!
-		posts: [Post]! # This is how GraphQL connects the Industry type with the Post type... it designates a key for an industry object that references an array of matching Posts
-
-		# This is a one to many relationship between Industry and Post
+		posts: [Post]!
 	}
 
 	type Tag {
@@ -171,6 +203,9 @@ const typeDefs = gql`
 		interviewGoals: String
 		interviewQuestions: String
 		resumeURL: String
+		review: Review
+		response: Response
+		report: Report
 	}
 
 	type Review {
@@ -182,7 +217,7 @@ const typeDefs = gql`
 		review: String
 		createdAt: DateTime!
 		lastUpdated: DateTime!
-		response: String
+		response: Response
 	}
 
 	type Response {
@@ -191,6 +226,7 @@ const typeDefs = gql`
 		text: String!
 		createdAt: DateTime!
 		lastUpdated: DateTime!
+		booking: Booking!
 	}
 
 	type Report {

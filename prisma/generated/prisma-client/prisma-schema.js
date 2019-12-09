@@ -453,6 +453,9 @@ type Booking {
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
+  review: Review
+  response: Response
+  report: Report
 }
 
 type BookingConnection {
@@ -477,11 +480,84 @@ input BookingCreateInput {
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
+  review: ReviewCreateOneWithoutBookingInput
+  response: ResponseCreateOneWithoutBookingInput
+  report: ReportCreateOneWithoutBookingInput
 }
 
-input BookingCreateOneInput {
-  create: BookingCreateInput
+input BookingCreateOneWithoutReportInput {
+  create: BookingCreateWithoutReportInput
   connect: BookingWhereUniqueInput
+}
+
+input BookingCreateOneWithoutResponseInput {
+  create: BookingCreateWithoutResponseInput
+  connect: BookingWhereUniqueInput
+}
+
+input BookingCreateOneWithoutReviewInput {
+  create: BookingCreateWithoutReviewInput
+  connect: BookingWhereUniqueInput
+}
+
+input BookingCreateWithoutReportInput {
+  id: ID
+  year: Int!
+  month: Int!
+  day: Int!
+  hour: Int!
+  minute: Int!
+  coach: String!
+  seeker: String!
+  uniquecheck: String!
+  availability: AvailabilityCreateManyInput
+  pending: Boolean
+  confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
+  review: ReviewCreateOneWithoutBookingInput
+  response: ResponseCreateOneWithoutBookingInput
+}
+
+input BookingCreateWithoutResponseInput {
+  id: ID
+  year: Int!
+  month: Int!
+  day: Int!
+  hour: Int!
+  minute: Int!
+  coach: String!
+  seeker: String!
+  uniquecheck: String!
+  availability: AvailabilityCreateManyInput
+  pending: Boolean
+  confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
+  review: ReviewCreateOneWithoutBookingInput
+  report: ReportCreateOneWithoutBookingInput
+}
+
+input BookingCreateWithoutReviewInput {
+  id: ID
+  year: Int!
+  month: Int!
+  day: Int!
+  hour: Int!
+  minute: Int!
+  coach: String!
+  seeker: String!
+  uniquecheck: String!
+  availability: AvailabilityCreateManyInput
+  pending: Boolean
+  confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
+  response: ResponseCreateOneWithoutBookingInput
+  report: ReportCreateOneWithoutBookingInput
 }
 
 type BookingEdge {
@@ -555,23 +631,6 @@ input BookingSubscriptionWhereInput {
   NOT: [BookingSubscriptionWhereInput!]
 }
 
-input BookingUpdateDataInput {
-  year: Int
-  month: Int
-  day: Int
-  hour: Int
-  minute: Int
-  coach: String
-  seeker: String
-  uniquecheck: String
-  availability: AvailabilityUpdateManyInput
-  pending: Boolean
-  confirmed: Boolean
-  interviewGoals: String
-  interviewQuestions: String
-  resumeURL: String
-}
-
 input BookingUpdateInput {
   year: Int
   month: Int
@@ -587,6 +646,9 @@ input BookingUpdateInput {
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
+  review: ReviewUpdateOneWithoutBookingInput
+  response: ResponseUpdateOneWithoutBookingInput
+  report: ReportUpdateOneWithoutBookingInput
 }
 
 input BookingUpdateManyMutationInput {
@@ -605,16 +667,97 @@ input BookingUpdateManyMutationInput {
   resumeURL: String
 }
 
-input BookingUpdateOneRequiredInput {
-  create: BookingCreateInput
-  update: BookingUpdateDataInput
-  upsert: BookingUpsertNestedInput
+input BookingUpdateOneRequiredWithoutReportInput {
+  create: BookingCreateWithoutReportInput
+  update: BookingUpdateWithoutReportDataInput
+  upsert: BookingUpsertWithoutReportInput
   connect: BookingWhereUniqueInput
 }
 
-input BookingUpsertNestedInput {
-  update: BookingUpdateDataInput!
-  create: BookingCreateInput!
+input BookingUpdateOneRequiredWithoutResponseInput {
+  create: BookingCreateWithoutResponseInput
+  update: BookingUpdateWithoutResponseDataInput
+  upsert: BookingUpsertWithoutResponseInput
+  connect: BookingWhereUniqueInput
+}
+
+input BookingUpdateOneRequiredWithoutReviewInput {
+  create: BookingCreateWithoutReviewInput
+  update: BookingUpdateWithoutReviewDataInput
+  upsert: BookingUpsertWithoutReviewInput
+  connect: BookingWhereUniqueInput
+}
+
+input BookingUpdateWithoutReportDataInput {
+  year: Int
+  month: Int
+  day: Int
+  hour: Int
+  minute: Int
+  coach: String
+  seeker: String
+  uniquecheck: String
+  availability: AvailabilityUpdateManyInput
+  pending: Boolean
+  confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
+  review: ReviewUpdateOneWithoutBookingInput
+  response: ResponseUpdateOneWithoutBookingInput
+}
+
+input BookingUpdateWithoutResponseDataInput {
+  year: Int
+  month: Int
+  day: Int
+  hour: Int
+  minute: Int
+  coach: String
+  seeker: String
+  uniquecheck: String
+  availability: AvailabilityUpdateManyInput
+  pending: Boolean
+  confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
+  review: ReviewUpdateOneWithoutBookingInput
+  report: ReportUpdateOneWithoutBookingInput
+}
+
+input BookingUpdateWithoutReviewDataInput {
+  year: Int
+  month: Int
+  day: Int
+  hour: Int
+  minute: Int
+  coach: String
+  seeker: String
+  uniquecheck: String
+  availability: AvailabilityUpdateManyInput
+  pending: Boolean
+  confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
+  response: ResponseUpdateOneWithoutBookingInput
+  report: ReportUpdateOneWithoutBookingInput
+}
+
+input BookingUpsertWithoutReportInput {
+  update: BookingUpdateWithoutReportDataInput!
+  create: BookingCreateWithoutReportInput!
+}
+
+input BookingUpsertWithoutResponseInput {
+  update: BookingUpdateWithoutResponseDataInput!
+  create: BookingCreateWithoutResponseInput!
+}
+
+input BookingUpsertWithoutReviewInput {
+  update: BookingUpdateWithoutReviewDataInput!
+  create: BookingCreateWithoutReviewInput!
 }
 
 input BookingWhereInput {
@@ -763,6 +906,9 @@ input BookingWhereInput {
   resumeURL_not_starts_with: String
   resumeURL_ends_with: String
   resumeURL_not_ends_with: String
+  review: ReviewWhereInput
+  response: ResponseWhereInput
+  report: ReportWhereInput
   AND: [BookingWhereInput!]
   OR: [BookingWhereInput!]
   NOT: [BookingWhereInput!]
@@ -1580,7 +1726,22 @@ input ReportCreateInput {
   id: ID
   coach: String!
   seeker: String!
-  booking: BookingCreateOneInput!
+  booking: BookingCreateOneWithoutReportInput!
+  strengths: String!
+  growthAreas: String!
+  suggestions: String!
+  additionalComments: String
+}
+
+input ReportCreateOneWithoutBookingInput {
+  create: ReportCreateWithoutBookingInput
+  connect: ReportWhereUniqueInput
+}
+
+input ReportCreateWithoutBookingInput {
+  id: ID
+  coach: String!
+  seeker: String!
   strengths: String!
   growthAreas: String!
   suggestions: String!
@@ -1643,7 +1804,7 @@ input ReportSubscriptionWhereInput {
 input ReportUpdateInput {
   coach: String
   seeker: String
-  booking: BookingUpdateOneRequiredInput
+  booking: BookingUpdateOneRequiredWithoutReportInput
   strengths: String
   growthAreas: String
   suggestions: String
@@ -1657,6 +1818,29 @@ input ReportUpdateManyMutationInput {
   growthAreas: String
   suggestions: String
   additionalComments: String
+}
+
+input ReportUpdateOneWithoutBookingInput {
+  create: ReportCreateWithoutBookingInput
+  update: ReportUpdateWithoutBookingDataInput
+  upsert: ReportUpsertWithoutBookingInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ReportWhereUniqueInput
+}
+
+input ReportUpdateWithoutBookingDataInput {
+  coach: String
+  seeker: String
+  strengths: String
+  growthAreas: String
+  suggestions: String
+  additionalComments: String
+}
+
+input ReportUpsertWithoutBookingInput {
+  update: ReportUpdateWithoutBookingDataInput!
+  create: ReportCreateWithoutBookingInput!
 }
 
 input ReportWhereInput {
@@ -1782,6 +1966,7 @@ type Response {
   text: String!
   createdAt: DateTime!
   lastUpdated: DateTime!
+  booking: Booking!
 }
 
 type ResponseConnection {
@@ -1794,6 +1979,12 @@ input ResponseCreateInput {
   id: ID
   review: ReviewCreateOneWithoutResponseInput!
   text: String!
+  booking: BookingCreateOneWithoutResponseInput!
+}
+
+input ResponseCreateOneWithoutBookingInput {
+  create: ResponseCreateWithoutBookingInput
+  connect: ResponseWhereUniqueInput
 }
 
 input ResponseCreateOneWithoutReviewInput {
@@ -1801,9 +1992,16 @@ input ResponseCreateOneWithoutReviewInput {
   connect: ResponseWhereUniqueInput
 }
 
+input ResponseCreateWithoutBookingInput {
+  id: ID
+  review: ReviewCreateOneWithoutResponseInput!
+  text: String!
+}
+
 input ResponseCreateWithoutReviewInput {
   id: ID
   text: String!
+  booking: BookingCreateOneWithoutResponseInput!
 }
 
 type ResponseEdge {
@@ -1850,10 +2048,20 @@ input ResponseSubscriptionWhereInput {
 input ResponseUpdateInput {
   review: ReviewUpdateOneRequiredWithoutResponseInput
   text: String
+  booking: BookingUpdateOneRequiredWithoutResponseInput
 }
 
 input ResponseUpdateManyMutationInput {
   text: String
+}
+
+input ResponseUpdateOneWithoutBookingInput {
+  create: ResponseCreateWithoutBookingInput
+  update: ResponseUpdateWithoutBookingDataInput
+  upsert: ResponseUpsertWithoutBookingInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ResponseWhereUniqueInput
 }
 
 input ResponseUpdateOneWithoutReviewInput {
@@ -1865,8 +2073,19 @@ input ResponseUpdateOneWithoutReviewInput {
   connect: ResponseWhereUniqueInput
 }
 
+input ResponseUpdateWithoutBookingDataInput {
+  review: ReviewUpdateOneRequiredWithoutResponseInput
+  text: String
+}
+
 input ResponseUpdateWithoutReviewDataInput {
   text: String
+  booking: BookingUpdateOneRequiredWithoutResponseInput
+}
+
+input ResponseUpsertWithoutBookingInput {
+  update: ResponseUpdateWithoutBookingDataInput!
+  create: ResponseCreateWithoutBookingInput!
 }
 
 input ResponseUpsertWithoutReviewInput {
@@ -1920,6 +2139,7 @@ input ResponseWhereInput {
   lastUpdated_lte: DateTime
   lastUpdated_gt: DateTime
   lastUpdated_gte: DateTime
+  booking: BookingWhereInput
   AND: [ResponseWhereInput!]
   OR: [ResponseWhereInput!]
   NOT: [ResponseWhereInput!]
@@ -1951,10 +2171,15 @@ input ReviewCreateInput {
   id: ID
   coach: String!
   seeker: String!
-  booking: BookingCreateOneInput!
+  booking: BookingCreateOneWithoutReviewInput!
   rating: Int!
   review: String
   response: ResponseCreateOneWithoutReviewInput
+}
+
+input ReviewCreateOneWithoutBookingInput {
+  create: ReviewCreateWithoutBookingInput
+  connect: ReviewWhereUniqueInput
 }
 
 input ReviewCreateOneWithoutResponseInput {
@@ -1962,11 +2187,20 @@ input ReviewCreateOneWithoutResponseInput {
   connect: ReviewWhereUniqueInput
 }
 
+input ReviewCreateWithoutBookingInput {
+  id: ID
+  coach: String!
+  seeker: String!
+  rating: Int!
+  review: String
+  response: ResponseCreateOneWithoutReviewInput
+}
+
 input ReviewCreateWithoutResponseInput {
   id: ID
   coach: String!
   seeker: String!
-  booking: BookingCreateOneInput!
+  booking: BookingCreateOneWithoutReviewInput!
   rating: Int!
   review: String
 }
@@ -2024,7 +2258,7 @@ input ReviewSubscriptionWhereInput {
 input ReviewUpdateInput {
   coach: String
   seeker: String
-  booking: BookingUpdateOneRequiredInput
+  booking: BookingUpdateOneRequiredWithoutReviewInput
   rating: Int
   review: String
   response: ResponseUpdateOneWithoutReviewInput
@@ -2044,12 +2278,34 @@ input ReviewUpdateOneRequiredWithoutResponseInput {
   connect: ReviewWhereUniqueInput
 }
 
+input ReviewUpdateOneWithoutBookingInput {
+  create: ReviewCreateWithoutBookingInput
+  update: ReviewUpdateWithoutBookingDataInput
+  upsert: ReviewUpsertWithoutBookingInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ReviewWhereUniqueInput
+}
+
+input ReviewUpdateWithoutBookingDataInput {
+  coach: String
+  seeker: String
+  rating: Int
+  review: String
+  response: ResponseUpdateOneWithoutReviewInput
+}
+
 input ReviewUpdateWithoutResponseDataInput {
   coach: String
   seeker: String
-  booking: BookingUpdateOneRequiredInput
+  booking: BookingUpdateOneRequiredWithoutReviewInput
   rating: Int
   review: String
+}
+
+input ReviewUpsertWithoutBookingInput {
+  update: ReviewUpdateWithoutBookingDataInput!
+  create: ReviewCreateWithoutBookingInput!
 }
 
 input ReviewUpsertWithoutResponseInput {
