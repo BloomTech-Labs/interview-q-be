@@ -55,6 +55,9 @@ type Booking {
   availability: [Availability]!
 	pending: Boolean
 	confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
 }
 
 # type User {

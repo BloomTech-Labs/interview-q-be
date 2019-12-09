@@ -79,6 +79,9 @@ const typeDefs = gql`
 			availabilityB: String!
 			pending: Boolean
 			confirmed: Boolean
+			interviewGoals: String
+			interviewQuestions: String
+			resumeURL: String
 		): Booking!
 
 		deleteBooking(uniquecheck: String!): Booking!
@@ -136,6 +139,9 @@ const typeDefs = gql`
 		availability: [Availability]!
 		pending: Boolean
 		confirmed: Boolean
+		interviewGoals: String
+		interviewQuestions: String
+		resumeURL: String
 	}
 
 	extend type User @key(fields: "id") {
