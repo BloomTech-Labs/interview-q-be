@@ -309,7 +309,13 @@ export type BookingOrderByInput =
   | "pending_ASC"
   | "pending_DESC"
   | "confirmed_ASC"
-  | "confirmed_DESC";
+  | "confirmed_DESC"
+  | "interviewGoals_ASC"
+  | "interviewGoals_DESC"
+  | "interviewQuestions_ASC"
+  | "interviewQuestions_DESC"
+  | "resumeURL_ASC"
+  | "resumeURL_DESC";
 
 export type PostOrderByInput =
   | "id_ASC"
@@ -586,6 +592,9 @@ export interface BookingCreateInput {
   availability?: Maybe<AvailabilityCreateManyInput>;
   pending?: Maybe<Boolean>;
   confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
 }
 
 export interface AvailabilitySubscriptionWhereInput {
@@ -629,6 +638,9 @@ export interface BookingUpdateInput {
   availability?: Maybe<AvailabilityUpdateManyInput>;
   pending?: Maybe<Boolean>;
   confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
 }
 
 export interface PostWhereInput {
@@ -1011,6 +1023,9 @@ export interface BookingUpdateManyMutationInput {
   uniquecheck?: Maybe<String>;
   pending?: Maybe<Boolean>;
   confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
 }
 
 export type TagWhereUniqueInput = AtLeastOne<{
@@ -1466,6 +1481,48 @@ export interface BookingWhereInput {
   pending_not?: Maybe<Boolean>;
   confirmed?: Maybe<Boolean>;
   confirmed_not?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewGoals_not?: Maybe<String>;
+  interviewGoals_in?: Maybe<String[] | String>;
+  interviewGoals_not_in?: Maybe<String[] | String>;
+  interviewGoals_lt?: Maybe<String>;
+  interviewGoals_lte?: Maybe<String>;
+  interviewGoals_gt?: Maybe<String>;
+  interviewGoals_gte?: Maybe<String>;
+  interviewGoals_contains?: Maybe<String>;
+  interviewGoals_not_contains?: Maybe<String>;
+  interviewGoals_starts_with?: Maybe<String>;
+  interviewGoals_not_starts_with?: Maybe<String>;
+  interviewGoals_ends_with?: Maybe<String>;
+  interviewGoals_not_ends_with?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  interviewQuestions_not?: Maybe<String>;
+  interviewQuestions_in?: Maybe<String[] | String>;
+  interviewQuestions_not_in?: Maybe<String[] | String>;
+  interviewQuestions_lt?: Maybe<String>;
+  interviewQuestions_lte?: Maybe<String>;
+  interviewQuestions_gt?: Maybe<String>;
+  interviewQuestions_gte?: Maybe<String>;
+  interviewQuestions_contains?: Maybe<String>;
+  interviewQuestions_not_contains?: Maybe<String>;
+  interviewQuestions_starts_with?: Maybe<String>;
+  interviewQuestions_not_starts_with?: Maybe<String>;
+  interviewQuestions_ends_with?: Maybe<String>;
+  interviewQuestions_not_ends_with?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+  resumeURL_not?: Maybe<String>;
+  resumeURL_in?: Maybe<String[] | String>;
+  resumeURL_not_in?: Maybe<String[] | String>;
+  resumeURL_lt?: Maybe<String>;
+  resumeURL_lte?: Maybe<String>;
+  resumeURL_gt?: Maybe<String>;
+  resumeURL_gte?: Maybe<String>;
+  resumeURL_contains?: Maybe<String>;
+  resumeURL_not_contains?: Maybe<String>;
+  resumeURL_starts_with?: Maybe<String>;
+  resumeURL_not_starts_with?: Maybe<String>;
+  resumeURL_ends_with?: Maybe<String>;
+  resumeURL_not_ends_with?: Maybe<String>;
   AND?: Maybe<BookingWhereInput[] | BookingWhereInput>;
   OR?: Maybe<BookingWhereInput[] | BookingWhereInput>;
   NOT?: Maybe<BookingWhereInput[] | BookingWhereInput>;
@@ -2279,6 +2336,9 @@ export interface Booking {
   uniquecheck: String;
   pending?: Boolean;
   confirmed?: Boolean;
+  interviewGoals?: String;
+  interviewQuestions?: String;
+  resumeURL?: String;
 }
 
 export interface BookingPromise extends Promise<Booking>, Fragmentable {
@@ -2302,6 +2362,9 @@ export interface BookingPromise extends Promise<Booking>, Fragmentable {
   }) => T;
   pending: () => Promise<Boolean>;
   confirmed: () => Promise<Boolean>;
+  interviewGoals: () => Promise<String>;
+  interviewQuestions: () => Promise<String>;
+  resumeURL: () => Promise<String>;
 }
 
 export interface BookingSubscription
@@ -2327,6 +2390,9 @@ export interface BookingSubscription
   }) => T;
   pending: () => Promise<AsyncIterator<Boolean>>;
   confirmed: () => Promise<AsyncIterator<Boolean>>;
+  interviewGoals: () => Promise<AsyncIterator<String>>;
+  interviewQuestions: () => Promise<AsyncIterator<String>>;
+  resumeURL: () => Promise<AsyncIterator<String>>;
 }
 
 export interface BookingNullablePromise
@@ -2352,6 +2418,9 @@ export interface BookingNullablePromise
   }) => T;
   pending: () => Promise<Boolean>;
   confirmed: () => Promise<Boolean>;
+  interviewGoals: () => Promise<String>;
+  interviewQuestions: () => Promise<String>;
+  resumeURL: () => Promise<String>;
 }
 
 export interface BookingPreviousValues {
@@ -2366,6 +2435,9 @@ export interface BookingPreviousValues {
   uniquecheck: String;
   pending?: Boolean;
   confirmed?: Boolean;
+  interviewGoals?: String;
+  interviewQuestions?: String;
+  resumeURL?: String;
 }
 
 export interface BookingPreviousValuesPromise
@@ -2382,6 +2454,9 @@ export interface BookingPreviousValuesPromise
   uniquecheck: () => Promise<String>;
   pending: () => Promise<Boolean>;
   confirmed: () => Promise<Boolean>;
+  interviewGoals: () => Promise<String>;
+  interviewQuestions: () => Promise<String>;
+  resumeURL: () => Promise<String>;
 }
 
 export interface BookingPreviousValuesSubscription
@@ -2398,6 +2473,9 @@ export interface BookingPreviousValuesSubscription
   uniquecheck: () => Promise<AsyncIterator<String>>;
   pending: () => Promise<AsyncIterator<Boolean>>;
   confirmed: () => Promise<AsyncIterator<Boolean>>;
+  interviewGoals: () => Promise<AsyncIterator<String>>;
+  interviewQuestions: () => Promise<AsyncIterator<String>>;
+  resumeURL: () => Promise<AsyncIterator<String>>;
 }
 
 export interface Tag {

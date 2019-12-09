@@ -266,7 +266,17 @@ function deleteAvailability(_parent, args, context) {
 
 // Mutations/Operations for Bookings
 async function createBooking(_parent, args, context) {
-	const { year, month, day, hour, minute, coach } = args;
+	const {
+		year,
+		month,
+		day,
+		hour,
+		minute,
+		coach,
+		interviewGoals,
+		interviewQuestions,
+		resumeURL,
+	} = args;
 	const seeker = getUserId(context);
 	const uniquecheck = [coach, seeker, year, month, day, hour, minute].reduce(
 		(acc, val) => acc + '-' + val,
@@ -296,6 +306,9 @@ async function createBooking(_parent, args, context) {
 			],
 		},
 		uniquecheck,
+		interviewGoals,
+		interviewQuestions,
+		resumeURL,
 	});
 }
 

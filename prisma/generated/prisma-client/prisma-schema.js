@@ -438,6 +438,9 @@ type Booking {
   availability(where: AvailabilityWhereInput, orderBy: AvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Availability!]
   pending: Boolean
   confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
 }
 
 type BookingConnection {
@@ -459,6 +462,9 @@ input BookingCreateInput {
   availability: AvailabilityCreateManyInput
   pending: Boolean
   confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
 }
 
 type BookingEdge {
@@ -489,6 +495,12 @@ enum BookingOrderByInput {
   pending_DESC
   confirmed_ASC
   confirmed_DESC
+  interviewGoals_ASC
+  interviewGoals_DESC
+  interviewQuestions_ASC
+  interviewQuestions_DESC
+  resumeURL_ASC
+  resumeURL_DESC
 }
 
 type BookingPreviousValues {
@@ -503,6 +515,9 @@ type BookingPreviousValues {
   uniquecheck: String!
   pending: Boolean
   confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
 }
 
 type BookingSubscriptionPayload {
@@ -535,6 +550,9 @@ input BookingUpdateInput {
   availability: AvailabilityUpdateManyInput
   pending: Boolean
   confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
 }
 
 input BookingUpdateManyMutationInput {
@@ -548,6 +566,9 @@ input BookingUpdateManyMutationInput {
   uniquecheck: String
   pending: Boolean
   confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
 }
 
 input BookingWhereInput {
@@ -654,6 +675,48 @@ input BookingWhereInput {
   pending_not: Boolean
   confirmed: Boolean
   confirmed_not: Boolean
+  interviewGoals: String
+  interviewGoals_not: String
+  interviewGoals_in: [String!]
+  interviewGoals_not_in: [String!]
+  interviewGoals_lt: String
+  interviewGoals_lte: String
+  interviewGoals_gt: String
+  interviewGoals_gte: String
+  interviewGoals_contains: String
+  interviewGoals_not_contains: String
+  interviewGoals_starts_with: String
+  interviewGoals_not_starts_with: String
+  interviewGoals_ends_with: String
+  interviewGoals_not_ends_with: String
+  interviewQuestions: String
+  interviewQuestions_not: String
+  interviewQuestions_in: [String!]
+  interviewQuestions_not_in: [String!]
+  interviewQuestions_lt: String
+  interviewQuestions_lte: String
+  interviewQuestions_gt: String
+  interviewQuestions_gte: String
+  interviewQuestions_contains: String
+  interviewQuestions_not_contains: String
+  interviewQuestions_starts_with: String
+  interviewQuestions_not_starts_with: String
+  interviewQuestions_ends_with: String
+  interviewQuestions_not_ends_with: String
+  resumeURL: String
+  resumeURL_not: String
+  resumeURL_in: [String!]
+  resumeURL_not_in: [String!]
+  resumeURL_lt: String
+  resumeURL_lte: String
+  resumeURL_gt: String
+  resumeURL_gte: String
+  resumeURL_contains: String
+  resumeURL_not_contains: String
+  resumeURL_starts_with: String
+  resumeURL_not_starts_with: String
+  resumeURL_ends_with: String
+  resumeURL_not_ends_with: String
   AND: [BookingWhereInput!]
   OR: [BookingWhereInput!]
   NOT: [BookingWhereInput!]
