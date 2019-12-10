@@ -24,6 +24,7 @@ const typeDefs = gql`
 		bookingsBySeeker(seeker_id: String!): [Booking]
 		bookingByUniquecheck(uniquecheck: String!): Booking!
 		reviewsByCoach(coach_id: String!): [Review]
+		reviewsByPost(post_id: String!): [Review]
 		ratingByCoach(coach_id: String!): Float!
 		reviewsBySeeker(seeker_id: String!): [Review]
 		reviewByBooking(uniqueBooking: String!): Review
@@ -151,6 +152,7 @@ const typeDefs = gql`
 		isPublished: Boolean!
 		createdAt: DateTime!
 		lastUpdated: DateTime!
+		reviews: [Review]!
 	}
 
 	extend type User @key(fields: "id") {
@@ -218,6 +220,7 @@ const typeDefs = gql`
 		createdAt: DateTime!
 		lastUpdated: DateTime!
 		response: Response
+		post: Post!
 	}
 
 	type Response {

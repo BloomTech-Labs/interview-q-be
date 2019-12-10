@@ -9,7 +9,7 @@ describe('Post', () => {
 	let coachID;
 	const app = server.createHttpServer({});
 	const token =
-		'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrMnh0ZXB4aDAwbmgwNzcydHpyZDJyc28iLCJlbWFpbCI6ImxhYnMxOC5xdWFsaXR5aHViQGdtYWlsLmNvbSIsImlhdCI6MTU3NTMxNTQ2NSwiZXhwIjoxNTc1MzU4NjY1fQ.U_stjCwg_kMVmv27zkh2jobGRrCZgsC9BdNLtzu-7-0';
+		'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrM2h6Z2EyeDAwYzkwNzcxYW1peTYzemwiLCJlbWFpbCI6ImJsYWgxQGJsYWguY29tIiwiaWF0IjoxNTc1OTgyNjU4LCJleHAiOjE1NzYwMjU4NTh9.CGPaQ1D9wC5ZOiCpqma2UV_nq5AoeKC8QlRa-v2xAnk';
 
 	it('creates a post', async () => {
 		const response = await request(app)
