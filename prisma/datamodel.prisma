@@ -13,6 +13,7 @@ type Post {
   company_lc: String
   position_lc: String
   tags: [Tag]!
+  reviews: [Review]!
   # coach: User @provides(fields: "email") @relation(link: TABLE name: "UserOnPost", onDelete: SET_NULL)
   # ratingsId: ID!
 }
@@ -73,6 +74,7 @@ type Review {
   createdAt: DateTime! @createdAt
   lastUpdated: DateTime! @updatedAt
   response: Response @relation(link: INLINE)
+  post: Post!
 }
 
 type Response {

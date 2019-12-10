@@ -1138,6 +1138,7 @@ type Post {
   company_lc: String
   position_lc: String
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
+  reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review!]
 }
 
 type PostConnection {
@@ -1159,6 +1160,7 @@ input PostCreateInput {
   company_lc: String
   position_lc: String
   tags: TagCreateManyWithoutPostsInput
+  reviews: ReviewCreateManyWithoutPostInput
 }
 
 input PostCreateManyWithoutIndustryInput {
@@ -1171,10 +1173,31 @@ input PostCreateManyWithoutTagsInput {
   connect: [PostWhereUniqueInput!]
 }
 
+input PostCreateOneWithoutReviewsInput {
+  create: PostCreateWithoutReviewsInput
+  connect: PostWhereUniqueInput
+}
+
 input PostCreateWithoutIndustryInput {
   id: ID
   price: Int
   position: String
+  description: String
+  coachID: String!
+  company: String
+  isPublished: Boolean
+  desc_lc: String
+  company_lc: String
+  position_lc: String
+  tags: TagCreateManyWithoutPostsInput
+  reviews: ReviewCreateManyWithoutPostInput
+}
+
+input PostCreateWithoutReviewsInput {
+  id: ID
+  price: Int
+  position: String
+  industry: IndustryCreateOneWithoutPostsInput
   description: String
   coachID: String!
   company: String
@@ -1197,6 +1220,7 @@ input PostCreateWithoutTagsInput {
   desc_lc: String
   company_lc: String
   position_lc: String
+  reviews: ReviewCreateManyWithoutPostInput
 }
 
 type PostEdge {
@@ -1420,6 +1444,7 @@ input PostUpdateInput {
   company_lc: String
   position_lc: String
   tags: TagUpdateManyWithoutPostsInput
+  reviews: ReviewUpdateManyWithoutPostInput
 }
 
 input PostUpdateManyDataInput {
@@ -1475,9 +1500,31 @@ input PostUpdateManyWithWhereNestedInput {
   data: PostUpdateManyDataInput!
 }
 
+input PostUpdateOneRequiredWithoutReviewsInput {
+  create: PostCreateWithoutReviewsInput
+  update: PostUpdateWithoutReviewsDataInput
+  upsert: PostUpsertWithoutReviewsInput
+  connect: PostWhereUniqueInput
+}
+
 input PostUpdateWithoutIndustryDataInput {
   price: Int
   position: String
+  description: String
+  coachID: String
+  company: String
+  isPublished: Boolean
+  desc_lc: String
+  company_lc: String
+  position_lc: String
+  tags: TagUpdateManyWithoutPostsInput
+  reviews: ReviewUpdateManyWithoutPostInput
+}
+
+input PostUpdateWithoutReviewsDataInput {
+  price: Int
+  position: String
+  industry: IndustryUpdateOneWithoutPostsInput
   description: String
   coachID: String
   company: String
@@ -1499,6 +1546,7 @@ input PostUpdateWithoutTagsDataInput {
   desc_lc: String
   company_lc: String
   position_lc: String
+  reviews: ReviewUpdateManyWithoutPostInput
 }
 
 input PostUpdateWithWhereUniqueWithoutIndustryInput {
@@ -1509,6 +1557,11 @@ input PostUpdateWithWhereUniqueWithoutIndustryInput {
 input PostUpdateWithWhereUniqueWithoutTagsInput {
   where: PostWhereUniqueInput!
   data: PostUpdateWithoutTagsDataInput!
+}
+
+input PostUpsertWithoutReviewsInput {
+  update: PostUpdateWithoutReviewsDataInput!
+  create: PostCreateWithoutReviewsInput!
 }
 
 input PostUpsertWithWhereUniqueWithoutIndustryInput {
@@ -1666,6 +1719,9 @@ input PostWhereInput {
   tags_every: TagWhereInput
   tags_some: TagWhereInput
   tags_none: TagWhereInput
+  reviews_every: ReviewWhereInput
+  reviews_some: ReviewWhereInput
+  reviews_none: ReviewWhereInput
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]
@@ -2159,6 +2215,7 @@ type Review {
   createdAt: DateTime!
   lastUpdated: DateTime!
   response: Response
+  post: Post!
 }
 
 type ReviewConnection {
@@ -2175,6 +2232,12 @@ input ReviewCreateInput {
   rating: Int!
   review: String
   response: ResponseCreateOneWithoutReviewInput
+  post: PostCreateOneWithoutReviewsInput!
+}
+
+input ReviewCreateManyWithoutPostInput {
+  create: [ReviewCreateWithoutPostInput!]
+  connect: [ReviewWhereUniqueInput!]
 }
 
 input ReviewCreateOneWithoutBookingInput {
@@ -2194,6 +2257,17 @@ input ReviewCreateWithoutBookingInput {
   rating: Int!
   review: String
   response: ResponseCreateOneWithoutReviewInput
+  post: PostCreateOneWithoutReviewsInput!
+}
+
+input ReviewCreateWithoutPostInput {
+  id: ID
+  coach: String!
+  seeker: String!
+  booking: BookingCreateOneWithoutReviewInput!
+  rating: Int!
+  review: String
+  response: ResponseCreateOneWithoutReviewInput
 }
 
 input ReviewCreateWithoutResponseInput {
@@ -2203,6 +2277,7 @@ input ReviewCreateWithoutResponseInput {
   booking: BookingCreateOneWithoutReviewInput!
   rating: Int!
   review: String
+  post: PostCreateOneWithoutReviewsInput!
 }
 
 type ReviewEdge {
@@ -2237,6 +2312,92 @@ type ReviewPreviousValues {
   lastUpdated: DateTime!
 }
 
+input ReviewScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  coach: String
+  coach_not: String
+  coach_in: [String!]
+  coach_not_in: [String!]
+  coach_lt: String
+  coach_lte: String
+  coach_gt: String
+  coach_gte: String
+  coach_contains: String
+  coach_not_contains: String
+  coach_starts_with: String
+  coach_not_starts_with: String
+  coach_ends_with: String
+  coach_not_ends_with: String
+  seeker: String
+  seeker_not: String
+  seeker_in: [String!]
+  seeker_not_in: [String!]
+  seeker_lt: String
+  seeker_lte: String
+  seeker_gt: String
+  seeker_gte: String
+  seeker_contains: String
+  seeker_not_contains: String
+  seeker_starts_with: String
+  seeker_not_starts_with: String
+  seeker_ends_with: String
+  seeker_not_ends_with: String
+  rating: Int
+  rating_not: Int
+  rating_in: [Int!]
+  rating_not_in: [Int!]
+  rating_lt: Int
+  rating_lte: Int
+  rating_gt: Int
+  rating_gte: Int
+  review: String
+  review_not: String
+  review_in: [String!]
+  review_not_in: [String!]
+  review_lt: String
+  review_lte: String
+  review_gt: String
+  review_gte: String
+  review_contains: String
+  review_not_contains: String
+  review_starts_with: String
+  review_not_starts_with: String
+  review_ends_with: String
+  review_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  lastUpdated: DateTime
+  lastUpdated_not: DateTime
+  lastUpdated_in: [DateTime!]
+  lastUpdated_not_in: [DateTime!]
+  lastUpdated_lt: DateTime
+  lastUpdated_lte: DateTime
+  lastUpdated_gt: DateTime
+  lastUpdated_gte: DateTime
+  AND: [ReviewScalarWhereInput!]
+  OR: [ReviewScalarWhereInput!]
+  NOT: [ReviewScalarWhereInput!]
+}
+
 type ReviewSubscriptionPayload {
   mutation: MutationType!
   node: Review
@@ -2262,6 +2423,14 @@ input ReviewUpdateInput {
   rating: Int
   review: String
   response: ResponseUpdateOneWithoutReviewInput
+  post: PostUpdateOneRequiredWithoutReviewsInput
+}
+
+input ReviewUpdateManyDataInput {
+  coach: String
+  seeker: String
+  rating: Int
+  review: String
 }
 
 input ReviewUpdateManyMutationInput {
@@ -2269,6 +2438,23 @@ input ReviewUpdateManyMutationInput {
   seeker: String
   rating: Int
   review: String
+}
+
+input ReviewUpdateManyWithoutPostInput {
+  create: [ReviewCreateWithoutPostInput!]
+  delete: [ReviewWhereUniqueInput!]
+  connect: [ReviewWhereUniqueInput!]
+  set: [ReviewWhereUniqueInput!]
+  disconnect: [ReviewWhereUniqueInput!]
+  update: [ReviewUpdateWithWhereUniqueWithoutPostInput!]
+  upsert: [ReviewUpsertWithWhereUniqueWithoutPostInput!]
+  deleteMany: [ReviewScalarWhereInput!]
+  updateMany: [ReviewUpdateManyWithWhereNestedInput!]
+}
+
+input ReviewUpdateManyWithWhereNestedInput {
+  where: ReviewScalarWhereInput!
+  data: ReviewUpdateManyDataInput!
 }
 
 input ReviewUpdateOneRequiredWithoutResponseInput {
@@ -2293,6 +2479,16 @@ input ReviewUpdateWithoutBookingDataInput {
   rating: Int
   review: String
   response: ResponseUpdateOneWithoutReviewInput
+  post: PostUpdateOneRequiredWithoutReviewsInput
+}
+
+input ReviewUpdateWithoutPostDataInput {
+  coach: String
+  seeker: String
+  booking: BookingUpdateOneRequiredWithoutReviewInput
+  rating: Int
+  review: String
+  response: ResponseUpdateOneWithoutReviewInput
 }
 
 input ReviewUpdateWithoutResponseDataInput {
@@ -2301,6 +2497,12 @@ input ReviewUpdateWithoutResponseDataInput {
   booking: BookingUpdateOneRequiredWithoutReviewInput
   rating: Int
   review: String
+  post: PostUpdateOneRequiredWithoutReviewsInput
+}
+
+input ReviewUpdateWithWhereUniqueWithoutPostInput {
+  where: ReviewWhereUniqueInput!
+  data: ReviewUpdateWithoutPostDataInput!
 }
 
 input ReviewUpsertWithoutBookingInput {
@@ -2311,6 +2513,12 @@ input ReviewUpsertWithoutBookingInput {
 input ReviewUpsertWithoutResponseInput {
   update: ReviewUpdateWithoutResponseDataInput!
   create: ReviewCreateWithoutResponseInput!
+}
+
+input ReviewUpsertWithWhereUniqueWithoutPostInput {
+  where: ReviewWhereUniqueInput!
+  update: ReviewUpdateWithoutPostDataInput!
+  create: ReviewCreateWithoutPostInput!
 }
 
 input ReviewWhereInput {
@@ -2396,6 +2604,7 @@ input ReviewWhereInput {
   lastUpdated_gt: DateTime
   lastUpdated_gte: DateTime
   response: ResponseWhereInput
+  post: PostWhereInput
   AND: [ReviewWhereInput!]
   OR: [ReviewWhereInput!]
   NOT: [ReviewWhereInput!]

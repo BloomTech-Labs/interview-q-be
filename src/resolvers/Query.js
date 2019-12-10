@@ -13,6 +13,7 @@ module.exports = {
 	bookingsBySeeker,
 	bookingByUniquecheck,
 	reviewsByCoach,
+	reviewsByPost,
 	ratingByCoach,
 	reviewsBySeeker,
 	reviewByBooking,
@@ -115,6 +116,10 @@ function bookingByUniquecheck(_parents, args, context) {
 // Reviews queries
 function reviewsByCoach(_parents, args, context) {
 	return context.prisma.reviews({ where: { coach: args.coach_id } });
+}
+
+function reviewsByPost(_parents, args, context) {
+	return context.prisma.post({ where: { id: args.post_id } }).reviews();
 }
 
 async function ratingByCoach(_parents, args, context) {
