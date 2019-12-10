@@ -9,7 +9,7 @@ describe('Post', () => {
 	let coachID;
 	const app = server.createHttpServer({});
 	const token =
-		'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrMnh0ZXB4aDAwbmgwNzcydHpyZDJyc28iLCJlbWFpbCI6ImxhYnMxOC5xdWFsaXR5aHViQGdtYWlsLmNvbSIsImlhdCI6MTU3NTMxNTQ2NSwiZXhwIjoxNTc1MzU4NjY1fQ.U_stjCwg_kMVmv27zkh2jobGRrCZgsC9BdNLtzu-7-0';
+		'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrMnh0ZXB4aDAwbmgwNzcydHpyZDJyc28iLCJlbWFpbCI6ImxhYnMxOC5xdWFsaXR5aHViQGdtYWlsLmNvbSIsImlhdCI6MTU3NTk5NTczMiwiZXhwIjoxNTc2MDM4OTMyfQ.0DZ938P78DGZ724YHfvGh4T3cFmi5D3ZrAcO_wf65PM';
 
 	it('creates a post', async () => {
 		const response = await request(app)
@@ -17,7 +17,7 @@ describe('Post', () => {
 			.set({ Authorization: token })
 			.send({
 				query: `mutation {
-          createPost(price: 10, position: "Test position", industryName: "Visual Arts", description: "Test description", tagString: "Test1, Test2", company: "McDonalds" ) {
+          createPost(price: 10, position: "Test position", industryName: "Visual Arts", description: "Test description", tagString: "Test1, Test2", company: "McDonalds", isPublished: true ) {
 						id
             coach {
               id
@@ -104,8 +104,8 @@ describe('Post', () => {
       }`,
 			});
 
-		expect(response.body.data.post.tags[0].name).toBe('Test1');
-		expect(response.body.data.post.tags[1].name).toBe('Test2');
+		expect(response.body.data.post.tags[0].name).toBe('test1');
+		expect(response.body.data.post.tags[1].name).toBe('test2');
 	});
 
 	it('updates a post', async () => {

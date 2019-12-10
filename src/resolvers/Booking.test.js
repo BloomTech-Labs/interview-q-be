@@ -5,7 +5,7 @@ const request = require('supertest');
 const server = require('../server');
 
 const token =
-	'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrM3Jramo2YTAwNWYwNzEya25xY3EyYWMiLCJlbWFpbCI6ImpvaG4ud2lja0BoaXRtYW4ub3JnIiwiaWF0IjoxNTc1NjUwOTYyLCJleHAiOjE1NzU2OTQxNjJ9.f-CoMs6eF5LCZLJal3h19J3494BCZucL13OBF2QUeBU';
+	'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrM2h6Z2EyeDAwYzkwNzcxYW1peTYzemwiLCJlbWFpbCI6ImJsYWgxQGJsYWguY29tIiwiaWF0IjoxNTc1OTgyNjU4LCJleHAiOjE1NzYwMjU4NTh9.CGPaQ1D9wC5ZOiCpqma2UV_nq5AoeKC8QlRa-v2xAnk';
 
 describe('Booking Queries', () => {
 	const app = server.createHttpServer({});

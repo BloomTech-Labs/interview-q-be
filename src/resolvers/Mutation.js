@@ -345,6 +345,8 @@ async function createReview(_parent, args, context) {
 
 	const booking = await context.prisma.booking({ uniquecheck: uniqueBooking });
 
+	const post = await context.prisma.post({ coachID: booking.coach });
+
 	return context.prisma.createReview({
 		coach: booking.coach,
 		seeker: booking.seeker,
@@ -353,6 +355,9 @@ async function createReview(_parent, args, context) {
 		},
 		rating,
 		review,
+		post: {
+			connect: { id: post.id },
+		},
 	});
 }
 
