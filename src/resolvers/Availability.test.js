@@ -5,7 +5,7 @@ const request = require('supertest');
 const server = require('../server');
 
 const token =
-	'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrM3Jramo2YTAwNWYwNzEya25xY3EyYWMiLCJlbWFpbCI6ImpvaG4ud2lja0BoaXRtYW4ub3JnIiwiaWF0IjoxNTc1NjUwOTYyLCJleHAiOjE1NzU2OTQxNjJ9.f-CoMs6eF5LCZLJal3h19J3494BCZucL13OBF2QUeBU';
+	'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrMnh0ZXB4aDAwbmgwNzcydHpyZDJyc28iLCJlbWFpbCI6ImxhYnMxOC5xdWFsaXR5aHViQGdtYWlsLmNvbSIsImlhdCI6MTU3NTk5NTczMiwiZXhwIjoxNTc2MDM4OTMyfQ.0DZ938P78DGZ724YHfvGh4T3cFmi5D3ZrAcO_wf65PM';
 
 describe('Availability Queries', () => {
 	const app = server.createHttpServer({});
