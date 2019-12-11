@@ -242,6 +242,7 @@ const typeDefs = gql`
 		suggestions: String!
 		additionalComments: String
 		createdAt: DateTime!
+		isSent: Boolean
 	}
 `;
 

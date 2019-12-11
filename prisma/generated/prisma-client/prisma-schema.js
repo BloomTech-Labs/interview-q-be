@@ -1770,6 +1770,7 @@ type Report {
   suggestions: String!
   additionalComments: String
   createdAt: DateTime!
+  isSent: Boolean
 }
 
 type ReportConnection {
@@ -1787,6 +1788,7 @@ input ReportCreateInput {
   growthAreas: String!
   suggestions: String!
   additionalComments: String
+  isSent: Boolean
 }
 
 input ReportCreateOneWithoutBookingInput {
@@ -1802,6 +1804,7 @@ input ReportCreateWithoutBookingInput {
   growthAreas: String!
   suggestions: String!
   additionalComments: String
+  isSent: Boolean
 }
 
 type ReportEdge {
@@ -1826,6 +1829,8 @@ enum ReportOrderByInput {
   additionalComments_DESC
   createdAt_ASC
   createdAt_DESC
+  isSent_ASC
+  isSent_DESC
 }
 
 type ReportPreviousValues {
@@ -1837,6 +1842,7 @@ type ReportPreviousValues {
   suggestions: String!
   additionalComments: String
   createdAt: DateTime!
+  isSent: Boolean
 }
 
 type ReportSubscriptionPayload {
@@ -1865,6 +1871,7 @@ input ReportUpdateInput {
   growthAreas: String
   suggestions: String
   additionalComments: String
+  isSent: Boolean
 }
 
 input ReportUpdateManyMutationInput {
@@ -1874,6 +1881,7 @@ input ReportUpdateManyMutationInput {
   growthAreas: String
   suggestions: String
   additionalComments: String
+  isSent: Boolean
 }
 
 input ReportUpdateOneWithoutBookingInput {
@@ -1892,6 +1900,7 @@ input ReportUpdateWithoutBookingDataInput {
   growthAreas: String
   suggestions: String
   additionalComments: String
+  isSent: Boolean
 }
 
 input ReportUpsertWithoutBookingInput {
@@ -2007,6 +2016,8 @@ input ReportWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  isSent: Boolean
+  isSent_not: Boolean
   AND: [ReportWhereInput!]
   OR: [ReportWhereInput!]
   NOT: [ReportWhereInput!]
