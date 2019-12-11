@@ -99,17 +99,19 @@ describe('Booking Mutations', () => {
 			.send({
 				query: `query {
         availabilities {
-          id
+          uniquecheck
           coach {
             id
-          }
+					}
         }
       }`,
 			});
 
 		const coachID = availabilities.body.data.availabilities[0].coach.id;
-		const availabilityA = availabilities.body.data.availabilities[0].id;
-		const availabilityB = availabilities.body.data.availabilities[1].id;
+		const availabilityA =
+			availabilities.body.data.availabilities[0].uniquecheck;
+		const availabilityB =
+			availabilities.body.data.availabilities[1].uniquecheck;
 
 		const response = await request(app)
 			.post('/')

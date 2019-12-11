@@ -129,7 +129,7 @@ async function updatePost(_parent, args, context) {
 	if (tagString) {
 		tagString = tagString.toLowerCase();
 		const tagArray = splitAndTrimTags(tagString);
-		// const tagsObjArray = await addNewTags(tagArray, context);
+		const tagsObjArray = await addNewTags(tagArray, context);
 		return await context.prisma.updatePost({
 			data: {
 				price,
