@@ -96,4 +96,5 @@ type Report {
   suggestions: String!
   additionalComments: String
   createdAt: DateTime! @createdAt
+  isSent: Boolean
 }
