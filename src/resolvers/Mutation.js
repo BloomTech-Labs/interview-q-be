@@ -408,6 +408,7 @@ async function createReport(_parent, args, context) {
 		growthAreas,
 		suggestions,
 		additionalComments,
+		isSent,
 	} = args;
 
 	const booking = await context.prisma.booking({ uniquecheck: uniqueBooking });
@@ -422,6 +423,7 @@ async function createReport(_parent, args, context) {
 		growthAreas,
 		suggestions,
 		additionalComments,
+		isSent,
 	});
 }
 

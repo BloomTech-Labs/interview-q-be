@@ -126,6 +126,7 @@ const typeDefs = gql`
 			growthAreas: String!
 			suggestions: String!
 			additionalComments: String
+			isSent: Boolean!
 		): Report!
 
 		updateReport(id: String!): Report!
