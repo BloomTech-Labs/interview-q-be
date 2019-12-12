@@ -5,6 +5,8 @@ module.exports = {
   deleteBooking,
 }
 
+const { getUserId } = require('../../../utils');
+
 async function createAvailability(_parent, args, context) {
 	const { year, month, day, start_hour, start_minute } = args;
 	const coach = getUserId(context);

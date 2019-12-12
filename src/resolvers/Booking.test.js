@@ -142,7 +142,7 @@ describe('Booking Mutations', () => {
           }
         }`,
 			});
-
+    console.log(response.body);
 		uniquecheck = response.body.data.createBooking.uniquecheck;
 
 		expect(response.body.data.createBooking.id).toBeTruthy();

@@ -9,6 +9,8 @@ module.exports = {
 	updateReport,
 };
 
+const { checkFields, splitAndTrimTags, getUserId } = require('../../../utils');
+
 // Mutations for Reviews
 async function createReview(_parent, args, context) {
 	const { uniqueBooking, rating, review } = args;
