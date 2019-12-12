@@ -500,7 +500,9 @@ export type ReportOrderByInput =
   | "additionalComments_ASC"
   | "additionalComments_DESC"
   | "createdAt_ASC"
-  | "createdAt_DESC";
+  | "createdAt_DESC"
+  | "isSent_ASC"
+  | "isSent_DESC";
 
 export type ResponseOrderByInput =
   | "id_ASC"
@@ -1308,6 +1310,7 @@ export interface ReportUpdateInput {
   growthAreas?: Maybe<String>;
   suggestions?: Maybe<String>;
   additionalComments?: Maybe<String>;
+  isSent?: Maybe<Boolean>;
 }
 
 export interface BookingUpdateWithoutResponseDataInput {
@@ -1351,6 +1354,7 @@ export interface ReportCreateInput {
   growthAreas: String;
   suggestions: String;
   additionalComments?: Maybe<String>;
+  isSent?: Maybe<Boolean>;
 }
 
 export interface ReportUpdateWithoutBookingDataInput {
@@ -1360,6 +1364,7 @@ export interface ReportUpdateWithoutBookingDataInput {
   growthAreas?: Maybe<String>;
   suggestions?: Maybe<String>;
   additionalComments?: Maybe<String>;
+  isSent?: Maybe<Boolean>;
 }
 
 export type TagWhereUniqueInput = AtLeastOne<{
@@ -2081,6 +2086,7 @@ export interface ReportUpdateManyMutationInput {
   growthAreas?: Maybe<String>;
   suggestions?: Maybe<String>;
   additionalComments?: Maybe<String>;
+  isSent?: Maybe<Boolean>;
 }
 
 export interface ReviewUpdateOneRequiredWithoutResponseInput {
@@ -2379,6 +2385,8 @@ export interface ReportWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
+  isSent?: Maybe<Boolean>;
+  isSent_not?: Maybe<Boolean>;
   AND?: Maybe<ReportWhereInput[] | ReportWhereInput>;
   OR?: Maybe<ReportWhereInput[] | ReportWhereInput>;
   NOT?: Maybe<ReportWhereInput[] | ReportWhereInput>;
@@ -2768,6 +2776,7 @@ export interface ReportCreateWithoutBookingInput {
   growthAreas: String;
   suggestions: String;
   additionalComments?: Maybe<String>;
+  isSent?: Maybe<Boolean>;
 }
 
 export interface NodeNode {
@@ -2802,6 +2811,7 @@ export interface Report {
   suggestions: String;
   additionalComments?: String;
   createdAt: DateTimeOutput;
+  isSent?: Boolean;
 }
 
 export interface ReportPromise extends Promise<Report>, Fragmentable {
@@ -2814,6 +2824,7 @@ export interface ReportPromise extends Promise<Report>, Fragmentable {
   suggestions: () => Promise<String>;
   additionalComments: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
+  isSent: () => Promise<Boolean>;
 }
 
 export interface ReportSubscription
@@ -2828,6 +2839,7 @@ export interface ReportSubscription
   suggestions: () => Promise<AsyncIterator<String>>;
   additionalComments: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  isSent: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface ReportNullablePromise
@@ -2842,6 +2854,7 @@ export interface ReportNullablePromise
   suggestions: () => Promise<String>;
   additionalComments: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
+  isSent: () => Promise<Boolean>;
 }
 
 export interface AggregateAvailability {
@@ -4167,6 +4180,7 @@ export interface ReportPreviousValues {
   suggestions: String;
   additionalComments?: String;
   createdAt: DateTimeOutput;
+  isSent?: Boolean;
 }
 
 export interface ReportPreviousValuesPromise
@@ -4180,6 +4194,7 @@ export interface ReportPreviousValuesPromise
   suggestions: () => Promise<String>;
   additionalComments: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
+  isSent: () => Promise<Boolean>;
 }
 
 export interface ReportPreviousValuesSubscription
@@ -4193,6 +4208,7 @@ export interface ReportPreviousValuesSubscription
   suggestions: () => Promise<AsyncIterator<String>>;
   additionalComments: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  isSent: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface TagSubscriptionPayload {

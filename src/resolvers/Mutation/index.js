@@ -5,14 +5,14 @@ const {
 	deleteIndustry,
 	updateIndustry,
 	removeTagFromPost,
-} = require('./Posts');
+} = require('./1_Posts_Industries_Tags');
 
 const {
 	createAvailability,
 	deleteAvailability,
 	createBooking,
   deleteBooking,
-} = require('./Availabilities');
+} = require('./2_Availabilities_Bookings');
 
 const {
 	createReview,
@@ -23,7 +23,7 @@ const {
 	deleteResponse,
 	createReport,
 	updateReport,
-} = require('./Feedback');
+} = require('./3_Reviews_Responses_Reports');
 
 module.exports = {
 	createPost,
