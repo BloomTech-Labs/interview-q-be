@@ -2,12 +2,12 @@ require('dotenv').config();
 
 const request = require('supertest');
 
-const server = require('../server');
+const server = require('../../server');
 
-describe('Response Queries', () => {
+describe('Review Queries', () => {
 	it('', () => {});
 });
 
-describe('Response Mutations', () => {
+describe('Review Mutations', () => {
 	it('', () => {});
 });
