@@ -53,7 +53,8 @@ async function createBooking(_parent, args, context) {
 	await context.prisma.updateAvailability({
 		data: { isOpen: false },
 		where: { uniquecheck: args.availabilityA },
-	});
+  });
+  
 	await context.prisma.updateAvailability({
 		data: { isOpen: false },
 		where: { uniquecheck: args.availabilityB },
