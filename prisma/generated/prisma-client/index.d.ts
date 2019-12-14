@@ -427,10 +427,10 @@ export type ReviewOrderByInput =
 export type AvailabilityOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "start_hour_ASC"
-  | "start_hour_DESC"
-  | "start_minute_ASC"
-  | "start_minute_DESC"
+  | "hour_ASC"
+  | "hour_DESC"
+  | "minute_ASC"
+  | "minute_DESC"
   | "coach_ASC"
   | "coach_DESC"
   | "bookingID_ASC"
@@ -907,8 +907,8 @@ export interface PostUpdateWithWhereUniqueWithoutTagsInput {
 }
 
 export interface AvailabilityUpdateDataInput {
-  start_hour?: Maybe<Int>;
-  start_minute?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
   coach?: Maybe<String>;
   bookingID?: Maybe<String>;
   year?: Maybe<Int>;
@@ -960,22 +960,22 @@ export interface AvailabilityScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  start_hour?: Maybe<Int>;
-  start_hour_not?: Maybe<Int>;
-  start_hour_in?: Maybe<Int[] | Int>;
-  start_hour_not_in?: Maybe<Int[] | Int>;
-  start_hour_lt?: Maybe<Int>;
-  start_hour_lte?: Maybe<Int>;
-  start_hour_gt?: Maybe<Int>;
-  start_hour_gte?: Maybe<Int>;
-  start_minute?: Maybe<Int>;
-  start_minute_not?: Maybe<Int>;
-  start_minute_in?: Maybe<Int[] | Int>;
-  start_minute_not_in?: Maybe<Int[] | Int>;
-  start_minute_lt?: Maybe<Int>;
-  start_minute_lte?: Maybe<Int>;
-  start_minute_gt?: Maybe<Int>;
-  start_minute_gte?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  hour_not?: Maybe<Int>;
+  hour_in?: Maybe<Int[] | Int>;
+  hour_not_in?: Maybe<Int[] | Int>;
+  hour_lt?: Maybe<Int>;
+  hour_lte?: Maybe<Int>;
+  hour_gt?: Maybe<Int>;
+  hour_gte?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  minute_not?: Maybe<Int>;
+  minute_in?: Maybe<Int[] | Int>;
+  minute_not_in?: Maybe<Int[] | Int>;
+  minute_lt?: Maybe<Int>;
+  minute_lte?: Maybe<Int>;
+  minute_gt?: Maybe<Int>;
+  minute_gte?: Maybe<Int>;
   coach?: Maybe<String>;
   coach_not?: Maybe<String>;
   coach_in?: Maybe<String[] | String>;
@@ -1068,8 +1068,8 @@ export type PostWhereUniqueInput = AtLeastOne<{
 }>;
 
 export interface AvailabilityUpdateManyDataInput {
-  start_hour?: Maybe<Int>;
-  start_minute?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
   coach?: Maybe<String>;
   bookingID?: Maybe<String>;
   year?: Maybe<Int>;
@@ -1399,8 +1399,8 @@ export interface BookingUpsertWithoutResponseInput {
 }
 
 export interface AvailabilityUpdateInput {
-  start_hour?: Maybe<Int>;
-  start_minute?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
   coach?: Maybe<String>;
   bookingID?: Maybe<String>;
   year?: Maybe<Int>;
@@ -1948,22 +1948,22 @@ export interface AvailabilityWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  start_hour?: Maybe<Int>;
-  start_hour_not?: Maybe<Int>;
-  start_hour_in?: Maybe<Int[] | Int>;
-  start_hour_not_in?: Maybe<Int[] | Int>;
-  start_hour_lt?: Maybe<Int>;
-  start_hour_lte?: Maybe<Int>;
-  start_hour_gt?: Maybe<Int>;
-  start_hour_gte?: Maybe<Int>;
-  start_minute?: Maybe<Int>;
-  start_minute_not?: Maybe<Int>;
-  start_minute_in?: Maybe<Int[] | Int>;
-  start_minute_not_in?: Maybe<Int[] | Int>;
-  start_minute_lt?: Maybe<Int>;
-  start_minute_lte?: Maybe<Int>;
-  start_minute_gt?: Maybe<Int>;
-  start_minute_gte?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  hour_not?: Maybe<Int>;
+  hour_in?: Maybe<Int[] | Int>;
+  hour_not_in?: Maybe<Int[] | Int>;
+  hour_lt?: Maybe<Int>;
+  hour_lte?: Maybe<Int>;
+  hour_gt?: Maybe<Int>;
+  hour_gte?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  minute_not?: Maybe<Int>;
+  minute_in?: Maybe<Int[] | Int>;
+  minute_not_in?: Maybe<Int[] | Int>;
+  minute_lt?: Maybe<Int>;
+  minute_lte?: Maybe<Int>;
+  minute_gt?: Maybe<Int>;
+  minute_gte?: Maybe<Int>;
   coach?: Maybe<String>;
   coach_not?: Maybe<String>;
   coach_in?: Maybe<String[] | String>;
@@ -2160,8 +2160,8 @@ export interface BookingUpdateWithoutReviewDataInput {
 
 export interface AvailabilityCreateInput {
   id?: Maybe<ID_Input>;
-  start_hour: Int;
-  start_minute: Int;
+  hour: Int;
+  minute: Int;
   coach: String;
   bookingID?: Maybe<String>;
   year: Int;
@@ -2496,8 +2496,8 @@ export interface PostUpdateManyWithoutIndustryInput {
 }
 
 export interface AvailabilityUpdateManyMutationInput {
-  start_hour?: Maybe<Int>;
-  start_minute?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
   coach?: Maybe<String>;
   bookingID?: Maybe<String>;
   year?: Maybe<Int>;
@@ -3207,8 +3207,8 @@ export interface AggregateReportSubscription
 
 export interface AvailabilityPreviousValues {
   id: ID_Output;
-  start_hour: Int;
-  start_minute: Int;
+  hour: Int;
+  minute: Int;
   coach: String;
   bookingID?: String;
   year: Int;
@@ -3223,8 +3223,8 @@ export interface AvailabilityPreviousValuesPromise
   extends Promise<AvailabilityPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  start_hour: () => Promise<Int>;
-  start_minute: () => Promise<Int>;
+  hour: () => Promise<Int>;
+  minute: () => Promise<Int>;
   coach: () => Promise<String>;
   bookingID: () => Promise<String>;
   year: () => Promise<Int>;
@@ -3239,8 +3239,8 @@ export interface AvailabilityPreviousValuesSubscription
   extends Promise<AsyncIterator<AvailabilityPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  start_hour: () => Promise<AsyncIterator<Int>>;
-  start_minute: () => Promise<AsyncIterator<Int>>;
+  hour: () => Promise<AsyncIterator<Int>>;
+  minute: () => Promise<AsyncIterator<Int>>;
   coach: () => Promise<AsyncIterator<String>>;
   bookingID: () => Promise<AsyncIterator<String>>;
   year: () => Promise<AsyncIterator<Int>>;
@@ -4036,8 +4036,8 @@ export interface BookingConnectionSubscription
 
 export interface Availability {
   id: ID_Output;
-  start_hour: Int;
-  start_minute: Int;
+  hour: Int;
+  minute: Int;
   coach: String;
   bookingID?: String;
   year: Int;
@@ -4052,8 +4052,8 @@ export interface AvailabilityPromise
   extends Promise<Availability>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  start_hour: () => Promise<Int>;
-  start_minute: () => Promise<Int>;
+  hour: () => Promise<Int>;
+  minute: () => Promise<Int>;
   coach: () => Promise<String>;
   bookingID: () => Promise<String>;
   year: () => Promise<Int>;
@@ -4068,8 +4068,8 @@ export interface AvailabilitySubscription
   extends Promise<AsyncIterator<Availability>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  start_hour: () => Promise<AsyncIterator<Int>>;
-  start_minute: () => Promise<AsyncIterator<Int>>;
+  hour: () => Promise<AsyncIterator<Int>>;
+  minute: () => Promise<AsyncIterator<Int>>;
   coach: () => Promise<AsyncIterator<String>>;
   bookingID: () => Promise<AsyncIterator<String>>;
   year: () => Promise<AsyncIterator<Int>>;
@@ -4084,8 +4084,8 @@ export interface AvailabilityNullablePromise
   extends Promise<Availability | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  start_hour: () => Promise<Int>;
-  start_minute: () => Promise<Int>;
+  hour: () => Promise<Int>;
+  minute: () => Promise<Int>;
   coach: () => Promise<String>;
   bookingID: () => Promise<String>;
   year: () => Promise<Int>;

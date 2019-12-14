@@ -90,8 +90,8 @@ describe('Availability Mutations', () => {
 			.send({
 				query: `mutation {
           createAvailability(
-            start_hour: ${randomInt(0, 23)}
-            start_minute: ${randomInt(0, 60)}
+            hour: ${randomInt(0, 23)}
+            minute: ${randomInt(0, 60)}
             year: ${randomInt(2020, 2030)}
             month: ${randomInt(1, 12)}
             day: ${randomInt(1, 31)}

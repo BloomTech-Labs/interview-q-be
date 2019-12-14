@@ -8,7 +8,7 @@ module.exports = {
 const { getUserId } = require('../../../utils');
 
 async function createAvailability(_parent, args, context) {
-	const { year, month, day, start_hour, start_minute } = args;
+	const { year, month, day, hour, minute } = args;
 	const coach = getUserId(context);
 
 	const uniquecheck = [
@@ -16,8 +16,8 @@ async function createAvailability(_parent, args, context) {
 		year,
 		month,
 		day,
-		start_hour,
-		start_minute,
+		hour,
+		minute,
 	].reduce((acc, val) => acc + '-' + val);
 
 	return context.prisma.createAvailability({

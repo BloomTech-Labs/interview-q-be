@@ -31,8 +31,8 @@ type Tag {
 
 type Availability {
   id: ID! @id
-  start_hour: Int!
-  start_minute: Int!
+  hour: Int!
+  minute: Int!
   coach: String!
   bookingID: String
 	year: Int!

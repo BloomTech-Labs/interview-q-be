@@ -37,8 +37,8 @@ type AggregateTag {
 
 type Availability {
   id: ID!
-  start_hour: Int!
-  start_minute: Int!
+  hour: Int!
+  minute: Int!
   coach: String!
   bookingID: String
   year: Int!
@@ -57,8 +57,8 @@ type AvailabilityConnection {
 
 input AvailabilityCreateInput {
   id: ID
-  start_hour: Int!
-  start_minute: Int!
+  hour: Int!
+  minute: Int!
   coach: String!
   bookingID: String
   year: Int!
@@ -82,10 +82,10 @@ type AvailabilityEdge {
 enum AvailabilityOrderByInput {
   id_ASC
   id_DESC
-  start_hour_ASC
-  start_hour_DESC
-  start_minute_ASC
-  start_minute_DESC
+  hour_ASC
+  hour_DESC
+  minute_ASC
+  minute_DESC
   coach_ASC
   coach_DESC
   bookingID_ASC
@@ -106,8 +106,8 @@ enum AvailabilityOrderByInput {
 
 type AvailabilityPreviousValues {
   id: ID!
-  start_hour: Int!
-  start_minute: Int!
+  hour: Int!
+  minute: Int!
   coach: String!
   bookingID: String
   year: Int!
@@ -133,22 +133,22 @@ input AvailabilityScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  start_hour: Int
-  start_hour_not: Int
-  start_hour_in: [Int!]
-  start_hour_not_in: [Int!]
-  start_hour_lt: Int
-  start_hour_lte: Int
-  start_hour_gt: Int
-  start_hour_gte: Int
-  start_minute: Int
-  start_minute_not: Int
-  start_minute_in: [Int!]
-  start_minute_not_in: [Int!]
-  start_minute_lt: Int
-  start_minute_lte: Int
-  start_minute_gt: Int
-  start_minute_gte: Int
+  hour: Int
+  hour_not: Int
+  hour_in: [Int!]
+  hour_not_in: [Int!]
+  hour_lt: Int
+  hour_lte: Int
+  hour_gt: Int
+  hour_gte: Int
+  minute: Int
+  minute_not: Int
+  minute_in: [Int!]
+  minute_not_in: [Int!]
+  minute_lt: Int
+  minute_lte: Int
+  minute_gt: Int
+  minute_gte: Int
   coach: String
   coach_not: String
   coach_in: [String!]
@@ -243,8 +243,8 @@ input AvailabilitySubscriptionWhereInput {
 }
 
 input AvailabilityUpdateDataInput {
-  start_hour: Int
-  start_minute: Int
+  hour: Int
+  minute: Int
   coach: String
   bookingID: String
   year: Int
@@ -256,8 +256,8 @@ input AvailabilityUpdateDataInput {
 }
 
 input AvailabilityUpdateInput {
-  start_hour: Int
-  start_minute: Int
+  hour: Int
+  minute: Int
   coach: String
   bookingID: String
   year: Int
@@ -269,8 +269,8 @@ input AvailabilityUpdateInput {
 }
 
 input AvailabilityUpdateManyDataInput {
-  start_hour: Int
-  start_minute: Int
+  hour: Int
+  minute: Int
   coach: String
   bookingID: String
   year: Int
@@ -294,8 +294,8 @@ input AvailabilityUpdateManyInput {
 }
 
 input AvailabilityUpdateManyMutationInput {
-  start_hour: Int
-  start_minute: Int
+  hour: Int
+  minute: Int
   coach: String
   bookingID: String
   year: Int
@@ -337,22 +337,22 @@ input AvailabilityWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  start_hour: Int
-  start_hour_not: Int
-  start_hour_in: [Int!]
-  start_hour_not_in: [Int!]
-  start_hour_lt: Int
-  start_hour_lte: Int
-  start_hour_gt: Int
-  start_hour_gte: Int
-  start_minute: Int
-  start_minute_not: Int
-  start_minute_in: [Int!]
-  start_minute_not_in: [Int!]
-  start_minute_lt: Int
-  start_minute_lte: Int
-  start_minute_gt: Int
-  start_minute_gte: Int
+  hour: Int
+  hour_not: Int
+  hour_in: [Int!]
+  hour_not_in: [Int!]
+  hour_lt: Int
+  hour_lte: Int
+  hour_gt: Int
+  hour_gte: Int
+  minute: Int
+  minute_not: Int
+  minute_in: [Int!]
+  minute_not_in: [Int!]
+  minute_lt: Int
+  minute_lte: Int
+  minute_gt: Int
+  minute_gte: Int
   coach: String
   coach_not: String
   coach_in: [String!]
