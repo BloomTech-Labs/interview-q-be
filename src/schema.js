@@ -65,8 +65,8 @@ const typeDefs = gql`
 		removeTagFromPost(id: ID!, tagID: String): Post!
 
 		createAvailability(
-			start_hour: Int!
-			start_minute: Int!
+			hour: Int!
+			minute: Int!
 			# coach: String!
 			# bookingId: String
 			year: Int!
@@ -178,8 +178,8 @@ const typeDefs = gql`
 
 	type Availability {
 		id: ID!
-		start_hour: Int!
-		start_minute: Int!
+		hour: Int!
+		minute: Int!
 		coach: User!
 		bookingID: String
 		year: Int!

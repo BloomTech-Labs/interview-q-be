@@ -2,10 +2,19 @@ require('dotenv').config();
 
 const request = require('supertest');
 
-const server = require('../server');
+const server = require('../../server');
+const jwt = require('jsonwebtoken');
 
-const token =
-	'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrM2h6Z2EyeDAwYzkwNzcxYW1peTYzemwiLCJlbWFpbCI6ImJsYWgxQGJsYWguY29tIiwiaWF0IjoxNTc1OTgyNjU4LCJleHAiOjE1NzYwMjU4NTh9.CGPaQ1D9wC5ZOiCpqma2UV_nq5AoeKC8QlRa-v2xAnk';
+function generateToken() {
+  const JWT_SECRET = process.env.JWT_SECRET;
+  const payload = {
+    email: "labs18.qualityhub@gmail.com",
+    id: "ck2xtepxh00nh0772tzrd2rso",
+  };
+  return jwt.sign(payload, JWT_SECRET)
+}
+
+const token = generateToken();
 
 describe('Booking Queries', () => {
 	const app = server.createHttpServer({});
@@ -133,7 +142,7 @@ describe('Booking Mutations', () => {
           }
         }`,
 			});
-
+    console.log(response.body);
 		uniquecheck = response.body.data.createBooking.uniquecheck;
 
 		expect(response.body.data.createBooking.id).toBeTruthy();

@@ -2,15 +2,24 @@ require('dotenv').config();
 
 const request = require('supertest');
 
-const server = require('../server');
+const server = require('../../server');
+const jwt = require('jsonwebtoken');
+
+function generateToken() {
+  const JWT_SECRET = process.env.JWT_SECRET;
+  const payload = {
+    email: "labs18.qualityhub@gmail.com",
+    id: "ck2xtepxh00nh0772tzrd2rso",
+  };
+  return jwt.sign(payload, JWT_SECRET)
+}
+
+const token = generateToken();
 
 describe('Post', () => {
 	let id;
 	let coachID;
 	const app = server.createHttpServer({});
-	const token =
-		'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrMnh0ZXB4aDAwbmgwNzcydHpyZDJyc28iLCJlbWFpbCI6ImxhYnMxOC5xdWFsaXR5aHViQGdtYWlsLmNvbSIsImlhdCI6MTU3NTk5NTczMiwiZXhwIjoxNTc2MDM4OTMyfQ.0DZ938P78DGZ724YHfvGh4T3cFmi5D3ZrAcO_wf65PM';
-
 	it('creates a post', async () => {
 		const response = await request(app)
 			.post('/')

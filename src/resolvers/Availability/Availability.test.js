@@ -2,11 +2,20 @@ require('dotenv').config();
 
 const request = require('supertest');
 
-const server = require('../server');
+const server = require('../../server');
 
-const token =
-	'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNrMnh0ZXB4aDAwbmgwNzcydHpyZDJyc28iLCJlbWFpbCI6ImxhYnMxOC5xdWFsaXR5aHViQGdtYWlsLmNvbSIsImlhdCI6MTU3NTk5NTczMiwiZXhwIjoxNTc2MDM4OTMyfQ.0DZ938P78DGZ724YHfvGh4T3cFmi5D3ZrAcO_wf65PM';
+const jwt = require('jsonwebtoken');
 
+function generateToken() {
+  const JWT_SECRET = process.env.JWT_SECRET;
+  const payload = {
+    email: "labs18.qualityhub@gmail.com",
+    id: "ck2xtepxh00nh0772tzrd2rso",
+  };
+  return jwt.sign(payload, JWT_SECRET)
+}
+
+const token = generateToken();
 describe('Availability Queries', () => {
 	const app = server.createHttpServer({});
 
@@ -81,8 +90,8 @@ describe('Availability Mutations', () => {
 			.send({
 				query: `mutation {
           createAvailability(
-            start_hour: ${randomInt(0, 23)}
-            start_minute: ${randomInt(0, 60)}
+            hour: ${randomInt(0, 23)}
+            minute: ${randomInt(0, 60)}
             year: ${randomInt(2020, 2030)}
             month: ${randomInt(1, 12)}
             day: ${randomInt(1, 31)}

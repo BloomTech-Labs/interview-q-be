@@ -51,8 +51,8 @@ type Industry {
 	type Availability {
     id: ID!
     dayOfWeek: String!
-    start_hour: Int!
-    start_minute: Int!
+    hour: Int!
+    minute: Int!
     end_hour: Int!
     end_minute: Int!
     user: User!
