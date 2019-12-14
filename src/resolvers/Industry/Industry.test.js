@@ -1,6 +1,6 @@
 const request = require('supertest');
 
-const server = require('../server');
+const server = require('../../server');
 
 describe('Industry', () => {
 	it('returns the list of industries', async () => {
