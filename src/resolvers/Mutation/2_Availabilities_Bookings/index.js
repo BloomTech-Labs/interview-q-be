@@ -43,7 +43,8 @@ async function createBooking(_parent, args, context) {
 		coach,
 		interviewGoals,
 		interviewQuestions,
-		resumeURL,
+    resumeURL,
+    price,
 	} = args;
 	const seeker = getUserId(context);
 	const uniquecheck = [coach, seeker, year, month, day, hour, minute].reduce(
@@ -77,7 +78,8 @@ async function createBooking(_parent, args, context) {
 		uniquecheck,
 		interviewGoals,
 		interviewQuestions,
-		resumeURL,
+    resumeURL,
+    price
 	});
 }
 
