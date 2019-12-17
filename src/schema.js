@@ -223,7 +223,7 @@ const typeDefs = gql`
 		createdAt: DateTime!
 		lastUpdated: DateTime!
 		response: Response
-		post: Post!
+		# post: Post!
 	}
 
 	type Response {

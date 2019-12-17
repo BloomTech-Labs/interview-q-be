@@ -21,5 +21,5 @@ function post(parent, _args, context) {
 }
 
 function __resolveReference(review, context) {
-	return context.prisma.review({ coach: review.id });
+	return context.prisma.reviews({ coach: review.id });
 }
