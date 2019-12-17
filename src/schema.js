@@ -161,7 +161,8 @@ const typeDefs = gql`
 		post: Post
 		availability: [Availability]
 		coach_bookings: [Booking]
-		seeker_bookings: [Booking]
+    seeker_bookings: [Booking]
+    reviews: [Review]
 	}
 
 	type Industry {
@@ -208,7 +209,8 @@ const typeDefs = gql`
 		resumeURL: String
 		review: Review
 		response: Response
-		report: Report
+    report: Report
+    price: Int!
 	}
 
 	type Review {

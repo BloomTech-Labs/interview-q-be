@@ -1,4 +1,4 @@
-module.exports = { coach, seeker, booking, response, post };
+module.exports = { coach, seeker, booking, response, post, __resolveReference };
 
 function coach(review) {
 	return { __typename: 'User', id: review.coach };
@@ -18,4 +18,8 @@ function response(parent, _args, context) {
 
 function post(parent, _args, context) {
 	return context.prisma.review({ id: parent.id }).post();
+}
+
+function __resolveReference(review, context) {
+	return context.prisma.review({ coach: review.id });
 }
