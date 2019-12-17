@@ -91,7 +91,8 @@ const typeDefs = gql`
 			confirmed: Boolean
 			interviewGoals: String
 			interviewQuestions: String
-			resumeURL: String
+      resumeURL: String
+      price: Int!
 		): Booking!
 
 		deleteBooking(uniquecheck: String!): Booking!
