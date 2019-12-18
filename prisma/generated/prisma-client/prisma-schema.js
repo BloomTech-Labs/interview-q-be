@@ -457,6 +457,7 @@ type Booking {
   response: Response
   report: Report
   price: Int!
+  date: DateTime!
 }
 
 type BookingConnection {
@@ -485,6 +486,7 @@ input BookingCreateInput {
   response: ResponseCreateOneWithoutBookingInput
   report: ReportCreateOneWithoutBookingInput
   price: Int!
+  date: DateTime!
 }
 
 input BookingCreateOneWithoutReportInput {
@@ -521,6 +523,7 @@ input BookingCreateWithoutReportInput {
   review: ReviewCreateOneWithoutBookingInput
   response: ResponseCreateOneWithoutBookingInput
   price: Int!
+  date: DateTime!
 }
 
 input BookingCreateWithoutResponseInput {
@@ -542,6 +545,7 @@ input BookingCreateWithoutResponseInput {
   review: ReviewCreateOneWithoutBookingInput
   report: ReportCreateOneWithoutBookingInput
   price: Int!
+  date: DateTime!
 }
 
 input BookingCreateWithoutReviewInput {
@@ -563,6 +567,7 @@ input BookingCreateWithoutReviewInput {
   response: ResponseCreateOneWithoutBookingInput
   report: ReportCreateOneWithoutBookingInput
   price: Int!
+  date: DateTime!
 }
 
 type BookingEdge {
@@ -601,6 +606,8 @@ enum BookingOrderByInput {
   resumeURL_DESC
   price_ASC
   price_DESC
+  date_ASC
+  date_DESC
 }
 
 type BookingPreviousValues {
@@ -619,6 +626,7 @@ type BookingPreviousValues {
   interviewQuestions: String
   resumeURL: String
   price: Int!
+  date: DateTime!
 }
 
 type BookingSubscriptionPayload {
@@ -658,6 +666,7 @@ input BookingUpdateInput {
   response: ResponseUpdateOneWithoutBookingInput
   report: ReportUpdateOneWithoutBookingInput
   price: Int
+  date: DateTime
 }
 
 input BookingUpdateManyMutationInput {
@@ -675,6 +684,7 @@ input BookingUpdateManyMutationInput {
   interviewQuestions: String
   resumeURL: String
   price: Int
+  date: DateTime
 }
 
 input BookingUpdateOneRequiredWithoutReportInput {
@@ -716,6 +726,7 @@ input BookingUpdateWithoutReportDataInput {
   review: ReviewUpdateOneWithoutBookingInput
   response: ResponseUpdateOneWithoutBookingInput
   price: Int
+  date: DateTime
 }
 
 input BookingUpdateWithoutResponseDataInput {
@@ -736,6 +747,7 @@ input BookingUpdateWithoutResponseDataInput {
   review: ReviewUpdateOneWithoutBookingInput
   report: ReportUpdateOneWithoutBookingInput
   price: Int
+  date: DateTime
 }
 
 input BookingUpdateWithoutReviewDataInput {
@@ -756,6 +768,7 @@ input BookingUpdateWithoutReviewDataInput {
   response: ResponseUpdateOneWithoutBookingInput
   report: ReportUpdateOneWithoutBookingInput
   price: Int
+  date: DateTime
 }
 
 input BookingUpsertWithoutReportInput {
@@ -930,6 +943,14 @@ input BookingWhereInput {
   price_lte: Int
   price_gt: Int
   price_gte: Int
+  date: DateTime
+  date_not: DateTime
+  date_in: [DateTime!]
+  date_not_in: [DateTime!]
+  date_lt: DateTime
+  date_lte: DateTime
+  date_gt: DateTime
+  date_gte: DateTime
   AND: [BookingWhereInput!]
   OR: [BookingWhereInput!]
   NOT: [BookingWhereInput!]
