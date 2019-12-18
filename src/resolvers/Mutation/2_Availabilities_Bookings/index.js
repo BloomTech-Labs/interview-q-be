@@ -109,5 +109,5 @@ function createISOString(year, month, day, hour, minute) {
   const newDay = ( day < 10 ? `0${day}` : day );
   const newHour = ( hour < 10 ? `0${hour}` : hour );
   const newMinute = ( minute < 10 ? `0${minute}` : minute );
-  return `${newYear}-${newMonth}-${newDay}T${newHour}:${newMinute}:00.000Z`;
+  return `${year}-${newMonth}-${newDay}T${newHour}:${newMinute}:00.000Z`;
 }
