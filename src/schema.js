@@ -25,7 +25,7 @@ const typeDefs = gql`
 		bookingByUniquecheck(uniquecheck: String!): Booking!
 		reviewsByCoach(coach_id: String!): [Review]
 		reviewsByPost(post_id: String!): [Review]
-		ratingByCoach(coach_id: String!): Float!
+		ratingByCoach(coach_id: String!): Float
 		reviewsBySeeker(seeker_id: String!): [Review]
 		reviewByBooking(uniqueBooking: String!): Review
 		responseByBooking(uniqueBooking: String!): Response
