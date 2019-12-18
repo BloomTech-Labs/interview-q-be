@@ -410,7 +410,9 @@ export type BookingOrderByInput =
   | "resumeURL_ASC"
   | "resumeURL_DESC"
   | "price_ASC"
-  | "price_DESC";
+  | "price_DESC"
+  | "date_ASC"
+  | "date_DESC";
 
 export type PostOrderByInput =
   | "id_ASC"
@@ -567,6 +569,7 @@ export interface BookingCreateWithoutResponseInput {
   review?: Maybe<ReviewCreateOneWithoutBookingInput>;
   report?: Maybe<ReportCreateOneWithoutBookingInput>;
   price: Int;
+  date: DateTimeInput;
 }
 
 export interface BookingUpsertWithoutResponseInput {
@@ -774,6 +777,14 @@ export interface BookingWhereInput {
   price_lte?: Maybe<Int>;
   price_gt?: Maybe<Int>;
   price_gte?: Maybe<Int>;
+  date?: Maybe<DateTimeInput>;
+  date_not?: Maybe<DateTimeInput>;
+  date_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  date_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  date_lt?: Maybe<DateTimeInput>;
+  date_lte?: Maybe<DateTimeInput>;
+  date_gt?: Maybe<DateTimeInput>;
+  date_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<BookingWhereInput[] | BookingWhereInput>;
   OR?: Maybe<BookingWhereInput[] | BookingWhereInput>;
   NOT?: Maybe<BookingWhereInput[] | BookingWhereInput>;
@@ -912,6 +923,7 @@ export interface BookingCreateWithoutReviewInput {
   response?: Maybe<ResponseCreateOneWithoutBookingInput>;
   report?: Maybe<ReportCreateOneWithoutBookingInput>;
   price: Int;
+  date: DateTimeInput;
 }
 
 export interface PostWhereInput {
@@ -1081,6 +1093,7 @@ export interface BookingUpdateInput {
   response?: Maybe<ResponseUpdateOneWithoutBookingInput>;
   report?: Maybe<ReportUpdateOneWithoutBookingInput>;
   price?: Maybe<Int>;
+  date?: Maybe<DateTimeInput>;
 }
 
 export interface TagWhereInput {
@@ -1401,6 +1414,7 @@ export interface BookingUpdateWithoutReportDataInput {
   review?: Maybe<ReviewUpdateOneWithoutBookingInput>;
   response?: Maybe<ResponseUpdateOneWithoutBookingInput>;
   price?: Maybe<Int>;
+  date?: Maybe<DateTimeInput>;
 }
 
 export interface IndustryCreateOneWithoutPostsInput {
@@ -1445,6 +1459,7 @@ export interface BookingCreateWithoutReportInput {
   review?: Maybe<ReviewCreateOneWithoutBookingInput>;
   response?: Maybe<ResponseCreateOneWithoutBookingInput>;
   price: Int;
+  date: DateTimeInput;
 }
 
 export interface BookingUpdateWithoutResponseDataInput {
@@ -1465,6 +1480,7 @@ export interface BookingUpdateWithoutResponseDataInput {
   review?: Maybe<ReviewUpdateOneWithoutBookingInput>;
   report?: Maybe<ReportUpdateOneWithoutBookingInput>;
   price?: Maybe<Int>;
+  date?: Maybe<DateTimeInput>;
 }
 
 export interface ReportCreateInput {
@@ -1569,6 +1585,7 @@ export interface BookingCreateInput {
   response?: Maybe<ResponseCreateOneWithoutBookingInput>;
   report?: Maybe<ReportCreateOneWithoutBookingInput>;
   price: Int;
+  date: DateTimeInput;
 }
 
 export interface ReviewUpsertWithoutBookingInput {
@@ -1781,6 +1798,7 @@ export interface BookingUpdateWithoutReviewDataInput {
   response?: Maybe<ResponseUpdateOneWithoutBookingInput>;
   report?: Maybe<ReportUpdateOneWithoutBookingInput>;
   price?: Maybe<Int>;
+  date?: Maybe<DateTimeInput>;
 }
 
 export interface IndustryWhereInput {
@@ -1884,6 +1902,7 @@ export interface BookingUpdateManyMutationInput {
   interviewQuestions?: Maybe<String>;
   resumeURL?: Maybe<String>;
   price?: Maybe<Int>;
+  date?: Maybe<DateTimeInput>;
 }
 
 export interface ResponseUpdateInput {
@@ -3117,6 +3136,7 @@ export interface Booking {
   interviewQuestions?: String;
   resumeURL?: String;
   price: Int;
+  date: DateTimeOutput;
 }
 
 export interface BookingPromise extends Promise<Booking>, Fragmentable {
@@ -3147,6 +3167,7 @@ export interface BookingPromise extends Promise<Booking>, Fragmentable {
   response: <T = ResponsePromise>() => T;
   report: <T = ReportPromise>() => T;
   price: () => Promise<Int>;
+  date: () => Promise<DateTimeOutput>;
 }
 
 export interface BookingSubscription
@@ -3179,6 +3200,7 @@ export interface BookingSubscription
   response: <T = ResponseSubscription>() => T;
   report: <T = ReportSubscription>() => T;
   price: () => Promise<AsyncIterator<Int>>;
+  date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface BookingNullablePromise
@@ -3211,6 +3233,7 @@ export interface BookingNullablePromise
   response: <T = ResponsePromise>() => T;
   report: <T = ReportPromise>() => T;
   price: () => Promise<Int>;
+  date: () => Promise<DateTimeOutput>;
 }
 
 export interface BookingSubscriptionPayload {
@@ -3271,6 +3294,7 @@ export interface BookingPreviousValues {
   interviewQuestions?: String;
   resumeURL?: String;
   price: Int;
+  date: DateTimeOutput;
 }
 
 export interface BookingPreviousValuesPromise
@@ -3291,6 +3315,7 @@ export interface BookingPreviousValuesPromise
   interviewQuestions: () => Promise<String>;
   resumeURL: () => Promise<String>;
   price: () => Promise<Int>;
+  date: () => Promise<DateTimeOutput>;
 }
 
 export interface BookingPreviousValuesSubscription
@@ -3311,6 +3336,7 @@ export interface BookingPreviousValuesSubscription
   interviewQuestions: () => Promise<AsyncIterator<String>>;
   resumeURL: () => Promise<AsyncIterator<String>>;
   price: () => Promise<AsyncIterator<Int>>;
+  date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface AggregateIndustry {

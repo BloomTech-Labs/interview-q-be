@@ -62,6 +62,7 @@ type Booking {
   response: Response @relation(link: INLINE)
   report: Report @relation(link: INLINE)
   price: Int!
+  date: DateTime!
 }
 
 type Review {

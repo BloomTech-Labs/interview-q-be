@@ -100,11 +100,11 @@ function bookings(_parents, _args, context) {
 }
 
 function bookingsByCoach(_parents, args, context) {
-	return context.prisma.bookings({ where: { coach: args.coach_id } });
+	return context.prisma.bookings({ where: { coach: args.coach_id }, orderBy: "DATE_DESC" });
 }
 
 function bookingsBySeeker(_parents, args, context) {
-	return context.prisma.bookings({ where: { seeker: args.seeker_id } });
+	return context.prisma.bookings({ where: { seeker: args.seeker_id }, orderBy: "DATE_DESC" });
 }
 
 function bookingByUniquecheck(_parents, args, context) {
