@@ -46,9 +46,10 @@ async function createBooking(_parent, args, context) {
     resumeURL,
     price,
   } = args;
+
   const date = createISOString(year, month, day, hour, minute);
 	const seeker = getUserId(context);
-	const uniquecheck = [coach, seeker, year, month, day, hour, minute].reduce(
+	const uniquecheck = [coach, year, month, day, hour, minute].reduce(
 		(acc, val) => acc + '-' + val,
 	);
 
