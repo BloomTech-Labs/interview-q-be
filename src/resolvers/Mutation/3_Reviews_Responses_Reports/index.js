@@ -29,11 +29,11 @@ async function createReview(_parent, args, context) {
 }
 
 function updateReview(_parent, args, context) {
-  const { id, rating, review} = args;
+	const { id, rating, review } = args;
 	return context.prisma.updateReview({
-		data: { rating,review },
+		data: { rating, review },
 		where: {
-			id
+			id,
 		},
 	});
 }
@@ -46,7 +46,7 @@ function deleteReview(_parent, args, context) {
 function createResponse(_parent, args, context) {
 	const { reviewID, uniqueBooking, text } = args;
 
-	return context.prisma.createReview({
+	return context.prisma.createResponse({
 		review: {
 			connect: { id: reviewID },
 		},
@@ -58,7 +58,7 @@ function createResponse(_parent, args, context) {
 }
 
 function updateResponse(_parent, args, context) {
-  const { id, text } = args;
+	const { id, text } = args;
 	return context.prisma.updateResponse({
 		data: { text },
 		where: { id },
