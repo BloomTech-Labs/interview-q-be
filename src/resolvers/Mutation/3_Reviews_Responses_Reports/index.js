@@ -58,8 +58,9 @@ function createResponse(_parent, args, context) {
 }
 
 function updateResponse(_parent, args, context) {
+  const { id, text } = args;
 	return context.prisma.updateResponse({
-		data: { args },
+		data: { text },
 		where: { id },
 	});
 }
