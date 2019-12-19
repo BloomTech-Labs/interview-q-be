@@ -51,8 +51,8 @@ async function createBooking(_parent, args, context) {
 	const seeker = getUserId(context);
 	const uniquecheck = [coach, year, month, day, hour, minute].reduce(
 		(acc, val) => acc + '-' + val,
-	);
-
+  );
+  
 	await context.prisma.updateAvailability({
 		data: { isOpen: false },
 		where: { uniquecheck: args.availabilityA },
