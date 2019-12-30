@@ -43,13 +43,16 @@ async function createBooking(_parent, args, context) {
 		coach,
 		interviewGoals,
 		interviewQuestions,
-		resumeURL,
-	} = args;
-	const seeker = getUserId(context);
-	const uniquecheck = [coach, seeker, year, month, day, hour, minute].reduce(
-		(acc, val) => acc + '-' + val,
-	);
+    resumeURL,
+    price,
+  } = args;
 
+  const date = createISOString(year, month, day, hour, minute);
+	const seeker = getUserId(context);
+	const uniquecheck = [coach, year, month, day, hour, minute].reduce(
+		(acc, val) => acc + '-' + val,
+  );
+  
 	await context.prisma.updateAvailability({
 		data: { isOpen: false },
 		where: { uniquecheck: args.availabilityA },
@@ -67,7 +70,8 @@ async function createBooking(_parent, args, context) {
 		hour,
 		minute,
 		coach,
-		seeker,
+    seeker,
+    date,
 		availability: {
 			connect: [
 				{ uniquecheck: args.availabilityA },
@@ -77,7 +81,8 @@ async function createBooking(_parent, args, context) {
 		uniquecheck,
 		interviewGoals,
 		interviewQuestions,
-		resumeURL,
+    resumeURL,
+    price
 	});
 }
 
@@ -98,4 +103,12 @@ async function deleteBooking(_parent, args, context) {
 	});
 
 	return context.prisma.deleteBooking({ uniquecheck: args.uniquecheck });
+}
+
+function createISOString(year, month, day, hour, minute) {
+  const newMonth = ( month < 10 ? `0${month}` : month );
+  const newDay = ( day < 10 ? `0${day}` : day );
+  const newHour = ( hour < 10 ? `0${hour}` : hour );
+  const newMinute = ( minute < 10 ? `0${minute}` : minute );
+  return `${year}-${newMonth}-${newDay}T${newHour}:${newMinute}:00.000Z`;
 }

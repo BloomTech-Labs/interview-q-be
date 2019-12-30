@@ -13,7 +13,6 @@ type Post {
   company_lc: String
   position_lc: String
   tags: [Tag]!
-  reviews: [Review]!
   # coach: User @provides(fields: "email") @relation(link: TABLE name: "UserOnPost", onDelete: SET_NULL)
   # ratingsId: ID!
 }
@@ -62,6 +61,8 @@ type Booking {
   review: Review @relation(link: INLINE)
   response: Response @relation(link: INLINE)
   report: Report @relation(link: INLINE)
+  price: Int!
+  date: DateTime!
 }
 
 type Review {
@@ -74,7 +75,6 @@ type Review {
   createdAt: DateTime! @createdAt
   lastUpdated: DateTime! @updatedAt
   response: Response @relation(link: INLINE)
-  post: Post!
 }
 
 type Response {

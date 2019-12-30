@@ -17,8 +17,6 @@ async function createReview(_parent, args, context) {
 
 	const booking = await context.prisma.booking({ uniquecheck: uniqueBooking });
 
-	const post = await context.prisma.post({ coachID: booking.coach });
-
 	return context.prisma.createReview({
 		coach: booking.coach,
 		seeker: booking.seeker,
@@ -27,15 +25,13 @@ async function createReview(_parent, args, context) {
 		},
 		rating,
 		review,
-		post: {
-			connect: { id: post.id },
-		},
 	});
 }
 
 function updateReview(_parent, args, context) {
+	const { id, rating, review } = args;
 	return context.prisma.updateReview({
-		data: { args },
+		data: { rating, review },
 		where: {
 			id,
 		},
@@ -50,7 +46,7 @@ function deleteReview(_parent, args, context) {
 function createResponse(_parent, args, context) {
 	const { reviewID, uniqueBooking, text } = args;
 
-	return context.prisma.createReview({
+	return context.prisma.createResponse({
 		review: {
 			connect: { id: reviewID },
 		},
@@ -62,8 +58,9 @@ function createResponse(_parent, args, context) {
 }
 
 function updateResponse(_parent, args, context) {
+	const { id, text } = args;
 	return context.prisma.updateResponse({
-		data: { args },
+		data: { text },
 		where: { id },
 	});
 }

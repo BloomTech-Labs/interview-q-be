@@ -25,7 +25,7 @@ const typeDefs = gql`
 		bookingByUniquecheck(uniquecheck: String!): Booking!
 		reviewsByCoach(coach_id: String!): [Review]
 		reviewsByPost(post_id: String!): [Review]
-		ratingByCoach(coach_id: String!): Float!
+		ratingByCoach(coach_id: String!): Float
 		reviewsBySeeker(seeker_id: String!): [Review]
 		reviewByBooking(uniqueBooking: String!): Review
 		responseByBooking(uniqueBooking: String!): Response
@@ -91,7 +91,8 @@ const typeDefs = gql`
 			confirmed: Boolean
 			interviewGoals: String
 			interviewQuestions: String
-			resumeURL: String
+      resumeURL: String
+      price: Int!
 		): Booking!
 
 		deleteBooking(uniquecheck: String!): Booking!
@@ -161,7 +162,8 @@ const typeDefs = gql`
 		post: Post
 		availability: [Availability]
 		coach_bookings: [Booking]
-		seeker_bookings: [Booking]
+    seeker_bookings: [Booking]
+    reviews: [Review]
 	}
 
 	type Industry {
@@ -208,7 +210,8 @@ const typeDefs = gql`
 		resumeURL: String
 		review: Review
 		response: Response
-		report: Report
+    report: Report
+    price: Int!
 	}
 
 	type Review {
@@ -221,7 +224,7 @@ const typeDefs = gql`
 		createdAt: DateTime!
 		lastUpdated: DateTime!
 		response: Response
-		post: Post!
+		# post: Post!
 	}
 
 	type Response {
