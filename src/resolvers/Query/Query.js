@@ -100,11 +100,17 @@ function bookings(_parents, _args, context) {
 }
 
 function bookingsByCoach(_parents, args, context) {
-	return context.prisma.bookings({ where: { coach: args.coach_id }, orderBy: "date_DESC" });
+	return context.prisma.bookings({
+		where: { coach: args.coach_id },
+		orderBy: 'date_DESC',
+	});
 }
 
 function bookingsBySeeker(_parents, args, context) {
-	return context.prisma.bookings({ where: { seeker: args.seeker_id }, orderBy: "date_DESC" });
+	return context.prisma.bookings({
+		where: { seeker: args.seeker_id },
+		orderBy: 'date_DESC',
+	});
 }
 
 function bookingByUniquecheck(_parents, args, context) {
@@ -130,7 +136,7 @@ async function ratingByCoach(_parents, args, context) {
 	const avgRating =
 		reviews.reduce((acc, val) => acc + val.rating, 0) / reviews.length;
 
-	return avgRating;
+	return Math.round(avgRating * 10) / 10;
 }
 
 function reviewsBySeeker(_parents, args, context) {
