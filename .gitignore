@@ -55,7 +55,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-/congif
+/config
 .env
 .env.test
 
