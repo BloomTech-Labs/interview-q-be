@@ -16,6 +16,7 @@ type Post {
   # coach: User @provides(fields: "email") @relation(link: TABLE name: "UserOnPost", onDelete: SET_NULL)
   # ratingsId: ID!
 }
+
 type Industry {
 	id: ID! @id
 	name: String! @unique
@@ -58,33 +59,12 @@ type Booking {
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
-  review: Review @relation(link: INLINE)
-  response: Response @relation(link: INLINE)
   report: Report @relation(link: INLINE)
   price: Int!
   date: DateTime!
 }
 
-type Review {
-  id: ID! @id
-  coach: String!
-  seeker: String!
-  booking: Booking! @unique
-  rating: Int!
-  review: String
-  createdAt: DateTime! @createdAt
-  lastUpdated: DateTime! @updatedAt
-  response: Response @relation(link: INLINE)
-}
 
-type Response {
-  id: ID! @id
-  review: Review! @unique
-  text: String!
-  createdAt: DateTime! @createdAt
-  lastUpdated: DateTime! @updatedAt
-  booking: Booking! @unique
-}
 
 type Report {
   id: ID! @id
