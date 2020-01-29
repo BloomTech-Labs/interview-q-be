@@ -29,7 +29,7 @@ const typeDefs = gql`
 		bookingsBySeeker(seeker_id: String!): [Booking]
 		bookingByUniquecheck(uniquecheck: String!): Booking!
 
-		responseByBooking(uniqueBooking: String!): Response
+		# responseByBooking(uniqueBooking: String!): Response
 
 		reportsByCoach(coach_id: String!): [Report]
 		reportsBySeeker(seeker_id: String!): [Report]
@@ -137,15 +137,14 @@ const typeDefs = gql`
 		reviews: [Review]!
 	}
 
-	"""
-	Associates posts, availability, bookings, etc with User
-	"""
+
+	# Associates posts, availability, bookings, etc with User
 	extend type User @key(fields: "id") {
 		id: ID! @external
 		post: Post
 		availability: [Availability]
 		coach_bookings: [Booking]
-    seeker_bookings: [Booking]
+		seeker_bookings: [Booking]
 	}
 
 
@@ -194,13 +193,11 @@ const typeDefs = gql`
     report: Report
 		price: Int!
 		review: Review 
-		response: Response
+		# response: Response
 	}
 
+	#		Associate a Booking with a Review
 	extend type Review @key(fields: "id") {
-		"""
-		Associate a Booking with a Review
-		"""
 		id: ID! @external
 		booking: Booking!
 	}
