@@ -23,14 +23,6 @@ type AggregateReport {
   count: Int!
 }
 
-type AggregateResponse {
-  count: Int!
-}
-
-type AggregateReview {
-  count: Int!
-}
-
 type AggregateTag {
   count: Int!
 }
@@ -453,8 +445,6 @@ type Booking {
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
-  review: Review
-  response: Response
   report: Report
   price: Int!
   date: DateTime!
@@ -482,8 +472,6 @@ input BookingCreateInput {
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
-  review: ReviewCreateOneWithoutBookingInput
-  response: ResponseCreateOneWithoutBookingInput
   report: ReportCreateOneWithoutBookingInput
   price: Int!
   date: DateTime!
@@ -491,16 +479,6 @@ input BookingCreateInput {
 
 input BookingCreateOneWithoutReportInput {
   create: BookingCreateWithoutReportInput
-  connect: BookingWhereUniqueInput
-}
-
-input BookingCreateOneWithoutResponseInput {
-  create: BookingCreateWithoutResponseInput
-  connect: BookingWhereUniqueInput
-}
-
-input BookingCreateOneWithoutReviewInput {
-  create: BookingCreateWithoutReviewInput
   connect: BookingWhereUniqueInput
 }
 
@@ -520,52 +498,6 @@ input BookingCreateWithoutReportInput {
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
-  review: ReviewCreateOneWithoutBookingInput
-  response: ResponseCreateOneWithoutBookingInput
-  price: Int!
-  date: DateTime!
-}
-
-input BookingCreateWithoutResponseInput {
-  id: ID
-  year: Int!
-  month: Int!
-  day: Int!
-  hour: Int!
-  minute: Int!
-  coach: String!
-  seeker: String!
-  uniquecheck: String!
-  availability: AvailabilityCreateManyInput
-  pending: Boolean
-  confirmed: Boolean
-  interviewGoals: String
-  interviewQuestions: String
-  resumeURL: String
-  review: ReviewCreateOneWithoutBookingInput
-  report: ReportCreateOneWithoutBookingInput
-  price: Int!
-  date: DateTime!
-}
-
-input BookingCreateWithoutReviewInput {
-  id: ID
-  year: Int!
-  month: Int!
-  day: Int!
-  hour: Int!
-  minute: Int!
-  coach: String!
-  seeker: String!
-  uniquecheck: String!
-  availability: AvailabilityCreateManyInput
-  pending: Boolean
-  confirmed: Boolean
-  interviewGoals: String
-  interviewQuestions: String
-  resumeURL: String
-  response: ResponseCreateOneWithoutBookingInput
-  report: ReportCreateOneWithoutBookingInput
   price: Int!
   date: DateTime!
 }
@@ -662,8 +594,6 @@ input BookingUpdateInput {
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
-  review: ReviewUpdateOneWithoutBookingInput
-  response: ResponseUpdateOneWithoutBookingInput
   report: ReportUpdateOneWithoutBookingInput
   price: Int
   date: DateTime
@@ -694,20 +624,6 @@ input BookingUpdateOneRequiredWithoutReportInput {
   connect: BookingWhereUniqueInput
 }
 
-input BookingUpdateOneRequiredWithoutResponseInput {
-  create: BookingCreateWithoutResponseInput
-  update: BookingUpdateWithoutResponseDataInput
-  upsert: BookingUpsertWithoutResponseInput
-  connect: BookingWhereUniqueInput
-}
-
-input BookingUpdateOneRequiredWithoutReviewInput {
-  create: BookingCreateWithoutReviewInput
-  update: BookingUpdateWithoutReviewDataInput
-  upsert: BookingUpsertWithoutReviewInput
-  connect: BookingWhereUniqueInput
-}
-
 input BookingUpdateWithoutReportDataInput {
   year: Int
   month: Int
@@ -723,50 +639,6 @@ input BookingUpdateWithoutReportDataInput {
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
-  review: ReviewUpdateOneWithoutBookingInput
-  response: ResponseUpdateOneWithoutBookingInput
-  price: Int
-  date: DateTime
-}
-
-input BookingUpdateWithoutResponseDataInput {
-  year: Int
-  month: Int
-  day: Int
-  hour: Int
-  minute: Int
-  coach: String
-  seeker: String
-  uniquecheck: String
-  availability: AvailabilityUpdateManyInput
-  pending: Boolean
-  confirmed: Boolean
-  interviewGoals: String
-  interviewQuestions: String
-  resumeURL: String
-  review: ReviewUpdateOneWithoutBookingInput
-  report: ReportUpdateOneWithoutBookingInput
-  price: Int
-  date: DateTime
-}
-
-input BookingUpdateWithoutReviewDataInput {
-  year: Int
-  month: Int
-  day: Int
-  hour: Int
-  minute: Int
-  coach: String
-  seeker: String
-  uniquecheck: String
-  availability: AvailabilityUpdateManyInput
-  pending: Boolean
-  confirmed: Boolean
-  interviewGoals: String
-  interviewQuestions: String
-  resumeURL: String
-  response: ResponseUpdateOneWithoutBookingInput
-  report: ReportUpdateOneWithoutBookingInput
   price: Int
   date: DateTime
 }
@@ -774,16 +646,6 @@ input BookingUpdateWithoutReviewDataInput {
 input BookingUpsertWithoutReportInput {
   update: BookingUpdateWithoutReportDataInput!
   create: BookingCreateWithoutReportInput!
-}
-
-input BookingUpsertWithoutResponseInput {
-  update: BookingUpdateWithoutResponseDataInput!
-  create: BookingCreateWithoutResponseInput!
-}
-
-input BookingUpsertWithoutReviewInput {
-  update: BookingUpdateWithoutReviewDataInput!
-  create: BookingCreateWithoutReviewInput!
 }
 
 input BookingWhereInput {
@@ -932,8 +794,6 @@ input BookingWhereInput {
   resumeURL_not_starts_with: String
   resumeURL_ends_with: String
   resumeURL_not_ends_with: String
-  review: ReviewWhereInput
-  response: ResponseWhereInput
   report: ReportWhereInput
   price: Int
   price_not: Int
@@ -1128,18 +988,6 @@ type Mutation {
   upsertReport(where: ReportWhereUniqueInput!, create: ReportCreateInput!, update: ReportUpdateInput!): Report!
   deleteReport(where: ReportWhereUniqueInput!): Report
   deleteManyReports(where: ReportWhereInput): BatchPayload!
-  createResponse(data: ResponseCreateInput!): Response!
-  updateResponse(data: ResponseUpdateInput!, where: ResponseWhereUniqueInput!): Response
-  updateManyResponses(data: ResponseUpdateManyMutationInput!, where: ResponseWhereInput): BatchPayload!
-  upsertResponse(where: ResponseWhereUniqueInput!, create: ResponseCreateInput!, update: ResponseUpdateInput!): Response!
-  deleteResponse(where: ResponseWhereUniqueInput!): Response
-  deleteManyResponses(where: ResponseWhereInput): BatchPayload!
-  createReview(data: ReviewCreateInput!): Review!
-  updateReview(data: ReviewUpdateInput!, where: ReviewWhereUniqueInput!): Review
-  updateManyReviews(data: ReviewUpdateManyMutationInput!, where: ReviewWhereInput): BatchPayload!
-  upsertReview(where: ReviewWhereUniqueInput!, create: ReviewCreateInput!, update: ReviewUpdateInput!): Review!
-  deleteReview(where: ReviewWhereUniqueInput!): Review
-  deleteManyReviews(where: ReviewWhereInput): BatchPayload!
   createTag(data: TagCreateInput!): Tag!
   updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateManyTags(data: TagUpdateManyMutationInput!, where: TagWhereInput): BatchPayload!
@@ -1734,12 +1582,6 @@ type Query {
   report(where: ReportWhereUniqueInput!): Report
   reports(where: ReportWhereInput, orderBy: ReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Report]!
   reportsConnection(where: ReportWhereInput, orderBy: ReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReportConnection!
-  response(where: ResponseWhereUniqueInput!): Response
-  responses(where: ResponseWhereInput, orderBy: ResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Response]!
-  responsesConnection(where: ResponseWhereInput, orderBy: ResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ResponseConnection!
-  review(where: ReviewWhereUniqueInput!): Review
-  reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review]!
-  reviewsConnection(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReviewConnection!
   tag(where: TagWhereUniqueInput!): Tag
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
   tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
@@ -2013,459 +1855,12 @@ input ReportWhereUniqueInput {
   id: ID
 }
 
-type Response {
-  id: ID!
-  review: Review!
-  text: String!
-  createdAt: DateTime!
-  lastUpdated: DateTime!
-  booking: Booking!
-}
-
-type ResponseConnection {
-  pageInfo: PageInfo!
-  edges: [ResponseEdge]!
-  aggregate: AggregateResponse!
-}
-
-input ResponseCreateInput {
-  id: ID
-  review: ReviewCreateOneWithoutResponseInput!
-  text: String!
-  booking: BookingCreateOneWithoutResponseInput!
-}
-
-input ResponseCreateOneWithoutBookingInput {
-  create: ResponseCreateWithoutBookingInput
-  connect: ResponseWhereUniqueInput
-}
-
-input ResponseCreateOneWithoutReviewInput {
-  create: ResponseCreateWithoutReviewInput
-  connect: ResponseWhereUniqueInput
-}
-
-input ResponseCreateWithoutBookingInput {
-  id: ID
-  review: ReviewCreateOneWithoutResponseInput!
-  text: String!
-}
-
-input ResponseCreateWithoutReviewInput {
-  id: ID
-  text: String!
-  booking: BookingCreateOneWithoutResponseInput!
-}
-
-type ResponseEdge {
-  node: Response!
-  cursor: String!
-}
-
-enum ResponseOrderByInput {
-  id_ASC
-  id_DESC
-  text_ASC
-  text_DESC
-  createdAt_ASC
-  createdAt_DESC
-  lastUpdated_ASC
-  lastUpdated_DESC
-}
-
-type ResponsePreviousValues {
-  id: ID!
-  text: String!
-  createdAt: DateTime!
-  lastUpdated: DateTime!
-}
-
-type ResponseSubscriptionPayload {
-  mutation: MutationType!
-  node: Response
-  updatedFields: [String!]
-  previousValues: ResponsePreviousValues
-}
-
-input ResponseSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: ResponseWhereInput
-  AND: [ResponseSubscriptionWhereInput!]
-  OR: [ResponseSubscriptionWhereInput!]
-  NOT: [ResponseSubscriptionWhereInput!]
-}
-
-input ResponseUpdateInput {
-  review: ReviewUpdateOneRequiredWithoutResponseInput
-  text: String
-  booking: BookingUpdateOneRequiredWithoutResponseInput
-}
-
-input ResponseUpdateManyMutationInput {
-  text: String
-}
-
-input ResponseUpdateOneWithoutBookingInput {
-  create: ResponseCreateWithoutBookingInput
-  update: ResponseUpdateWithoutBookingDataInput
-  upsert: ResponseUpsertWithoutBookingInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: ResponseWhereUniqueInput
-}
-
-input ResponseUpdateOneWithoutReviewInput {
-  create: ResponseCreateWithoutReviewInput
-  update: ResponseUpdateWithoutReviewDataInput
-  upsert: ResponseUpsertWithoutReviewInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: ResponseWhereUniqueInput
-}
-
-input ResponseUpdateWithoutBookingDataInput {
-  review: ReviewUpdateOneRequiredWithoutResponseInput
-  text: String
-}
-
-input ResponseUpdateWithoutReviewDataInput {
-  text: String
-  booking: BookingUpdateOneRequiredWithoutResponseInput
-}
-
-input ResponseUpsertWithoutBookingInput {
-  update: ResponseUpdateWithoutBookingDataInput!
-  create: ResponseCreateWithoutBookingInput!
-}
-
-input ResponseUpsertWithoutReviewInput {
-  update: ResponseUpdateWithoutReviewDataInput!
-  create: ResponseCreateWithoutReviewInput!
-}
-
-input ResponseWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  review: ReviewWhereInput
-  text: String
-  text_not: String
-  text_in: [String!]
-  text_not_in: [String!]
-  text_lt: String
-  text_lte: String
-  text_gt: String
-  text_gte: String
-  text_contains: String
-  text_not_contains: String
-  text_starts_with: String
-  text_not_starts_with: String
-  text_ends_with: String
-  text_not_ends_with: String
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  lastUpdated: DateTime
-  lastUpdated_not: DateTime
-  lastUpdated_in: [DateTime!]
-  lastUpdated_not_in: [DateTime!]
-  lastUpdated_lt: DateTime
-  lastUpdated_lte: DateTime
-  lastUpdated_gt: DateTime
-  lastUpdated_gte: DateTime
-  booking: BookingWhereInput
-  AND: [ResponseWhereInput!]
-  OR: [ResponseWhereInput!]
-  NOT: [ResponseWhereInput!]
-}
-
-input ResponseWhereUniqueInput {
-  id: ID
-}
-
-type Review {
-  id: ID!
-  coach: String!
-  seeker: String!
-  booking: Booking!
-  rating: Int!
-  review: String
-  createdAt: DateTime!
-  lastUpdated: DateTime!
-  response: Response
-}
-
-type ReviewConnection {
-  pageInfo: PageInfo!
-  edges: [ReviewEdge]!
-  aggregate: AggregateReview!
-}
-
-input ReviewCreateInput {
-  id: ID
-  coach: String!
-  seeker: String!
-  booking: BookingCreateOneWithoutReviewInput!
-  rating: Int!
-  review: String
-  response: ResponseCreateOneWithoutReviewInput
-}
-
-input ReviewCreateOneWithoutBookingInput {
-  create: ReviewCreateWithoutBookingInput
-  connect: ReviewWhereUniqueInput
-}
-
-input ReviewCreateOneWithoutResponseInput {
-  create: ReviewCreateWithoutResponseInput
-  connect: ReviewWhereUniqueInput
-}
-
-input ReviewCreateWithoutBookingInput {
-  id: ID
-  coach: String!
-  seeker: String!
-  rating: Int!
-  review: String
-  response: ResponseCreateOneWithoutReviewInput
-}
-
-input ReviewCreateWithoutResponseInput {
-  id: ID
-  coach: String!
-  seeker: String!
-  booking: BookingCreateOneWithoutReviewInput!
-  rating: Int!
-  review: String
-}
-
-type ReviewEdge {
-  node: Review!
-  cursor: String!
-}
-
-enum ReviewOrderByInput {
-  id_ASC
-  id_DESC
-  coach_ASC
-  coach_DESC
-  seeker_ASC
-  seeker_DESC
-  rating_ASC
-  rating_DESC
-  review_ASC
-  review_DESC
-  createdAt_ASC
-  createdAt_DESC
-  lastUpdated_ASC
-  lastUpdated_DESC
-}
-
-type ReviewPreviousValues {
-  id: ID!
-  coach: String!
-  seeker: String!
-  rating: Int!
-  review: String
-  createdAt: DateTime!
-  lastUpdated: DateTime!
-}
-
-type ReviewSubscriptionPayload {
-  mutation: MutationType!
-  node: Review
-  updatedFields: [String!]
-  previousValues: ReviewPreviousValues
-}
-
-input ReviewSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: ReviewWhereInput
-  AND: [ReviewSubscriptionWhereInput!]
-  OR: [ReviewSubscriptionWhereInput!]
-  NOT: [ReviewSubscriptionWhereInput!]
-}
-
-input ReviewUpdateInput {
-  coach: String
-  seeker: String
-  booking: BookingUpdateOneRequiredWithoutReviewInput
-  rating: Int
-  review: String
-  response: ResponseUpdateOneWithoutReviewInput
-}
-
-input ReviewUpdateManyMutationInput {
-  coach: String
-  seeker: String
-  rating: Int
-  review: String
-}
-
-input ReviewUpdateOneRequiredWithoutResponseInput {
-  create: ReviewCreateWithoutResponseInput
-  update: ReviewUpdateWithoutResponseDataInput
-  upsert: ReviewUpsertWithoutResponseInput
-  connect: ReviewWhereUniqueInput
-}
-
-input ReviewUpdateOneWithoutBookingInput {
-  create: ReviewCreateWithoutBookingInput
-  update: ReviewUpdateWithoutBookingDataInput
-  upsert: ReviewUpsertWithoutBookingInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: ReviewWhereUniqueInput
-}
-
-input ReviewUpdateWithoutBookingDataInput {
-  coach: String
-  seeker: String
-  rating: Int
-  review: String
-  response: ResponseUpdateOneWithoutReviewInput
-}
-
-input ReviewUpdateWithoutResponseDataInput {
-  coach: String
-  seeker: String
-  booking: BookingUpdateOneRequiredWithoutReviewInput
-  rating: Int
-  review: String
-}
-
-input ReviewUpsertWithoutBookingInput {
-  update: ReviewUpdateWithoutBookingDataInput!
-  create: ReviewCreateWithoutBookingInput!
-}
-
-input ReviewUpsertWithoutResponseInput {
-  update: ReviewUpdateWithoutResponseDataInput!
-  create: ReviewCreateWithoutResponseInput!
-}
-
-input ReviewWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  coach: String
-  coach_not: String
-  coach_in: [String!]
-  coach_not_in: [String!]
-  coach_lt: String
-  coach_lte: String
-  coach_gt: String
-  coach_gte: String
-  coach_contains: String
-  coach_not_contains: String
-  coach_starts_with: String
-  coach_not_starts_with: String
-  coach_ends_with: String
-  coach_not_ends_with: String
-  seeker: String
-  seeker_not: String
-  seeker_in: [String!]
-  seeker_not_in: [String!]
-  seeker_lt: String
-  seeker_lte: String
-  seeker_gt: String
-  seeker_gte: String
-  seeker_contains: String
-  seeker_not_contains: String
-  seeker_starts_with: String
-  seeker_not_starts_with: String
-  seeker_ends_with: String
-  seeker_not_ends_with: String
-  booking: BookingWhereInput
-  rating: Int
-  rating_not: Int
-  rating_in: [Int!]
-  rating_not_in: [Int!]
-  rating_lt: Int
-  rating_lte: Int
-  rating_gt: Int
-  rating_gte: Int
-  review: String
-  review_not: String
-  review_in: [String!]
-  review_not_in: [String!]
-  review_lt: String
-  review_lte: String
-  review_gt: String
-  review_gte: String
-  review_contains: String
-  review_not_contains: String
-  review_starts_with: String
-  review_not_starts_with: String
-  review_ends_with: String
-  review_not_ends_with: String
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  lastUpdated: DateTime
-  lastUpdated_not: DateTime
-  lastUpdated_in: [DateTime!]
-  lastUpdated_not_in: [DateTime!]
-  lastUpdated_lt: DateTime
-  lastUpdated_lte: DateTime
-  lastUpdated_gt: DateTime
-  lastUpdated_gte: DateTime
-  response: ResponseWhereInput
-  AND: [ReviewWhereInput!]
-  OR: [ReviewWhereInput!]
-  NOT: [ReviewWhereInput!]
-}
-
-input ReviewWhereUniqueInput {
-  id: ID
-}
-
 type Subscription {
   availability(where: AvailabilitySubscriptionWhereInput): AvailabilitySubscriptionPayload
   booking(where: BookingSubscriptionWhereInput): BookingSubscriptionPayload
   industry(where: IndustrySubscriptionWhereInput): IndustrySubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   report(where: ReportSubscriptionWhereInput): ReportSubscriptionPayload
-  response(where: ResponseSubscriptionWhereInput): ResponseSubscriptionPayload
-  review(where: ReviewSubscriptionWhereInput): ReviewSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
 }
 
