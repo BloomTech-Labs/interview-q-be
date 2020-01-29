@@ -4,5 +4,4 @@ function post(parent, _args, context) {
 
 module.exports = {
   post,
-  reviews
 };

@@ -1,4 +1,4 @@
-module.exports = { industry, coach, tags, __resolveReference, reviews };
+module.exports = { industry, coach, tags, __resolveReference };
 
 function industry(parent, _args, context) {
 	return context.prisma.post({ id: parent.id }).industry();
