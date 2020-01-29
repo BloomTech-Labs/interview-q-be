@@ -1,5 +1,10 @@
 const { gql } = require('apollo-server');
 
+// TODO - extend external type Review with Booking -- DONE
+
+// TODO - extend external type User with Review (recieved -- as coach) -- NOT NECESSARY
+// TODO - extend external type User with Review (given -- as reviewer) -- NOT NECESSARY
+
 const typeDefs = gql`
 	# The Query type lists all the different queries (Retrieve operations) that front-end can make from this Endpoint
 	# We can name these whatever we want. "Banana" words
@@ -23,13 +28,9 @@ const typeDefs = gql`
 		bookingsByCoach(coach_id: String!): [Booking]
 		bookingsBySeeker(seeker_id: String!): [Booking]
 		bookingByUniquecheck(uniquecheck: String!): Booking!
-		reviewsByCoach(coach_id: String!): [Review]
-		reviewsByPost(post_id: String!): [Review]
-		ratingByCoach(coach_id: String!): Float
-		reviewsBySeeker(seeker_id: String!): [Review]
-		reviewByBooking(uniqueBooking: String!): Review
+
 		responseByBooking(uniqueBooking: String!): Response
-		responseByReview(review_id: String!): Response
+
 		reportsByCoach(coach_id: String!): [Report]
 		reportsBySeeker(seeker_id: String!): [Report]
 		reportByBooking(uniqueBooking: String!): Report
@@ -97,27 +98,6 @@ const typeDefs = gql`
 
 		deleteBooking(uniquecheck: String!): Booking!
 
-		createReview(
-			# coach: String!
-			# seeker: String!
-			uniqueBooking: String!
-			rating: Int!
-			review: String
-		): Review!
-
-		updateReview(id: String!, rating: Int, review: String): Review!
-
-		deleteReview(id: String!): Review!
-
-		createResponse(
-			reviewID: String!
-			text: String!
-			uniqueBooking: String!
-		): Response!
-
-		updateResponse(id: String!, text: String): Response!
-
-		deleteResponse(id: String!): Response!
 
 		createReport(
 			# coach: String!
@@ -157,14 +137,17 @@ const typeDefs = gql`
 		reviews: [Review]!
 	}
 
+	"""
+	Associates posts, availability, bookings, etc with User
+	"""
 	extend type User @key(fields: "id") {
 		id: ID! @external
 		post: Post
 		availability: [Availability]
 		coach_bookings: [Booking]
     seeker_bookings: [Booking]
-    reviews: [Review]
 	}
+
 
 	type Industry {
 		id: ID!
@@ -192,7 +175,7 @@ const typeDefs = gql`
 		recurring: Boolean!
 	}
 
-	type Booking {
+	type Booking @key(fields: "id") {
 		id: ID!
 		year: Int!
 		month: Int!
@@ -208,33 +191,21 @@ const typeDefs = gql`
 		interviewGoals: String
 		interviewQuestions: String
 		resumeURL: String
-		review: Review
-		response: Response
     report: Report
-    price: Int!
-	}
-
-	type Review {
-		id: ID!
-		coach: User!
-		seeker: User!
-		booking: Booking!
-		rating: Int!
-		review: String
-		createdAt: DateTime!
-		lastUpdated: DateTime!
+		price: Int!
+		review: Review 
 		response: Response
-		# post: Post!
 	}
 
-	type Response {
-		id: ID!
-		review: Review!
-		text: String!
-		createdAt: DateTime!
-		lastUpdated: DateTime!
+	extend type Review @key(fields: "id") {
+		"""
+		Associate a Booking with a Review
+		"""
+		id: ID! @external
 		booking: Booking!
 	}
+
+
 
 	type Report {
 		id: ID!
