@@ -1,5 +1,5 @@
 const { GraphQLServer } = require('graphql-yoga');
-const { prisma } = require('../prisma/generated/prisma-client');
+const { prisma } = require('./generated/prisma-client');
 const { buildFederatedSchema } = require('@apollo/federation');
 
 const typeDefs = require('./schema');
@@ -11,8 +11,6 @@ const Tag = require('./resolvers/Tag');
 const User = require('./resolvers/User');
 const Availability = require('./resolvers/Availability');
 const Booking = require('./resolvers/Booking');
-const Review = require('./resolvers/Review');
-const Response = require('./resolvers/Response');
 const Report = require('./resolvers/Report');
 
 const resolvers = {
@@ -24,8 +22,6 @@ const resolvers = {
 	User,
 	Availability,
 	Booking,
-	Review,
-	Response,
 	Report,
 };
 

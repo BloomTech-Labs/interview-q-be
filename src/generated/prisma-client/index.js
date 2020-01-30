@@ -25,14 +25,6 @@ var models = [
     embedded: false
   },
   {
-    name: "Review",
-    embedded: false
-  },
-  {
-    name: "Response",
-    embedded: false
-  },
-  {
     name: "Report",
     embedded: false
   }
