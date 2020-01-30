@@ -134,7 +134,7 @@ const typeDefs = gql`
 		isPublished: Boolean!
 		createdAt: DateTime!
 		lastUpdated: DateTime!
-		reviews: [Review]!
+		# reviews: [Review]! // TODO update method for resolving reviews on a Post
 	}
 
 
