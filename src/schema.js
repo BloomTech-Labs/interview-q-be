@@ -196,12 +196,10 @@ const typeDefs = gql`
 		# response: Response
 	}
 
-	#		Associate a Booking with a Review
-	extend type Review @key(fields: "id") {
-		id: ID! @external
-		booking: Booking!
-	}
 
+ extend type Review @key(fields:"job")   {
+    job: String! @external
+}
 
 
 	type Report {
