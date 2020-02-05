@@ -4,7 +4,7 @@ module.exports = {
 	__resolveReference,
 	availability,
 	review,
-	response,
+	// response,
 	report,
 };
 
@@ -24,14 +24,13 @@ function availability(parent, _args, context) {
 	return context.prisma.booking({ id: parent.id }).availability();
 }
 
-function review(parent, _args, context) {
-	return context.prisma.booking({ id: parent.id }).review();
-}
 
-function response(parent, _args, context) {
-	return context.prisma.booking({ id: parent.id }).response();
-}
 
 function report(parent, _args, context) {
 	return context.prisma.booking({ id: parent.id }).report();
+}
+
+// provides information to __resolveReference in Core Review resolver
+function review(parent) {
+	return { __typename: "Review", job: parent.id }
 }

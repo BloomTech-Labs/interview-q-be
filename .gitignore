@@ -55,6 +55,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
+/config
 .env
 .env.test
 
@@ -79,3 +80,7 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 node_modules/@types/aws-lambda/package.json
+
+
+# vscode
+/.vscode

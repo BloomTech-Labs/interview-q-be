@@ -25,14 +25,6 @@ var models = [
     embedded: false
   },
   {
-    name: "Review",
-    embedded: false
-  },
-  {
-    name: "Response",
-    embedded: false
-  },
-  {
     name: "Report",
     embedded: false
   }
@@ -40,6 +32,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://interview-q-9082c5e7f5.herokuapp.com/interview-q-be/dev`
+  endpoint: `${process.env["PRISMA_ENDPOINT"]}`
 });
 exports.prisma = new exports.Prisma();
