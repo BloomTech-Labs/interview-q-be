@@ -1,7 +1,7 @@
 # API Documentation
 
 #### Backend deployed at [Heroku](https://interview-q-staging.herokuapp.com/) <br>
-
+Contact Labs19 team for alternate deployment.
 ## Getting started
 
 To get the server running locally:
@@ -27,95 +27,112 @@ InterviewQ: https://interview-q-staging.herokuapp.com
 
 This GraphQL back-end API is connected to the overall project via Apollo Federation through the Gateway here: https://quality-hub-gateway-staging.herokuapp.com
 
-<!-- | Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      | -->
-
-<!-- #### User Routes
-
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    | -->
-
 # Data Model
 
-Specific schemas (data models, queries, mutations) for the GraphQL back-end API can be accessed at the link above.
-
-<!-- #### ORGANIZATIONS
-
----
+Specific schemas (data models, queries, mutations) for the GraphQL back-end API can be accessed at the link above. Additional documentation is viewable in the GraphQL Playground for the Federation Gateway.
 
 ```
-{
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
+type Post {
+  id: ID! @id
+  price: Int
+  position: String
+  industry: Industry
+  description: String
+  coachID: String! @unique
+  createdAt: DateTime! @createdAt
+  lastUpdated: DateTime! @updatedAt
+  company: String
+  isPublished: Boolean! @default(value: true)
+  desc_lc: String
+  company_lc: String
+  position_lc: String
+  tags: [Tag]!
+  # coach: User @provides(fields: "email") @relation(link: TABLE name: "UserOnPost", onDelete: SET_NULL)
+  # ratingsId: ID!
 }
-```
 
-#### USERS
-
----
-
-```
-{
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+type Industry {
+	id: ID! @id
+	name: String! @unique
+  posts: [Post]!
 }
+
+type Tag {
+  id: ID! @id
+  name: String! @unique
+  posts: [Post]!
+}
+
+type Availability {
+  id: ID! @id
+  hour: Int!
+  minute: Int!
+  coach: String!
+  bookingID: String
+	year: Int!
+	month: Int!
+	day: Int!
+  uniquecheck: String! @unique
+	isOpen: Boolean!
+	recurring: Boolean!
+}
+
+type Booking {
+  id: ID! @id
+  year: Int!
+  month: Int!
+  day: Int!
+  hour: Int!
+  minute: Int!
+  coach: String!
+  seeker: String!
+  uniquecheck: String! @unique
+  availability: [Availability]!
+	pending: Boolean
+	confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
+  report: Report @relation(link: INLINE)
+  price: Int!
+  date: DateTime!
+}
+
+
+
+type Report {
+  id: ID! @id
+  coach: String!
+  seeker: String!
+  booking: Booking! @unique
+  strengths: String!
+  growthAreas: String!
+  suggestions: String!
+  additionalComments: String
+  createdAt: DateTime! @createdAt
+  isSent: Boolean
+}
+
+
 ```
 
-## Actions
 
-🚫 This is an example, replace this with the actions that pertain to your backend
-
-`getOrgs()` -> Returns all organizations
-
-`getOrg(orgId)` -> Returns a single organization by ID
-
-`addOrg(org)` -> Returns the created org
-
-`updateOrg(orgId)` -> Update an organization by ID
-
-`deleteOrg(orgId)` -> Delete an organization by ID
-<br>
-<br>
-<br>
-`getUsers(orgId)` -> if no param all users
-
-`getUser(userId)` -> Returns a single user by user ID
-
-<!-- `addUser(user object)` Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
-
-`updateUser(userId, changes object)` -> Updates a single user by ID.
-
-`deleteUser(userId)` -> deletes everything dependent on the user -->
 
 ## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
-create a .env file that includes the following:
+For dynamic deployment, env-cmd is recommended. in the ./config directory you may specify different environment files for different purposes. For local development, the development.env file can be created and used. See Docker information below to more details.
 
-- JWT_SECRET -
+- JWT_SECRET - Used for authentication - must match between each federation member.
+- PRISMA_ENDPOINT - specifies prisma service endpoint.
+- PRISMA_SECRET - specifies secret to access prisma.
+- PRISMA_MANAGEMENT_API_SECRET - not in use. Specifies the secret to manage Prisma.
+- PRISMA_PORT - Port on which Prisma service Runs
+- APOLLO_PORT - Port on which Apollo Server Runs
+- PG_USER - Postgres DB username.
+- PG_PASSWORD - Postgres DB password.
+
 
 ## Contributing
 
