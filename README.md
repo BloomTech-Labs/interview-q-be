@@ -27,11 +27,11 @@ InterviewQ: https://interview-q-staging.herokuapp.com
 
 This GraphQL back-end API is connected to the overall project via Apollo Federation through the Gateway here: https://quality-hub-gateway-staging.herokuapp.com
 
-<!-- | Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      | -->
+| <!--   | Method                  | Endpoint  | Access Control                               | Description |
+| ------ | ----------------------- | --------- | -------------------------------------------- |
+| GET    | `/organizations/:orgId` | all users | Returns the information for an organization. |
+| PUT    | `/organizatoins/:orgId` | owners    | Modify an existing organization.             |
+| DELETE | `/organizations/:orgId` | owners    | Delete an organization.                      | -->         |
 
 <!-- #### User Routes
 
@@ -42,7 +42,7 @@ This GraphQL back-end API is connected to the overall project via Apollo Federat
 | GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
 | POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
 | PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    | -->
+| DELETE | `/users/:userId`        | owners, supervisors |                                                    | --> |
 
 # Data Model
 
@@ -189,3 +189,7 @@ Run `npm run development` This executes the development script which assigns the
 ### Updating Prisma Service
 
 If changes are made to datamodel.prisma, the service will need to be deployed using `prisma deploy -e ../config/development.env` following that, the Prisma client will need to be generated. Run `prisma generate -e ../config/development.env` This updates src/generated with the latest version of Prisma Client.
+
+
+## Production Deployment
+Utilize seed.graphql to seed data containing industry types. Execute the command `prisma seed` with optional `-e` + environment file to seed this data.
