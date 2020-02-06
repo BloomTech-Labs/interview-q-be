@@ -27,6 +27,7 @@ InterviewQ: https://interview-q-staging.herokuapp.com
 
 This GraphQL back-end API is connected to the overall project via Apollo Federation through the Gateway here: https://quality-hub-gateway-staging.herokuapp.com
 
+
 # Data Model
 
 Specific schemas (data models, queries, mutations) for the GraphQL back-end API can be accessed at the link above. Additional documentation is viewable in the GraphQL Playground for the Federation Gateway.
@@ -206,3 +207,7 @@ Run `npm run development` This executes the development script which assigns the
 ### Updating Prisma Service
 
 If changes are made to datamodel.prisma, the service will need to be deployed using `prisma deploy -e ../config/development.env` following that, the Prisma client will need to be generated. Run `prisma generate -e ../config/development.env` This updates src/generated with the latest version of Prisma Client.
+
+
+## Production Deployment
+Utilize seed.graphql to seed data containing industry types. Execute the command `prisma seed` with optional `-e` + environment file to seed this data.
