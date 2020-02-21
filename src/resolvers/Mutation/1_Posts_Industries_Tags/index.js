@@ -10,8 +10,6 @@ module.exports = {
 const { checkFields, splitAndTrimTags, getUserId } = require("../../../utils");
 const { addNewTags, deleteDisconnectedTags } = require("./utils");
 
-//ID OF COACH IS BEING SET TO AUTHID!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // Mutations/Operations for Post
 async function createPost(_parent, args, context) {

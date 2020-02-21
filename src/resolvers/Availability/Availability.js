@@ -1,12 +1,12 @@
 module.exports = {
-	coach,
-	__resolveReference,
+  coach,
+  __resolveReference
 };
 
 function coach(availability) {
-	return { __typename: 'User', id: availability.coach };
+  return { __typename: "User", authId: availability.coach };
 }
 
 function __resolveReference(availability, context) {
-	return context.prisma.availability({ id: availability.id });
+  return context.prisma.availability({ id: availability.id });
 }
