@@ -9,11 +9,11 @@ module.exports = {
 };
 
 function coach(booking) {
-	return { __typename: 'User', id: booking.coach };
+	return { __typename: 'User', authId: booking.coach };
 }
 
 function seeker(booking) {
-	return { __typename: 'User', id: booking.seeker };
+	return { __typename: 'User', authId: booking.seeker };
 }
 
 function __resolveReference(booking, context) {
