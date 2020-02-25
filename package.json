@@ -18,11 +18,11 @@
     "supertest": "^4.0.2"
   },
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --detectOpenHandles --forceExit",
     "server": "nodemon src/index.js",
     "start": "node src/index.js",
     "development": "env-cmd -f ./config/development.env nodemon src/index.js",
-    "coverage": "CI=true npm run test --coverage || true"
+    "coverage": "jest --coverage --detectOpenHandles --forceExit || true"
   },
   "repository": {
     "type": "git",
