@@ -21,7 +21,8 @@
     "test": "jest --watch",
     "server": "nodemon src/index.js",
     "start": "node src/index.js",
-    "development": "env-cmd -f ./config/development.env nodemon src/index.js"
+    "development": "env-cmd -f ./config/development.env nodemon src/index.js",
+    "coverage": "CI=true yarn test --coverage || true"
   },
   "repository": {
     "type": "git",
