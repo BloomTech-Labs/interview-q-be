@@ -22,7 +22,7 @@
     "server": "nodemon src/index.js",
     "start": "node src/index.js",
     "development": "env-cmd -f ./config/development.env nodemon src/index.js",
-    "coverage": "CI=true yarn test --coverage || true"
+    "coverage": "CI=true npm run test --coverage || true"
   },
   "repository": {
     "type": "git",
