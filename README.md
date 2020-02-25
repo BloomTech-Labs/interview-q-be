@@ -1,3 +1,6 @@
+[![Test Coverage](https://api.codeclimate.com/v1/badges/fb929ab4175e6447d335/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/interview-q-be/test_coverage)
+
+
 # API Documentation
 
 #### Backend deployed at [Heroku](https://interview-q-staging.herokuapp.com/) <br>
