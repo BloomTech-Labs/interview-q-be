@@ -1,5 +1,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/fb929ab4175e6447d335/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/interview-q-be/test_coverage)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/fb929ab4175e6447d335/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/interview-q-be/maintainability)
+
 
 # API Documentation
 
