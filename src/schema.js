@@ -31,6 +31,7 @@ const typeDefs = gql`
 
     # responseByBooking(uniqueBooking: String!): Response
 
+    reports: [Report]
     reportsByCoach(coach_id: String!): [Report]
     reportsBySeeker(seeker_id: String!): [Report]
     reportByBooking(uniqueBooking: String!): Report
@@ -102,14 +103,43 @@ const typeDefs = gql`
       # coach: String!
       # seeker: String!
       uniqueBooking: String!
-      strengths: String!
-      growthAreas: String!
-      suggestions: String!
-      additionalComments: String
-      isSent: Boolean!
+      firstImpression_rating: Int!
+      firstImpression_comment: String!
+      resume_rating: Int!
+      resume_comment: String!
+      professionalism_rating: Int!
+      professionalism_comment: String!
+      generalAttitude_rating: Int!
+      generalAttitude_comment: String!
+      technicalProficiency_rating: Int!
+      technicalProficiency_comment: String!
+      contentOfAnswers_rating: Int!
+      contentOfAnswers_comment: String!
+      communication_rating: Int!
+      communication_comment: String!
     ): Report!
 
     updateReport(id: String!): Report!
+
+    createCoachReport(
+      # coach: String!
+      # seeker: String!
+      uniqueBooking: String!
+      firstImpression_rating: Int!
+      firstImpression_comment: String!
+      resume_rating: Int!
+      resume_comment: String!
+      professionalism_rating: Int!
+      professionalism_comment: String!
+      generalAttitude_rating: Int!
+      generalAttitude_comment: String!
+      technicalProficiency_rating: Int!
+      technicalProficiency_comment: String!
+      contentOfAnswers_rating: Int!
+      contentOfAnswers_comment: String!
+      communication_rating: Int!
+      communication_comment: String!
+    ): CoachReport!
   }
 
   # ***************************************************
@@ -201,10 +231,43 @@ const typeDefs = gql`
     coach: User!
     seeker: User!
     booking: Booking!
-    strengths: String!
-    growthAreas: String!
-    suggestions: String!
-    additionalComments: String
+    firstImpression_rating: Int!
+    firstImpression_comment: String!
+    resume_rating: Int!
+    resume_comment: String!
+    professionalism_rating: Int!
+    professionalism_comment: String!
+    generalAttitude_rating: Int!
+    generalAttitude_comment: String!
+    technicalProficiency_rating: Int!
+    technicalProficiency_comment: String!
+    contentOfAnswers_rating: Int!
+    contentOfAnswers_comment: String!
+    communication_rating: Int!
+    communication_comment: String!
+    createdAt: DateTime!
+    isSent: Boolean
+  }
+
+  type CoachReport {
+    id: ID!
+    coach: User!
+    seeker: User!
+    booking: Booking!
+    firstImpression_rating: Int!
+    firstImpression_comment: String!
+    resume_rating: Int!
+    resume_comment: String!
+    professionalism_rating: Int!
+    professionalism_comment: String!
+    generalAttitude_rating: Int!
+    generalAttitude_comment: String!
+    technicalProficiency_rating: Int!
+    technicalProficiency_comment: String!
+    contentOfAnswers_rating: Int!
+    contentOfAnswers_comment: String!
+    communication_rating: Int!
+    communication_comment: String!
     createdAt: DateTime!
     isSent: Boolean
   }

@@ -11,6 +11,10 @@ type AggregateBooking {
   count: Int!
 }
 
+type AggregateCoachReport {
+  count: Int!
+}
+
 type AggregateIndustry {
   count: Int!
 }
@@ -477,6 +481,11 @@ input BookingCreateInput {
   date: DateTime!
 }
 
+input BookingCreateOneInput {
+  create: BookingCreateInput
+  connect: BookingWhereUniqueInput
+}
+
 input BookingCreateOneWithoutReportInput {
   create: BookingCreateWithoutReportInput
   connect: BookingWhereUniqueInput
@@ -579,6 +588,26 @@ input BookingSubscriptionWhereInput {
   NOT: [BookingSubscriptionWhereInput!]
 }
 
+input BookingUpdateDataInput {
+  year: Int
+  month: Int
+  day: Int
+  hour: Int
+  minute: Int
+  coach: String
+  seeker: String
+  uniquecheck: String
+  availability: AvailabilityUpdateManyInput
+  pending: Boolean
+  confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
+  report: ReportUpdateOneWithoutBookingInput
+  price: Int
+  date: DateTime
+}
+
 input BookingUpdateInput {
   year: Int
   month: Int
@@ -617,6 +646,13 @@ input BookingUpdateManyMutationInput {
   date: DateTime
 }
 
+input BookingUpdateOneRequiredInput {
+  create: BookingCreateInput
+  update: BookingUpdateDataInput
+  upsert: BookingUpsertNestedInput
+  connect: BookingWhereUniqueInput
+}
+
 input BookingUpdateOneRequiredWithoutReportInput {
   create: BookingCreateWithoutReportInput
   update: BookingUpdateWithoutReportDataInput
@@ -641,6 +677,11 @@ input BookingUpdateWithoutReportDataInput {
   resumeURL: String
   price: Int
   date: DateTime
+}
+
+input BookingUpsertNestedInput {
+  update: BookingUpdateDataInput!
+  create: BookingCreateInput!
 }
 
 input BookingUpsertWithoutReportInput {
@@ -821,6 +862,401 @@ input BookingWhereUniqueInput {
   uniquecheck: String
 }
 
+type CoachReport {
+  id: ID!
+  coach: String!
+  seeker: String!
+  booking: Booking!
+  firstImpression_rating: Int!
+  firstImpression_comment: String!
+  resume_rating: Int!
+  resume_comment: String!
+  professionalism_rating: Int!
+  professionalism_comment: String!
+  generalAttitude_rating: Int!
+  generalAttitude_comment: String!
+  technicalProficiency_rating: Int!
+  technicalProficiency_comment: String!
+  contentOfAnswers_rating: Int!
+  contentOfAnswers_comment: String!
+  communication_rating: Int!
+  communication_comment: String!
+  createdAt: DateTime!
+  isSent: Boolean
+}
+
+type CoachReportConnection {
+  pageInfo: PageInfo!
+  edges: [CoachReportEdge]!
+  aggregate: AggregateCoachReport!
+}
+
+input CoachReportCreateInput {
+  id: ID
+  coach: String!
+  seeker: String!
+  booking: BookingCreateOneInput!
+  firstImpression_rating: Int!
+  firstImpression_comment: String!
+  resume_rating: Int!
+  resume_comment: String!
+  professionalism_rating: Int!
+  professionalism_comment: String!
+  generalAttitude_rating: Int!
+  generalAttitude_comment: String!
+  technicalProficiency_rating: Int!
+  technicalProficiency_comment: String!
+  contentOfAnswers_rating: Int!
+  contentOfAnswers_comment: String!
+  communication_rating: Int!
+  communication_comment: String!
+  isSent: Boolean
+}
+
+type CoachReportEdge {
+  node: CoachReport!
+  cursor: String!
+}
+
+enum CoachReportOrderByInput {
+  id_ASC
+  id_DESC
+  coach_ASC
+  coach_DESC
+  seeker_ASC
+  seeker_DESC
+  firstImpression_rating_ASC
+  firstImpression_rating_DESC
+  firstImpression_comment_ASC
+  firstImpression_comment_DESC
+  resume_rating_ASC
+  resume_rating_DESC
+  resume_comment_ASC
+  resume_comment_DESC
+  professionalism_rating_ASC
+  professionalism_rating_DESC
+  professionalism_comment_ASC
+  professionalism_comment_DESC
+  generalAttitude_rating_ASC
+  generalAttitude_rating_DESC
+  generalAttitude_comment_ASC
+  generalAttitude_comment_DESC
+  technicalProficiency_rating_ASC
+  technicalProficiency_rating_DESC
+  technicalProficiency_comment_ASC
+  technicalProficiency_comment_DESC
+  contentOfAnswers_rating_ASC
+  contentOfAnswers_rating_DESC
+  contentOfAnswers_comment_ASC
+  contentOfAnswers_comment_DESC
+  communication_rating_ASC
+  communication_rating_DESC
+  communication_comment_ASC
+  communication_comment_DESC
+  createdAt_ASC
+  createdAt_DESC
+  isSent_ASC
+  isSent_DESC
+}
+
+type CoachReportPreviousValues {
+  id: ID!
+  coach: String!
+  seeker: String!
+  firstImpression_rating: Int!
+  firstImpression_comment: String!
+  resume_rating: Int!
+  resume_comment: String!
+  professionalism_rating: Int!
+  professionalism_comment: String!
+  generalAttitude_rating: Int!
+  generalAttitude_comment: String!
+  technicalProficiency_rating: Int!
+  technicalProficiency_comment: String!
+  contentOfAnswers_rating: Int!
+  contentOfAnswers_comment: String!
+  communication_rating: Int!
+  communication_comment: String!
+  createdAt: DateTime!
+  isSent: Boolean
+}
+
+type CoachReportSubscriptionPayload {
+  mutation: MutationType!
+  node: CoachReport
+  updatedFields: [String!]
+  previousValues: CoachReportPreviousValues
+}
+
+input CoachReportSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CoachReportWhereInput
+  AND: [CoachReportSubscriptionWhereInput!]
+  OR: [CoachReportSubscriptionWhereInput!]
+  NOT: [CoachReportSubscriptionWhereInput!]
+}
+
+input CoachReportUpdateInput {
+  coach: String
+  seeker: String
+  booking: BookingUpdateOneRequiredInput
+  firstImpression_rating: Int
+  firstImpression_comment: String
+  resume_rating: Int
+  resume_comment: String
+  professionalism_rating: Int
+  professionalism_comment: String
+  generalAttitude_rating: Int
+  generalAttitude_comment: String
+  technicalProficiency_rating: Int
+  technicalProficiency_comment: String
+  contentOfAnswers_rating: Int
+  contentOfAnswers_comment: String
+  communication_rating: Int
+  communication_comment: String
+  isSent: Boolean
+}
+
+input CoachReportUpdateManyMutationInput {
+  coach: String
+  seeker: String
+  firstImpression_rating: Int
+  firstImpression_comment: String
+  resume_rating: Int
+  resume_comment: String
+  professionalism_rating: Int
+  professionalism_comment: String
+  generalAttitude_rating: Int
+  generalAttitude_comment: String
+  technicalProficiency_rating: Int
+  technicalProficiency_comment: String
+  contentOfAnswers_rating: Int
+  contentOfAnswers_comment: String
+  communication_rating: Int
+  communication_comment: String
+  isSent: Boolean
+}
+
+input CoachReportWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  coach: String
+  coach_not: String
+  coach_in: [String!]
+  coach_not_in: [String!]
+  coach_lt: String
+  coach_lte: String
+  coach_gt: String
+  coach_gte: String
+  coach_contains: String
+  coach_not_contains: String
+  coach_starts_with: String
+  coach_not_starts_with: String
+  coach_ends_with: String
+  coach_not_ends_with: String
+  seeker: String
+  seeker_not: String
+  seeker_in: [String!]
+  seeker_not_in: [String!]
+  seeker_lt: String
+  seeker_lte: String
+  seeker_gt: String
+  seeker_gte: String
+  seeker_contains: String
+  seeker_not_contains: String
+  seeker_starts_with: String
+  seeker_not_starts_with: String
+  seeker_ends_with: String
+  seeker_not_ends_with: String
+  booking: BookingWhereInput
+  firstImpression_rating: Int
+  firstImpression_rating_not: Int
+  firstImpression_rating_in: [Int!]
+  firstImpression_rating_not_in: [Int!]
+  firstImpression_rating_lt: Int
+  firstImpression_rating_lte: Int
+  firstImpression_rating_gt: Int
+  firstImpression_rating_gte: Int
+  firstImpression_comment: String
+  firstImpression_comment_not: String
+  firstImpression_comment_in: [String!]
+  firstImpression_comment_not_in: [String!]
+  firstImpression_comment_lt: String
+  firstImpression_comment_lte: String
+  firstImpression_comment_gt: String
+  firstImpression_comment_gte: String
+  firstImpression_comment_contains: String
+  firstImpression_comment_not_contains: String
+  firstImpression_comment_starts_with: String
+  firstImpression_comment_not_starts_with: String
+  firstImpression_comment_ends_with: String
+  firstImpression_comment_not_ends_with: String
+  resume_rating: Int
+  resume_rating_not: Int
+  resume_rating_in: [Int!]
+  resume_rating_not_in: [Int!]
+  resume_rating_lt: Int
+  resume_rating_lte: Int
+  resume_rating_gt: Int
+  resume_rating_gte: Int
+  resume_comment: String
+  resume_comment_not: String
+  resume_comment_in: [String!]
+  resume_comment_not_in: [String!]
+  resume_comment_lt: String
+  resume_comment_lte: String
+  resume_comment_gt: String
+  resume_comment_gte: String
+  resume_comment_contains: String
+  resume_comment_not_contains: String
+  resume_comment_starts_with: String
+  resume_comment_not_starts_with: String
+  resume_comment_ends_with: String
+  resume_comment_not_ends_with: String
+  professionalism_rating: Int
+  professionalism_rating_not: Int
+  professionalism_rating_in: [Int!]
+  professionalism_rating_not_in: [Int!]
+  professionalism_rating_lt: Int
+  professionalism_rating_lte: Int
+  professionalism_rating_gt: Int
+  professionalism_rating_gte: Int
+  professionalism_comment: String
+  professionalism_comment_not: String
+  professionalism_comment_in: [String!]
+  professionalism_comment_not_in: [String!]
+  professionalism_comment_lt: String
+  professionalism_comment_lte: String
+  professionalism_comment_gt: String
+  professionalism_comment_gte: String
+  professionalism_comment_contains: String
+  professionalism_comment_not_contains: String
+  professionalism_comment_starts_with: String
+  professionalism_comment_not_starts_with: String
+  professionalism_comment_ends_with: String
+  professionalism_comment_not_ends_with: String
+  generalAttitude_rating: Int
+  generalAttitude_rating_not: Int
+  generalAttitude_rating_in: [Int!]
+  generalAttitude_rating_not_in: [Int!]
+  generalAttitude_rating_lt: Int
+  generalAttitude_rating_lte: Int
+  generalAttitude_rating_gt: Int
+  generalAttitude_rating_gte: Int
+  generalAttitude_comment: String
+  generalAttitude_comment_not: String
+  generalAttitude_comment_in: [String!]
+  generalAttitude_comment_not_in: [String!]
+  generalAttitude_comment_lt: String
+  generalAttitude_comment_lte: String
+  generalAttitude_comment_gt: String
+  generalAttitude_comment_gte: String
+  generalAttitude_comment_contains: String
+  generalAttitude_comment_not_contains: String
+  generalAttitude_comment_starts_with: String
+  generalAttitude_comment_not_starts_with: String
+  generalAttitude_comment_ends_with: String
+  generalAttitude_comment_not_ends_with: String
+  technicalProficiency_rating: Int
+  technicalProficiency_rating_not: Int
+  technicalProficiency_rating_in: [Int!]
+  technicalProficiency_rating_not_in: [Int!]
+  technicalProficiency_rating_lt: Int
+  technicalProficiency_rating_lte: Int
+  technicalProficiency_rating_gt: Int
+  technicalProficiency_rating_gte: Int
+  technicalProficiency_comment: String
+  technicalProficiency_comment_not: String
+  technicalProficiency_comment_in: [String!]
+  technicalProficiency_comment_not_in: [String!]
+  technicalProficiency_comment_lt: String
+  technicalProficiency_comment_lte: String
+  technicalProficiency_comment_gt: String
+  technicalProficiency_comment_gte: String
+  technicalProficiency_comment_contains: String
+  technicalProficiency_comment_not_contains: String
+  technicalProficiency_comment_starts_with: String
+  technicalProficiency_comment_not_starts_with: String
+  technicalProficiency_comment_ends_with: String
+  technicalProficiency_comment_not_ends_with: String
+  contentOfAnswers_rating: Int
+  contentOfAnswers_rating_not: Int
+  contentOfAnswers_rating_in: [Int!]
+  contentOfAnswers_rating_not_in: [Int!]
+  contentOfAnswers_rating_lt: Int
+  contentOfAnswers_rating_lte: Int
+  contentOfAnswers_rating_gt: Int
+  contentOfAnswers_rating_gte: Int
+  contentOfAnswers_comment: String
+  contentOfAnswers_comment_not: String
+  contentOfAnswers_comment_in: [String!]
+  contentOfAnswers_comment_not_in: [String!]
+  contentOfAnswers_comment_lt: String
+  contentOfAnswers_comment_lte: String
+  contentOfAnswers_comment_gt: String
+  contentOfAnswers_comment_gte: String
+  contentOfAnswers_comment_contains: String
+  contentOfAnswers_comment_not_contains: String
+  contentOfAnswers_comment_starts_with: String
+  contentOfAnswers_comment_not_starts_with: String
+  contentOfAnswers_comment_ends_with: String
+  contentOfAnswers_comment_not_ends_with: String
+  communication_rating: Int
+  communication_rating_not: Int
+  communication_rating_in: [Int!]
+  communication_rating_not_in: [Int!]
+  communication_rating_lt: Int
+  communication_rating_lte: Int
+  communication_rating_gt: Int
+  communication_rating_gte: Int
+  communication_comment: String
+  communication_comment_not: String
+  communication_comment_in: [String!]
+  communication_comment_not_in: [String!]
+  communication_comment_lt: String
+  communication_comment_lte: String
+  communication_comment_gt: String
+  communication_comment_gte: String
+  communication_comment_contains: String
+  communication_comment_not_contains: String
+  communication_comment_starts_with: String
+  communication_comment_not_starts_with: String
+  communication_comment_ends_with: String
+  communication_comment_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  isSent: Boolean
+  isSent_not: Boolean
+  AND: [CoachReportWhereInput!]
+  OR: [CoachReportWhereInput!]
+  NOT: [CoachReportWhereInput!]
+}
+
+input CoachReportWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 type Industry {
@@ -970,6 +1406,12 @@ type Mutation {
   upsertBooking(where: BookingWhereUniqueInput!, create: BookingCreateInput!, update: BookingUpdateInput!): Booking!
   deleteBooking(where: BookingWhereUniqueInput!): Booking
   deleteManyBookings(where: BookingWhereInput): BatchPayload!
+  createCoachReport(data: CoachReportCreateInput!): CoachReport!
+  updateCoachReport(data: CoachReportUpdateInput!, where: CoachReportWhereUniqueInput!): CoachReport
+  updateManyCoachReports(data: CoachReportUpdateManyMutationInput!, where: CoachReportWhereInput): BatchPayload!
+  upsertCoachReport(where: CoachReportWhereUniqueInput!, create: CoachReportCreateInput!, update: CoachReportUpdateInput!): CoachReport!
+  deleteCoachReport(where: CoachReportWhereUniqueInput!): CoachReport
+  deleteManyCoachReports(where: CoachReportWhereInput): BatchPayload!
   createIndustry(data: IndustryCreateInput!): Industry!
   updateIndustry(data: IndustryUpdateInput!, where: IndustryWhereUniqueInput!): Industry
   updateManyIndustries(data: IndustryUpdateManyMutationInput!, where: IndustryWhereInput): BatchPayload!
@@ -1573,6 +2015,9 @@ type Query {
   booking(where: BookingWhereUniqueInput!): Booking
   bookings(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Booking]!
   bookingsConnection(where: BookingWhereInput, orderBy: BookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BookingConnection!
+  coachReport(where: CoachReportWhereUniqueInput!): CoachReport
+  coachReports(where: CoachReportWhereInput, orderBy: CoachReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CoachReport]!
+  coachReportsConnection(where: CoachReportWhereInput, orderBy: CoachReportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CoachReportConnection!
   industry(where: IndustryWhereUniqueInput!): Industry
   industries(where: IndustryWhereInput, orderBy: IndustryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Industry]!
   industriesConnection(where: IndustryWhereInput, orderBy: IndustryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IndustryConnection!
@@ -1593,10 +2038,20 @@ type Report {
   coach: String!
   seeker: String!
   booking: Booking!
-  strengths: String!
-  growthAreas: String!
-  suggestions: String!
-  additionalComments: String
+  firstImpression_rating: Int!
+  firstImpression_comment: String!
+  resume_rating: Int!
+  resume_comment: String!
+  professionalism_rating: Int!
+  professionalism_comment: String!
+  generalAttitude_rating: Int!
+  generalAttitude_comment: String!
+  technicalProficiency_rating: Int!
+  technicalProficiency_comment: String!
+  contentOfAnswers_rating: Int!
+  contentOfAnswers_comment: String!
+  communication_rating: Int!
+  communication_comment: String!
   createdAt: DateTime!
   isSent: Boolean
 }
@@ -1612,10 +2067,20 @@ input ReportCreateInput {
   coach: String!
   seeker: String!
   booking: BookingCreateOneWithoutReportInput!
-  strengths: String!
-  growthAreas: String!
-  suggestions: String!
-  additionalComments: String
+  firstImpression_rating: Int!
+  firstImpression_comment: String!
+  resume_rating: Int!
+  resume_comment: String!
+  professionalism_rating: Int!
+  professionalism_comment: String!
+  generalAttitude_rating: Int!
+  generalAttitude_comment: String!
+  technicalProficiency_rating: Int!
+  technicalProficiency_comment: String!
+  contentOfAnswers_rating: Int!
+  contentOfAnswers_comment: String!
+  communication_rating: Int!
+  communication_comment: String!
   isSent: Boolean
 }
 
@@ -1628,10 +2093,20 @@ input ReportCreateWithoutBookingInput {
   id: ID
   coach: String!
   seeker: String!
-  strengths: String!
-  growthAreas: String!
-  suggestions: String!
-  additionalComments: String
+  firstImpression_rating: Int!
+  firstImpression_comment: String!
+  resume_rating: Int!
+  resume_comment: String!
+  professionalism_rating: Int!
+  professionalism_comment: String!
+  generalAttitude_rating: Int!
+  generalAttitude_comment: String!
+  technicalProficiency_rating: Int!
+  technicalProficiency_comment: String!
+  contentOfAnswers_rating: Int!
+  contentOfAnswers_comment: String!
+  communication_rating: Int!
+  communication_comment: String!
   isSent: Boolean
 }
 
@@ -1647,14 +2122,34 @@ enum ReportOrderByInput {
   coach_DESC
   seeker_ASC
   seeker_DESC
-  strengths_ASC
-  strengths_DESC
-  growthAreas_ASC
-  growthAreas_DESC
-  suggestions_ASC
-  suggestions_DESC
-  additionalComments_ASC
-  additionalComments_DESC
+  firstImpression_rating_ASC
+  firstImpression_rating_DESC
+  firstImpression_comment_ASC
+  firstImpression_comment_DESC
+  resume_rating_ASC
+  resume_rating_DESC
+  resume_comment_ASC
+  resume_comment_DESC
+  professionalism_rating_ASC
+  professionalism_rating_DESC
+  professionalism_comment_ASC
+  professionalism_comment_DESC
+  generalAttitude_rating_ASC
+  generalAttitude_rating_DESC
+  generalAttitude_comment_ASC
+  generalAttitude_comment_DESC
+  technicalProficiency_rating_ASC
+  technicalProficiency_rating_DESC
+  technicalProficiency_comment_ASC
+  technicalProficiency_comment_DESC
+  contentOfAnswers_rating_ASC
+  contentOfAnswers_rating_DESC
+  contentOfAnswers_comment_ASC
+  contentOfAnswers_comment_DESC
+  communication_rating_ASC
+  communication_rating_DESC
+  communication_comment_ASC
+  communication_comment_DESC
   createdAt_ASC
   createdAt_DESC
   isSent_ASC
@@ -1665,10 +2160,20 @@ type ReportPreviousValues {
   id: ID!
   coach: String!
   seeker: String!
-  strengths: String!
-  growthAreas: String!
-  suggestions: String!
-  additionalComments: String
+  firstImpression_rating: Int!
+  firstImpression_comment: String!
+  resume_rating: Int!
+  resume_comment: String!
+  professionalism_rating: Int!
+  professionalism_comment: String!
+  generalAttitude_rating: Int!
+  generalAttitude_comment: String!
+  technicalProficiency_rating: Int!
+  technicalProficiency_comment: String!
+  contentOfAnswers_rating: Int!
+  contentOfAnswers_comment: String!
+  communication_rating: Int!
+  communication_comment: String!
   createdAt: DateTime!
   isSent: Boolean
 }
@@ -1695,20 +2200,40 @@ input ReportUpdateInput {
   coach: String
   seeker: String
   booking: BookingUpdateOneRequiredWithoutReportInput
-  strengths: String
-  growthAreas: String
-  suggestions: String
-  additionalComments: String
+  firstImpression_rating: Int
+  firstImpression_comment: String
+  resume_rating: Int
+  resume_comment: String
+  professionalism_rating: Int
+  professionalism_comment: String
+  generalAttitude_rating: Int
+  generalAttitude_comment: String
+  technicalProficiency_rating: Int
+  technicalProficiency_comment: String
+  contentOfAnswers_rating: Int
+  contentOfAnswers_comment: String
+  communication_rating: Int
+  communication_comment: String
   isSent: Boolean
 }
 
 input ReportUpdateManyMutationInput {
   coach: String
   seeker: String
-  strengths: String
-  growthAreas: String
-  suggestions: String
-  additionalComments: String
+  firstImpression_rating: Int
+  firstImpression_comment: String
+  resume_rating: Int
+  resume_comment: String
+  professionalism_rating: Int
+  professionalism_comment: String
+  generalAttitude_rating: Int
+  generalAttitude_comment: String
+  technicalProficiency_rating: Int
+  technicalProficiency_comment: String
+  contentOfAnswers_rating: Int
+  contentOfAnswers_comment: String
+  communication_rating: Int
+  communication_comment: String
   isSent: Boolean
 }
 
@@ -1724,10 +2249,20 @@ input ReportUpdateOneWithoutBookingInput {
 input ReportUpdateWithoutBookingDataInput {
   coach: String
   seeker: String
-  strengths: String
-  growthAreas: String
-  suggestions: String
-  additionalComments: String
+  firstImpression_rating: Int
+  firstImpression_comment: String
+  resume_rating: Int
+  resume_comment: String
+  professionalism_rating: Int
+  professionalism_comment: String
+  generalAttitude_rating: Int
+  generalAttitude_comment: String
+  technicalProficiency_rating: Int
+  technicalProficiency_comment: String
+  contentOfAnswers_rating: Int
+  contentOfAnswers_comment: String
+  communication_rating: Int
+  communication_comment: String
   isSent: Boolean
 }
 
@@ -1780,62 +2315,160 @@ input ReportWhereInput {
   seeker_ends_with: String
   seeker_not_ends_with: String
   booking: BookingWhereInput
-  strengths: String
-  strengths_not: String
-  strengths_in: [String!]
-  strengths_not_in: [String!]
-  strengths_lt: String
-  strengths_lte: String
-  strengths_gt: String
-  strengths_gte: String
-  strengths_contains: String
-  strengths_not_contains: String
-  strengths_starts_with: String
-  strengths_not_starts_with: String
-  strengths_ends_with: String
-  strengths_not_ends_with: String
-  growthAreas: String
-  growthAreas_not: String
-  growthAreas_in: [String!]
-  growthAreas_not_in: [String!]
-  growthAreas_lt: String
-  growthAreas_lte: String
-  growthAreas_gt: String
-  growthAreas_gte: String
-  growthAreas_contains: String
-  growthAreas_not_contains: String
-  growthAreas_starts_with: String
-  growthAreas_not_starts_with: String
-  growthAreas_ends_with: String
-  growthAreas_not_ends_with: String
-  suggestions: String
-  suggestions_not: String
-  suggestions_in: [String!]
-  suggestions_not_in: [String!]
-  suggestions_lt: String
-  suggestions_lte: String
-  suggestions_gt: String
-  suggestions_gte: String
-  suggestions_contains: String
-  suggestions_not_contains: String
-  suggestions_starts_with: String
-  suggestions_not_starts_with: String
-  suggestions_ends_with: String
-  suggestions_not_ends_with: String
-  additionalComments: String
-  additionalComments_not: String
-  additionalComments_in: [String!]
-  additionalComments_not_in: [String!]
-  additionalComments_lt: String
-  additionalComments_lte: String
-  additionalComments_gt: String
-  additionalComments_gte: String
-  additionalComments_contains: String
-  additionalComments_not_contains: String
-  additionalComments_starts_with: String
-  additionalComments_not_starts_with: String
-  additionalComments_ends_with: String
-  additionalComments_not_ends_with: String
+  firstImpression_rating: Int
+  firstImpression_rating_not: Int
+  firstImpression_rating_in: [Int!]
+  firstImpression_rating_not_in: [Int!]
+  firstImpression_rating_lt: Int
+  firstImpression_rating_lte: Int
+  firstImpression_rating_gt: Int
+  firstImpression_rating_gte: Int
+  firstImpression_comment: String
+  firstImpression_comment_not: String
+  firstImpression_comment_in: [String!]
+  firstImpression_comment_not_in: [String!]
+  firstImpression_comment_lt: String
+  firstImpression_comment_lte: String
+  firstImpression_comment_gt: String
+  firstImpression_comment_gte: String
+  firstImpression_comment_contains: String
+  firstImpression_comment_not_contains: String
+  firstImpression_comment_starts_with: String
+  firstImpression_comment_not_starts_with: String
+  firstImpression_comment_ends_with: String
+  firstImpression_comment_not_ends_with: String
+  resume_rating: Int
+  resume_rating_not: Int
+  resume_rating_in: [Int!]
+  resume_rating_not_in: [Int!]
+  resume_rating_lt: Int
+  resume_rating_lte: Int
+  resume_rating_gt: Int
+  resume_rating_gte: Int
+  resume_comment: String
+  resume_comment_not: String
+  resume_comment_in: [String!]
+  resume_comment_not_in: [String!]
+  resume_comment_lt: String
+  resume_comment_lte: String
+  resume_comment_gt: String
+  resume_comment_gte: String
+  resume_comment_contains: String
+  resume_comment_not_contains: String
+  resume_comment_starts_with: String
+  resume_comment_not_starts_with: String
+  resume_comment_ends_with: String
+  resume_comment_not_ends_with: String
+  professionalism_rating: Int
+  professionalism_rating_not: Int
+  professionalism_rating_in: [Int!]
+  professionalism_rating_not_in: [Int!]
+  professionalism_rating_lt: Int
+  professionalism_rating_lte: Int
+  professionalism_rating_gt: Int
+  professionalism_rating_gte: Int
+  professionalism_comment: String
+  professionalism_comment_not: String
+  professionalism_comment_in: [String!]
+  professionalism_comment_not_in: [String!]
+  professionalism_comment_lt: String
+  professionalism_comment_lte: String
+  professionalism_comment_gt: String
+  professionalism_comment_gte: String
+  professionalism_comment_contains: String
+  professionalism_comment_not_contains: String
+  professionalism_comment_starts_with: String
+  professionalism_comment_not_starts_with: String
+  professionalism_comment_ends_with: String
+  professionalism_comment_not_ends_with: String
+  generalAttitude_rating: Int
+  generalAttitude_rating_not: Int
+  generalAttitude_rating_in: [Int!]
+  generalAttitude_rating_not_in: [Int!]
+  generalAttitude_rating_lt: Int
+  generalAttitude_rating_lte: Int
+  generalAttitude_rating_gt: Int
+  generalAttitude_rating_gte: Int
+  generalAttitude_comment: String
+  generalAttitude_comment_not: String
+  generalAttitude_comment_in: [String!]
+  generalAttitude_comment_not_in: [String!]
+  generalAttitude_comment_lt: String
+  generalAttitude_comment_lte: String
+  generalAttitude_comment_gt: String
+  generalAttitude_comment_gte: String
+  generalAttitude_comment_contains: String
+  generalAttitude_comment_not_contains: String
+  generalAttitude_comment_starts_with: String
+  generalAttitude_comment_not_starts_with: String
+  generalAttitude_comment_ends_with: String
+  generalAttitude_comment_not_ends_with: String
+  technicalProficiency_rating: Int
+  technicalProficiency_rating_not: Int
+  technicalProficiency_rating_in: [Int!]
+  technicalProficiency_rating_not_in: [Int!]
+  technicalProficiency_rating_lt: Int
+  technicalProficiency_rating_lte: Int
+  technicalProficiency_rating_gt: Int
+  technicalProficiency_rating_gte: Int
+  technicalProficiency_comment: String
+  technicalProficiency_comment_not: String
+  technicalProficiency_comment_in: [String!]
+  technicalProficiency_comment_not_in: [String!]
+  technicalProficiency_comment_lt: String
+  technicalProficiency_comment_lte: String
+  technicalProficiency_comment_gt: String
+  technicalProficiency_comment_gte: String
+  technicalProficiency_comment_contains: String
+  technicalProficiency_comment_not_contains: String
+  technicalProficiency_comment_starts_with: String
+  technicalProficiency_comment_not_starts_with: String
+  technicalProficiency_comment_ends_with: String
+  technicalProficiency_comment_not_ends_with: String
+  contentOfAnswers_rating: Int
+  contentOfAnswers_rating_not: Int
+  contentOfAnswers_rating_in: [Int!]
+  contentOfAnswers_rating_not_in: [Int!]
+  contentOfAnswers_rating_lt: Int
+  contentOfAnswers_rating_lte: Int
+  contentOfAnswers_rating_gt: Int
+  contentOfAnswers_rating_gte: Int
+  contentOfAnswers_comment: String
+  contentOfAnswers_comment_not: String
+  contentOfAnswers_comment_in: [String!]
+  contentOfAnswers_comment_not_in: [String!]
+  contentOfAnswers_comment_lt: String
+  contentOfAnswers_comment_lte: String
+  contentOfAnswers_comment_gt: String
+  contentOfAnswers_comment_gte: String
+  contentOfAnswers_comment_contains: String
+  contentOfAnswers_comment_not_contains: String
+  contentOfAnswers_comment_starts_with: String
+  contentOfAnswers_comment_not_starts_with: String
+  contentOfAnswers_comment_ends_with: String
+  contentOfAnswers_comment_not_ends_with: String
+  communication_rating: Int
+  communication_rating_not: Int
+  communication_rating_in: [Int!]
+  communication_rating_not_in: [Int!]
+  communication_rating_lt: Int
+  communication_rating_lte: Int
+  communication_rating_gt: Int
+  communication_rating_gte: Int
+  communication_comment: String
+  communication_comment_not: String
+  communication_comment_in: [String!]
+  communication_comment_not_in: [String!]
+  communication_comment_lt: String
+  communication_comment_lte: String
+  communication_comment_gt: String
+  communication_comment_gte: String
+  communication_comment_contains: String
+  communication_comment_not_contains: String
+  communication_comment_starts_with: String
+  communication_comment_not_starts_with: String
+  communication_comment_ends_with: String
+  communication_comment_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -1858,6 +2491,7 @@ input ReportWhereUniqueInput {
 type Subscription {
   availability(where: AvailabilitySubscriptionWhereInput): AvailabilitySubscriptionPayload
   booking(where: BookingSubscriptionWhereInput): BookingSubscriptionPayload
+  coachReport(where: CoachReportSubscriptionWhereInput): CoachReportSubscriptionPayload
   industry(where: IndustrySubscriptionWhereInput): IndustrySubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   report(where: ReportSubscriptionWhereInput): ReportSubscriptionPayload

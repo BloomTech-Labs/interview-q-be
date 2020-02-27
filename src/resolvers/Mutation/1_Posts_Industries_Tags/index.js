@@ -24,7 +24,6 @@ async function createPost(_parent, args, context) {
   } = args;
 
   const coachID = getUserId(context);
-  console.log(getUserId(context));
 
   if (isPublished) {
     checkFields({ position, industryName, description, company });
