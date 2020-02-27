@@ -13,6 +13,8 @@ const { checkFields, splitAndTrimTags, getUserId } = require("../../../utils");
 
 // Mutations for Reviews
 async function createReview(_parent, args, context) {
+  console.log("CREATE REVIEW");
+
   const { uniqueBooking, rating, review } = args;
 
   const booking = await context.prisma.booking({ uniquecheck: uniqueBooking });

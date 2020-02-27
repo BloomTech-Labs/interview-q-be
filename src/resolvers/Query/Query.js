@@ -12,6 +12,7 @@ module.exports = {
   bookingsByCoach,
   bookingsBySeeker,
   bookingByUniquecheck,
+  reviews,
   reviewsByCoach,
   reviewsByPost,
   ratingByCoach,
@@ -121,7 +122,10 @@ function bookingByUniquecheck(_parents, args, context) {
   });
 }
 
-// Reviews queries
+// Reports queries
+function reviews(_parent, _args, context) {
+  return context.prisma.reviews();
+}
 function reviewsByCoach(_parents, args, context) {
   return context.prisma.reviews({ where: { coach: args.coach_id } });
 }
