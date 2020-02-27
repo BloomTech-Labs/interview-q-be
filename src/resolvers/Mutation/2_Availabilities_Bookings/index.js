@@ -10,7 +10,6 @@ const { getUserId } = require("../../../utils");
 async function createAvailability(_parent, args, context) {
   const { year, month, day, hour, minute } = args;
 
-  console.log("CREATE AVAILBILITY!", getUserId(context));
   const coach = getUserId(context);
 
   const uniquecheck = [coach, year, month, day, hour, minute].reduce(

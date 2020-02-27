@@ -71,10 +71,44 @@ type Report {
   coach: String!
   seeker: String!
   booking: Booking! @unique
-  strengths: String!
-  growthAreas: String!
-  suggestions: String!
-  additionalComments: String
+  firstImpression_rating: Int!
+  firstImpression_comment: String!
+  resume_rating: Int!
+  resume_comment: String!
+  professionalism_rating: Int!
+  professionalism_comment: String!
+  generalAttitude_rating: Int!
+  generalAttitude_comment: String!
+  technicalProficiency_rating: Int!
+  technicalProficiency_comment: String!
+  contentOfAnswers_rating: Int!
+  contentOfAnswers_comment: String!
+  communication_rating: Int!
+  communication_comment: String!
   createdAt: DateTime! @createdAt
   isSent: Boolean
 }
+
+type CoachReport {
+    id: ID! @id
+    coach: String!
+    seeker: String!
+    booking: Booking! @unique
+    firstImpression_rating: Int!
+    firstImpression_comment: String!
+    resume_rating: Int!
+    resume_comment: String!
+    professionalism_rating: Int!
+    professionalism_comment: String!
+    generalAttitude_rating: Int!
+    generalAttitude_comment: String!
+    technicalProficiency_rating: Int!
+    technicalProficiency_comment: String!
+    contentOfAnswers_rating: Int!
+    contentOfAnswers_comment: String!
+    communication_rating: Int!
+    communication_comment: String!
+    createdAt: DateTime! @createdAt
+    isSent: Boolean
+  }
+

@@ -18,6 +18,7 @@ export type Maybe<T> = T | undefined | null;
 export interface Exists {
   availability: (where?: AvailabilityWhereInput) => Promise<boolean>;
   booking: (where?: BookingWhereInput) => Promise<boolean>;
+  coachReport: (where?: CoachReportWhereInput) => Promise<boolean>;
   industry: (where?: IndustryWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
   report: (where?: ReportWhereInput) => Promise<boolean>;
@@ -83,6 +84,27 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => BookingConnectionPromise;
+  coachReport: (
+    where: CoachReportWhereUniqueInput
+  ) => CoachReportNullablePromise;
+  coachReports: (args?: {
+    where?: CoachReportWhereInput;
+    orderBy?: CoachReportOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<CoachReport>;
+  coachReportsConnection: (args?: {
+    where?: CoachReportWhereInput;
+    orderBy?: CoachReportOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => CoachReportConnectionPromise;
   industry: (where: IndustryWhereUniqueInput) => IndustryNullablePromise;
   industries: (args?: {
     where?: IndustryWhereInput;
@@ -201,6 +223,24 @@ export interface Prisma {
   }) => BookingPromise;
   deleteBooking: (where: BookingWhereUniqueInput) => BookingPromise;
   deleteManyBookings: (where?: BookingWhereInput) => BatchPayloadPromise;
+  createCoachReport: (data: CoachReportCreateInput) => CoachReportPromise;
+  updateCoachReport: (args: {
+    data: CoachReportUpdateInput;
+    where: CoachReportWhereUniqueInput;
+  }) => CoachReportPromise;
+  updateManyCoachReports: (args: {
+    data: CoachReportUpdateManyMutationInput;
+    where?: CoachReportWhereInput;
+  }) => BatchPayloadPromise;
+  upsertCoachReport: (args: {
+    where: CoachReportWhereUniqueInput;
+    create: CoachReportCreateInput;
+    update: CoachReportUpdateInput;
+  }) => CoachReportPromise;
+  deleteCoachReport: (where: CoachReportWhereUniqueInput) => CoachReportPromise;
+  deleteManyCoachReports: (
+    where?: CoachReportWhereInput
+  ) => BatchPayloadPromise;
   createIndustry: (data: IndustryCreateInput) => IndustryPromise;
   updateIndustry: (args: {
     data: IndustryUpdateInput;
@@ -280,6 +320,9 @@ export interface Subscription {
   booking: (
     where?: BookingSubscriptionWhereInput
   ) => BookingSubscriptionPayloadSubscription;
+  coachReport: (
+    where?: CoachReportSubscriptionWhereInput
+  ) => CoachReportSubscriptionPayloadSubscription;
   industry: (
     where?: IndustrySubscriptionWhereInput
   ) => IndustrySubscriptionPayloadSubscription;
@@ -360,6 +403,46 @@ export type BookingOrderByInput =
   | "date_ASC"
   | "date_DESC";
 
+export type CoachReportOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "coach_ASC"
+  | "coach_DESC"
+  | "seeker_ASC"
+  | "seeker_DESC"
+  | "firstImpression_rating_ASC"
+  | "firstImpression_rating_DESC"
+  | "firstImpression_comment_ASC"
+  | "firstImpression_comment_DESC"
+  | "resume_rating_ASC"
+  | "resume_rating_DESC"
+  | "resume_comment_ASC"
+  | "resume_comment_DESC"
+  | "professionalism_rating_ASC"
+  | "professionalism_rating_DESC"
+  | "professionalism_comment_ASC"
+  | "professionalism_comment_DESC"
+  | "generalAttitude_rating_ASC"
+  | "generalAttitude_rating_DESC"
+  | "generalAttitude_comment_ASC"
+  | "generalAttitude_comment_DESC"
+  | "technicalProficiency_rating_ASC"
+  | "technicalProficiency_rating_DESC"
+  | "technicalProficiency_comment_ASC"
+  | "technicalProficiency_comment_DESC"
+  | "contentOfAnswers_rating_ASC"
+  | "contentOfAnswers_rating_DESC"
+  | "contentOfAnswers_comment_ASC"
+  | "contentOfAnswers_comment_DESC"
+  | "communication_rating_ASC"
+  | "communication_rating_DESC"
+  | "communication_comment_ASC"
+  | "communication_comment_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "isSent_ASC"
+  | "isSent_DESC";
+
 export type PostOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -401,14 +484,34 @@ export type ReportOrderByInput =
   | "coach_DESC"
   | "seeker_ASC"
   | "seeker_DESC"
-  | "strengths_ASC"
-  | "strengths_DESC"
-  | "growthAreas_ASC"
-  | "growthAreas_DESC"
-  | "suggestions_ASC"
-  | "suggestions_DESC"
-  | "additionalComments_ASC"
-  | "additionalComments_DESC"
+  | "firstImpression_rating_ASC"
+  | "firstImpression_rating_DESC"
+  | "firstImpression_comment_ASC"
+  | "firstImpression_comment_DESC"
+  | "resume_rating_ASC"
+  | "resume_rating_DESC"
+  | "resume_comment_ASC"
+  | "resume_comment_DESC"
+  | "professionalism_rating_ASC"
+  | "professionalism_rating_DESC"
+  | "professionalism_comment_ASC"
+  | "professionalism_comment_DESC"
+  | "generalAttitude_rating_ASC"
+  | "generalAttitude_rating_DESC"
+  | "generalAttitude_comment_ASC"
+  | "generalAttitude_comment_DESC"
+  | "technicalProficiency_rating_ASC"
+  | "technicalProficiency_rating_DESC"
+  | "technicalProficiency_comment_ASC"
+  | "technicalProficiency_comment_DESC"
+  | "contentOfAnswers_rating_ASC"
+  | "contentOfAnswers_rating_DESC"
+  | "contentOfAnswers_comment_ASC"
+  | "contentOfAnswers_comment_DESC"
+  | "communication_rating_ASC"
+  | "communication_rating_DESC"
+  | "communication_comment_ASC"
+  | "communication_comment_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "isSent_ASC"
@@ -744,62 +847,160 @@ export interface ReportWhereInput {
   seeker_ends_with?: Maybe<String>;
   seeker_not_ends_with?: Maybe<String>;
   booking?: Maybe<BookingWhereInput>;
-  strengths?: Maybe<String>;
-  strengths_not?: Maybe<String>;
-  strengths_in?: Maybe<String[] | String>;
-  strengths_not_in?: Maybe<String[] | String>;
-  strengths_lt?: Maybe<String>;
-  strengths_lte?: Maybe<String>;
-  strengths_gt?: Maybe<String>;
-  strengths_gte?: Maybe<String>;
-  strengths_contains?: Maybe<String>;
-  strengths_not_contains?: Maybe<String>;
-  strengths_starts_with?: Maybe<String>;
-  strengths_not_starts_with?: Maybe<String>;
-  strengths_ends_with?: Maybe<String>;
-  strengths_not_ends_with?: Maybe<String>;
-  growthAreas?: Maybe<String>;
-  growthAreas_not?: Maybe<String>;
-  growthAreas_in?: Maybe<String[] | String>;
-  growthAreas_not_in?: Maybe<String[] | String>;
-  growthAreas_lt?: Maybe<String>;
-  growthAreas_lte?: Maybe<String>;
-  growthAreas_gt?: Maybe<String>;
-  growthAreas_gte?: Maybe<String>;
-  growthAreas_contains?: Maybe<String>;
-  growthAreas_not_contains?: Maybe<String>;
-  growthAreas_starts_with?: Maybe<String>;
-  growthAreas_not_starts_with?: Maybe<String>;
-  growthAreas_ends_with?: Maybe<String>;
-  growthAreas_not_ends_with?: Maybe<String>;
-  suggestions?: Maybe<String>;
-  suggestions_not?: Maybe<String>;
-  suggestions_in?: Maybe<String[] | String>;
-  suggestions_not_in?: Maybe<String[] | String>;
-  suggestions_lt?: Maybe<String>;
-  suggestions_lte?: Maybe<String>;
-  suggestions_gt?: Maybe<String>;
-  suggestions_gte?: Maybe<String>;
-  suggestions_contains?: Maybe<String>;
-  suggestions_not_contains?: Maybe<String>;
-  suggestions_starts_with?: Maybe<String>;
-  suggestions_not_starts_with?: Maybe<String>;
-  suggestions_ends_with?: Maybe<String>;
-  suggestions_not_ends_with?: Maybe<String>;
-  additionalComments?: Maybe<String>;
-  additionalComments_not?: Maybe<String>;
-  additionalComments_in?: Maybe<String[] | String>;
-  additionalComments_not_in?: Maybe<String[] | String>;
-  additionalComments_lt?: Maybe<String>;
-  additionalComments_lte?: Maybe<String>;
-  additionalComments_gt?: Maybe<String>;
-  additionalComments_gte?: Maybe<String>;
-  additionalComments_contains?: Maybe<String>;
-  additionalComments_not_contains?: Maybe<String>;
-  additionalComments_starts_with?: Maybe<String>;
-  additionalComments_not_starts_with?: Maybe<String>;
-  additionalComments_ends_with?: Maybe<String>;
-  additionalComments_not_ends_with?: Maybe<String>;
+  firstImpression_rating?: Maybe<Int>;
+  firstImpression_rating_not?: Maybe<Int>;
+  firstImpression_rating_in?: Maybe<Int[] | Int>;
+  firstImpression_rating_not_in?: Maybe<Int[] | Int>;
+  firstImpression_rating_lt?: Maybe<Int>;
+  firstImpression_rating_lte?: Maybe<Int>;
+  firstImpression_rating_gt?: Maybe<Int>;
+  firstImpression_rating_gte?: Maybe<Int>;
+  firstImpression_comment?: Maybe<String>;
+  firstImpression_comment_not?: Maybe<String>;
+  firstImpression_comment_in?: Maybe<String[] | String>;
+  firstImpression_comment_not_in?: Maybe<String[] | String>;
+  firstImpression_comment_lt?: Maybe<String>;
+  firstImpression_comment_lte?: Maybe<String>;
+  firstImpression_comment_gt?: Maybe<String>;
+  firstImpression_comment_gte?: Maybe<String>;
+  firstImpression_comment_contains?: Maybe<String>;
+  firstImpression_comment_not_contains?: Maybe<String>;
+  firstImpression_comment_starts_with?: Maybe<String>;
+  firstImpression_comment_not_starts_with?: Maybe<String>;
+  firstImpression_comment_ends_with?: Maybe<String>;
+  firstImpression_comment_not_ends_with?: Maybe<String>;
+  resume_rating?: Maybe<Int>;
+  resume_rating_not?: Maybe<Int>;
+  resume_rating_in?: Maybe<Int[] | Int>;
+  resume_rating_not_in?: Maybe<Int[] | Int>;
+  resume_rating_lt?: Maybe<Int>;
+  resume_rating_lte?: Maybe<Int>;
+  resume_rating_gt?: Maybe<Int>;
+  resume_rating_gte?: Maybe<Int>;
+  resume_comment?: Maybe<String>;
+  resume_comment_not?: Maybe<String>;
+  resume_comment_in?: Maybe<String[] | String>;
+  resume_comment_not_in?: Maybe<String[] | String>;
+  resume_comment_lt?: Maybe<String>;
+  resume_comment_lte?: Maybe<String>;
+  resume_comment_gt?: Maybe<String>;
+  resume_comment_gte?: Maybe<String>;
+  resume_comment_contains?: Maybe<String>;
+  resume_comment_not_contains?: Maybe<String>;
+  resume_comment_starts_with?: Maybe<String>;
+  resume_comment_not_starts_with?: Maybe<String>;
+  resume_comment_ends_with?: Maybe<String>;
+  resume_comment_not_ends_with?: Maybe<String>;
+  professionalism_rating?: Maybe<Int>;
+  professionalism_rating_not?: Maybe<Int>;
+  professionalism_rating_in?: Maybe<Int[] | Int>;
+  professionalism_rating_not_in?: Maybe<Int[] | Int>;
+  professionalism_rating_lt?: Maybe<Int>;
+  professionalism_rating_lte?: Maybe<Int>;
+  professionalism_rating_gt?: Maybe<Int>;
+  professionalism_rating_gte?: Maybe<Int>;
+  professionalism_comment?: Maybe<String>;
+  professionalism_comment_not?: Maybe<String>;
+  professionalism_comment_in?: Maybe<String[] | String>;
+  professionalism_comment_not_in?: Maybe<String[] | String>;
+  professionalism_comment_lt?: Maybe<String>;
+  professionalism_comment_lte?: Maybe<String>;
+  professionalism_comment_gt?: Maybe<String>;
+  professionalism_comment_gte?: Maybe<String>;
+  professionalism_comment_contains?: Maybe<String>;
+  professionalism_comment_not_contains?: Maybe<String>;
+  professionalism_comment_starts_with?: Maybe<String>;
+  professionalism_comment_not_starts_with?: Maybe<String>;
+  professionalism_comment_ends_with?: Maybe<String>;
+  professionalism_comment_not_ends_with?: Maybe<String>;
+  generalAttitude_rating?: Maybe<Int>;
+  generalAttitude_rating_not?: Maybe<Int>;
+  generalAttitude_rating_in?: Maybe<Int[] | Int>;
+  generalAttitude_rating_not_in?: Maybe<Int[] | Int>;
+  generalAttitude_rating_lt?: Maybe<Int>;
+  generalAttitude_rating_lte?: Maybe<Int>;
+  generalAttitude_rating_gt?: Maybe<Int>;
+  generalAttitude_rating_gte?: Maybe<Int>;
+  generalAttitude_comment?: Maybe<String>;
+  generalAttitude_comment_not?: Maybe<String>;
+  generalAttitude_comment_in?: Maybe<String[] | String>;
+  generalAttitude_comment_not_in?: Maybe<String[] | String>;
+  generalAttitude_comment_lt?: Maybe<String>;
+  generalAttitude_comment_lte?: Maybe<String>;
+  generalAttitude_comment_gt?: Maybe<String>;
+  generalAttitude_comment_gte?: Maybe<String>;
+  generalAttitude_comment_contains?: Maybe<String>;
+  generalAttitude_comment_not_contains?: Maybe<String>;
+  generalAttitude_comment_starts_with?: Maybe<String>;
+  generalAttitude_comment_not_starts_with?: Maybe<String>;
+  generalAttitude_comment_ends_with?: Maybe<String>;
+  generalAttitude_comment_not_ends_with?: Maybe<String>;
+  technicalProficiency_rating?: Maybe<Int>;
+  technicalProficiency_rating_not?: Maybe<Int>;
+  technicalProficiency_rating_in?: Maybe<Int[] | Int>;
+  technicalProficiency_rating_not_in?: Maybe<Int[] | Int>;
+  technicalProficiency_rating_lt?: Maybe<Int>;
+  technicalProficiency_rating_lte?: Maybe<Int>;
+  technicalProficiency_rating_gt?: Maybe<Int>;
+  technicalProficiency_rating_gte?: Maybe<Int>;
+  technicalProficiency_comment?: Maybe<String>;
+  technicalProficiency_comment_not?: Maybe<String>;
+  technicalProficiency_comment_in?: Maybe<String[] | String>;
+  technicalProficiency_comment_not_in?: Maybe<String[] | String>;
+  technicalProficiency_comment_lt?: Maybe<String>;
+  technicalProficiency_comment_lte?: Maybe<String>;
+  technicalProficiency_comment_gt?: Maybe<String>;
+  technicalProficiency_comment_gte?: Maybe<String>;
+  technicalProficiency_comment_contains?: Maybe<String>;
+  technicalProficiency_comment_not_contains?: Maybe<String>;
+  technicalProficiency_comment_starts_with?: Maybe<String>;
+  technicalProficiency_comment_not_starts_with?: Maybe<String>;
+  technicalProficiency_comment_ends_with?: Maybe<String>;
+  technicalProficiency_comment_not_ends_with?: Maybe<String>;
+  contentOfAnswers_rating?: Maybe<Int>;
+  contentOfAnswers_rating_not?: Maybe<Int>;
+  contentOfAnswers_rating_in?: Maybe<Int[] | Int>;
+  contentOfAnswers_rating_not_in?: Maybe<Int[] | Int>;
+  contentOfAnswers_rating_lt?: Maybe<Int>;
+  contentOfAnswers_rating_lte?: Maybe<Int>;
+  contentOfAnswers_rating_gt?: Maybe<Int>;
+  contentOfAnswers_rating_gte?: Maybe<Int>;
+  contentOfAnswers_comment?: Maybe<String>;
+  contentOfAnswers_comment_not?: Maybe<String>;
+  contentOfAnswers_comment_in?: Maybe<String[] | String>;
+  contentOfAnswers_comment_not_in?: Maybe<String[] | String>;
+  contentOfAnswers_comment_lt?: Maybe<String>;
+  contentOfAnswers_comment_lte?: Maybe<String>;
+  contentOfAnswers_comment_gt?: Maybe<String>;
+  contentOfAnswers_comment_gte?: Maybe<String>;
+  contentOfAnswers_comment_contains?: Maybe<String>;
+  contentOfAnswers_comment_not_contains?: Maybe<String>;
+  contentOfAnswers_comment_starts_with?: Maybe<String>;
+  contentOfAnswers_comment_not_starts_with?: Maybe<String>;
+  contentOfAnswers_comment_ends_with?: Maybe<String>;
+  contentOfAnswers_comment_not_ends_with?: Maybe<String>;
+  communication_rating?: Maybe<Int>;
+  communication_rating_not?: Maybe<Int>;
+  communication_rating_in?: Maybe<Int[] | Int>;
+  communication_rating_not_in?: Maybe<Int[] | Int>;
+  communication_rating_lt?: Maybe<Int>;
+  communication_rating_lte?: Maybe<Int>;
+  communication_rating_gt?: Maybe<Int>;
+  communication_rating_gte?: Maybe<Int>;
+  communication_comment?: Maybe<String>;
+  communication_comment_not?: Maybe<String>;
+  communication_comment_in?: Maybe<String[] | String>;
+  communication_comment_not_in?: Maybe<String[] | String>;
+  communication_comment_lt?: Maybe<String>;
+  communication_comment_lte?: Maybe<String>;
+  communication_comment_gt?: Maybe<String>;
+  communication_comment_gte?: Maybe<String>;
+  communication_comment_contains?: Maybe<String>;
+  communication_comment_not_contains?: Maybe<String>;
+  communication_comment_starts_with?: Maybe<String>;
+  communication_comment_not_starts_with?: Maybe<String>;
+  communication_comment_ends_with?: Maybe<String>;
+  communication_comment_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -813,6 +1014,223 @@ export interface ReportWhereInput {
   AND?: Maybe<ReportWhereInput[] | ReportWhereInput>;
   OR?: Maybe<ReportWhereInput[] | ReportWhereInput>;
   NOT?: Maybe<ReportWhereInput[] | ReportWhereInput>;
+}
+
+export type CoachReportWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CoachReportWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  coach?: Maybe<String>;
+  coach_not?: Maybe<String>;
+  coach_in?: Maybe<String[] | String>;
+  coach_not_in?: Maybe<String[] | String>;
+  coach_lt?: Maybe<String>;
+  coach_lte?: Maybe<String>;
+  coach_gt?: Maybe<String>;
+  coach_gte?: Maybe<String>;
+  coach_contains?: Maybe<String>;
+  coach_not_contains?: Maybe<String>;
+  coach_starts_with?: Maybe<String>;
+  coach_not_starts_with?: Maybe<String>;
+  coach_ends_with?: Maybe<String>;
+  coach_not_ends_with?: Maybe<String>;
+  seeker?: Maybe<String>;
+  seeker_not?: Maybe<String>;
+  seeker_in?: Maybe<String[] | String>;
+  seeker_not_in?: Maybe<String[] | String>;
+  seeker_lt?: Maybe<String>;
+  seeker_lte?: Maybe<String>;
+  seeker_gt?: Maybe<String>;
+  seeker_gte?: Maybe<String>;
+  seeker_contains?: Maybe<String>;
+  seeker_not_contains?: Maybe<String>;
+  seeker_starts_with?: Maybe<String>;
+  seeker_not_starts_with?: Maybe<String>;
+  seeker_ends_with?: Maybe<String>;
+  seeker_not_ends_with?: Maybe<String>;
+  booking?: Maybe<BookingWhereInput>;
+  firstImpression_rating?: Maybe<Int>;
+  firstImpression_rating_not?: Maybe<Int>;
+  firstImpression_rating_in?: Maybe<Int[] | Int>;
+  firstImpression_rating_not_in?: Maybe<Int[] | Int>;
+  firstImpression_rating_lt?: Maybe<Int>;
+  firstImpression_rating_lte?: Maybe<Int>;
+  firstImpression_rating_gt?: Maybe<Int>;
+  firstImpression_rating_gte?: Maybe<Int>;
+  firstImpression_comment?: Maybe<String>;
+  firstImpression_comment_not?: Maybe<String>;
+  firstImpression_comment_in?: Maybe<String[] | String>;
+  firstImpression_comment_not_in?: Maybe<String[] | String>;
+  firstImpression_comment_lt?: Maybe<String>;
+  firstImpression_comment_lte?: Maybe<String>;
+  firstImpression_comment_gt?: Maybe<String>;
+  firstImpression_comment_gte?: Maybe<String>;
+  firstImpression_comment_contains?: Maybe<String>;
+  firstImpression_comment_not_contains?: Maybe<String>;
+  firstImpression_comment_starts_with?: Maybe<String>;
+  firstImpression_comment_not_starts_with?: Maybe<String>;
+  firstImpression_comment_ends_with?: Maybe<String>;
+  firstImpression_comment_not_ends_with?: Maybe<String>;
+  resume_rating?: Maybe<Int>;
+  resume_rating_not?: Maybe<Int>;
+  resume_rating_in?: Maybe<Int[] | Int>;
+  resume_rating_not_in?: Maybe<Int[] | Int>;
+  resume_rating_lt?: Maybe<Int>;
+  resume_rating_lte?: Maybe<Int>;
+  resume_rating_gt?: Maybe<Int>;
+  resume_rating_gte?: Maybe<Int>;
+  resume_comment?: Maybe<String>;
+  resume_comment_not?: Maybe<String>;
+  resume_comment_in?: Maybe<String[] | String>;
+  resume_comment_not_in?: Maybe<String[] | String>;
+  resume_comment_lt?: Maybe<String>;
+  resume_comment_lte?: Maybe<String>;
+  resume_comment_gt?: Maybe<String>;
+  resume_comment_gte?: Maybe<String>;
+  resume_comment_contains?: Maybe<String>;
+  resume_comment_not_contains?: Maybe<String>;
+  resume_comment_starts_with?: Maybe<String>;
+  resume_comment_not_starts_with?: Maybe<String>;
+  resume_comment_ends_with?: Maybe<String>;
+  resume_comment_not_ends_with?: Maybe<String>;
+  professionalism_rating?: Maybe<Int>;
+  professionalism_rating_not?: Maybe<Int>;
+  professionalism_rating_in?: Maybe<Int[] | Int>;
+  professionalism_rating_not_in?: Maybe<Int[] | Int>;
+  professionalism_rating_lt?: Maybe<Int>;
+  professionalism_rating_lte?: Maybe<Int>;
+  professionalism_rating_gt?: Maybe<Int>;
+  professionalism_rating_gte?: Maybe<Int>;
+  professionalism_comment?: Maybe<String>;
+  professionalism_comment_not?: Maybe<String>;
+  professionalism_comment_in?: Maybe<String[] | String>;
+  professionalism_comment_not_in?: Maybe<String[] | String>;
+  professionalism_comment_lt?: Maybe<String>;
+  professionalism_comment_lte?: Maybe<String>;
+  professionalism_comment_gt?: Maybe<String>;
+  professionalism_comment_gte?: Maybe<String>;
+  professionalism_comment_contains?: Maybe<String>;
+  professionalism_comment_not_contains?: Maybe<String>;
+  professionalism_comment_starts_with?: Maybe<String>;
+  professionalism_comment_not_starts_with?: Maybe<String>;
+  professionalism_comment_ends_with?: Maybe<String>;
+  professionalism_comment_not_ends_with?: Maybe<String>;
+  generalAttitude_rating?: Maybe<Int>;
+  generalAttitude_rating_not?: Maybe<Int>;
+  generalAttitude_rating_in?: Maybe<Int[] | Int>;
+  generalAttitude_rating_not_in?: Maybe<Int[] | Int>;
+  generalAttitude_rating_lt?: Maybe<Int>;
+  generalAttitude_rating_lte?: Maybe<Int>;
+  generalAttitude_rating_gt?: Maybe<Int>;
+  generalAttitude_rating_gte?: Maybe<Int>;
+  generalAttitude_comment?: Maybe<String>;
+  generalAttitude_comment_not?: Maybe<String>;
+  generalAttitude_comment_in?: Maybe<String[] | String>;
+  generalAttitude_comment_not_in?: Maybe<String[] | String>;
+  generalAttitude_comment_lt?: Maybe<String>;
+  generalAttitude_comment_lte?: Maybe<String>;
+  generalAttitude_comment_gt?: Maybe<String>;
+  generalAttitude_comment_gte?: Maybe<String>;
+  generalAttitude_comment_contains?: Maybe<String>;
+  generalAttitude_comment_not_contains?: Maybe<String>;
+  generalAttitude_comment_starts_with?: Maybe<String>;
+  generalAttitude_comment_not_starts_with?: Maybe<String>;
+  generalAttitude_comment_ends_with?: Maybe<String>;
+  generalAttitude_comment_not_ends_with?: Maybe<String>;
+  technicalProficiency_rating?: Maybe<Int>;
+  technicalProficiency_rating_not?: Maybe<Int>;
+  technicalProficiency_rating_in?: Maybe<Int[] | Int>;
+  technicalProficiency_rating_not_in?: Maybe<Int[] | Int>;
+  technicalProficiency_rating_lt?: Maybe<Int>;
+  technicalProficiency_rating_lte?: Maybe<Int>;
+  technicalProficiency_rating_gt?: Maybe<Int>;
+  technicalProficiency_rating_gte?: Maybe<Int>;
+  technicalProficiency_comment?: Maybe<String>;
+  technicalProficiency_comment_not?: Maybe<String>;
+  technicalProficiency_comment_in?: Maybe<String[] | String>;
+  technicalProficiency_comment_not_in?: Maybe<String[] | String>;
+  technicalProficiency_comment_lt?: Maybe<String>;
+  technicalProficiency_comment_lte?: Maybe<String>;
+  technicalProficiency_comment_gt?: Maybe<String>;
+  technicalProficiency_comment_gte?: Maybe<String>;
+  technicalProficiency_comment_contains?: Maybe<String>;
+  technicalProficiency_comment_not_contains?: Maybe<String>;
+  technicalProficiency_comment_starts_with?: Maybe<String>;
+  technicalProficiency_comment_not_starts_with?: Maybe<String>;
+  technicalProficiency_comment_ends_with?: Maybe<String>;
+  technicalProficiency_comment_not_ends_with?: Maybe<String>;
+  contentOfAnswers_rating?: Maybe<Int>;
+  contentOfAnswers_rating_not?: Maybe<Int>;
+  contentOfAnswers_rating_in?: Maybe<Int[] | Int>;
+  contentOfAnswers_rating_not_in?: Maybe<Int[] | Int>;
+  contentOfAnswers_rating_lt?: Maybe<Int>;
+  contentOfAnswers_rating_lte?: Maybe<Int>;
+  contentOfAnswers_rating_gt?: Maybe<Int>;
+  contentOfAnswers_rating_gte?: Maybe<Int>;
+  contentOfAnswers_comment?: Maybe<String>;
+  contentOfAnswers_comment_not?: Maybe<String>;
+  contentOfAnswers_comment_in?: Maybe<String[] | String>;
+  contentOfAnswers_comment_not_in?: Maybe<String[] | String>;
+  contentOfAnswers_comment_lt?: Maybe<String>;
+  contentOfAnswers_comment_lte?: Maybe<String>;
+  contentOfAnswers_comment_gt?: Maybe<String>;
+  contentOfAnswers_comment_gte?: Maybe<String>;
+  contentOfAnswers_comment_contains?: Maybe<String>;
+  contentOfAnswers_comment_not_contains?: Maybe<String>;
+  contentOfAnswers_comment_starts_with?: Maybe<String>;
+  contentOfAnswers_comment_not_starts_with?: Maybe<String>;
+  contentOfAnswers_comment_ends_with?: Maybe<String>;
+  contentOfAnswers_comment_not_ends_with?: Maybe<String>;
+  communication_rating?: Maybe<Int>;
+  communication_rating_not?: Maybe<Int>;
+  communication_rating_in?: Maybe<Int[] | Int>;
+  communication_rating_not_in?: Maybe<Int[] | Int>;
+  communication_rating_lt?: Maybe<Int>;
+  communication_rating_lte?: Maybe<Int>;
+  communication_rating_gt?: Maybe<Int>;
+  communication_rating_gte?: Maybe<Int>;
+  communication_comment?: Maybe<String>;
+  communication_comment_not?: Maybe<String>;
+  communication_comment_in?: Maybe<String[] | String>;
+  communication_comment_not_in?: Maybe<String[] | String>;
+  communication_comment_lt?: Maybe<String>;
+  communication_comment_lte?: Maybe<String>;
+  communication_comment_gt?: Maybe<String>;
+  communication_comment_gte?: Maybe<String>;
+  communication_comment_contains?: Maybe<String>;
+  communication_comment_not_contains?: Maybe<String>;
+  communication_comment_starts_with?: Maybe<String>;
+  communication_comment_not_starts_with?: Maybe<String>;
+  communication_comment_ends_with?: Maybe<String>;
+  communication_comment_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  isSent?: Maybe<Boolean>;
+  isSent_not?: Maybe<Boolean>;
+  AND?: Maybe<CoachReportWhereInput[] | CoachReportWhereInput>;
+  OR?: Maybe<CoachReportWhereInput[] | CoachReportWhereInput>;
+  NOT?: Maybe<CoachReportWhereInput[] | CoachReportWhereInput>;
 }
 
 export type IndustryWhereUniqueInput = AtLeastOne<{
@@ -1133,10 +1551,20 @@ export interface ReportCreateWithoutBookingInput {
   id?: Maybe<ID_Input>;
   coach: String;
   seeker: String;
-  strengths: String;
-  growthAreas: String;
-  suggestions: String;
-  additionalComments?: Maybe<String>;
+  firstImpression_rating: Int;
+  firstImpression_comment: String;
+  resume_rating: Int;
+  resume_comment: String;
+  professionalism_rating: Int;
+  professionalism_comment: String;
+  generalAttitude_rating: Int;
+  generalAttitude_comment: String;
+  technicalProficiency_rating: Int;
+  technicalProficiency_comment: String;
+  contentOfAnswers_rating: Int;
+  contentOfAnswers_comment: String;
+  communication_rating: Int;
+  communication_comment: String;
   isSent?: Maybe<Boolean>;
 }
 
@@ -1347,10 +1775,20 @@ export interface ReportUpdateOneWithoutBookingInput {
 export interface ReportUpdateWithoutBookingDataInput {
   coach?: Maybe<String>;
   seeker?: Maybe<String>;
-  strengths?: Maybe<String>;
-  growthAreas?: Maybe<String>;
-  suggestions?: Maybe<String>;
-  additionalComments?: Maybe<String>;
+  firstImpression_rating?: Maybe<Int>;
+  firstImpression_comment?: Maybe<String>;
+  resume_rating?: Maybe<Int>;
+  resume_comment?: Maybe<String>;
+  professionalism_rating?: Maybe<Int>;
+  professionalism_comment?: Maybe<String>;
+  generalAttitude_rating?: Maybe<Int>;
+  generalAttitude_comment?: Maybe<String>;
+  technicalProficiency_rating?: Maybe<Int>;
+  technicalProficiency_comment?: Maybe<String>;
+  contentOfAnswers_rating?: Maybe<Int>;
+  contentOfAnswers_comment?: Maybe<String>;
+  communication_rating?: Maybe<Int>;
+  communication_comment?: Maybe<String>;
   isSent?: Maybe<Boolean>;
 }
 
@@ -1375,6 +1813,106 @@ export interface BookingUpdateManyMutationInput {
   resumeURL?: Maybe<String>;
   price?: Maybe<Int>;
   date?: Maybe<DateTimeInput>;
+}
+
+export interface CoachReportCreateInput {
+  id?: Maybe<ID_Input>;
+  coach: String;
+  seeker: String;
+  booking: BookingCreateOneInput;
+  firstImpression_rating: Int;
+  firstImpression_comment: String;
+  resume_rating: Int;
+  resume_comment: String;
+  professionalism_rating: Int;
+  professionalism_comment: String;
+  generalAttitude_rating: Int;
+  generalAttitude_comment: String;
+  technicalProficiency_rating: Int;
+  technicalProficiency_comment: String;
+  contentOfAnswers_rating: Int;
+  contentOfAnswers_comment: String;
+  communication_rating: Int;
+  communication_comment: String;
+  isSent?: Maybe<Boolean>;
+}
+
+export interface BookingCreateOneInput {
+  create?: Maybe<BookingCreateInput>;
+  connect?: Maybe<BookingWhereUniqueInput>;
+}
+
+export interface CoachReportUpdateInput {
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  booking?: Maybe<BookingUpdateOneRequiredInput>;
+  firstImpression_rating?: Maybe<Int>;
+  firstImpression_comment?: Maybe<String>;
+  resume_rating?: Maybe<Int>;
+  resume_comment?: Maybe<String>;
+  professionalism_rating?: Maybe<Int>;
+  professionalism_comment?: Maybe<String>;
+  generalAttitude_rating?: Maybe<Int>;
+  generalAttitude_comment?: Maybe<String>;
+  technicalProficiency_rating?: Maybe<Int>;
+  technicalProficiency_comment?: Maybe<String>;
+  contentOfAnswers_rating?: Maybe<Int>;
+  contentOfAnswers_comment?: Maybe<String>;
+  communication_rating?: Maybe<Int>;
+  communication_comment?: Maybe<String>;
+  isSent?: Maybe<Boolean>;
+}
+
+export interface BookingUpdateOneRequiredInput {
+  create?: Maybe<BookingCreateInput>;
+  update?: Maybe<BookingUpdateDataInput>;
+  upsert?: Maybe<BookingUpsertNestedInput>;
+  connect?: Maybe<BookingWhereUniqueInput>;
+}
+
+export interface BookingUpdateDataInput {
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  uniquecheck?: Maybe<String>;
+  availability?: Maybe<AvailabilityUpdateManyInput>;
+  pending?: Maybe<Boolean>;
+  confirmed?: Maybe<Boolean>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+  report?: Maybe<ReportUpdateOneWithoutBookingInput>;
+  price?: Maybe<Int>;
+  date?: Maybe<DateTimeInput>;
+}
+
+export interface BookingUpsertNestedInput {
+  update: BookingUpdateDataInput;
+  create: BookingCreateInput;
+}
+
+export interface CoachReportUpdateManyMutationInput {
+  coach?: Maybe<String>;
+  seeker?: Maybe<String>;
+  firstImpression_rating?: Maybe<Int>;
+  firstImpression_comment?: Maybe<String>;
+  resume_rating?: Maybe<Int>;
+  resume_comment?: Maybe<String>;
+  professionalism_rating?: Maybe<Int>;
+  professionalism_comment?: Maybe<String>;
+  generalAttitude_rating?: Maybe<Int>;
+  generalAttitude_comment?: Maybe<String>;
+  technicalProficiency_rating?: Maybe<Int>;
+  technicalProficiency_comment?: Maybe<String>;
+  contentOfAnswers_rating?: Maybe<Int>;
+  contentOfAnswers_comment?: Maybe<String>;
+  communication_rating?: Maybe<Int>;
+  communication_comment?: Maybe<String>;
+  isSent?: Maybe<Boolean>;
 }
 
 export interface IndustryCreateInput {
@@ -1782,10 +2320,20 @@ export interface ReportCreateInput {
   coach: String;
   seeker: String;
   booking: BookingCreateOneWithoutReportInput;
-  strengths: String;
-  growthAreas: String;
-  suggestions: String;
-  additionalComments?: Maybe<String>;
+  firstImpression_rating: Int;
+  firstImpression_comment: String;
+  resume_rating: Int;
+  resume_comment: String;
+  professionalism_rating: Int;
+  professionalism_comment: String;
+  generalAttitude_rating: Int;
+  generalAttitude_comment: String;
+  technicalProficiency_rating: Int;
+  technicalProficiency_comment: String;
+  contentOfAnswers_rating: Int;
+  contentOfAnswers_comment: String;
+  communication_rating: Int;
+  communication_comment: String;
   isSent?: Maybe<Boolean>;
 }
 
@@ -1818,10 +2366,20 @@ export interface ReportUpdateInput {
   coach?: Maybe<String>;
   seeker?: Maybe<String>;
   booking?: Maybe<BookingUpdateOneRequiredWithoutReportInput>;
-  strengths?: Maybe<String>;
-  growthAreas?: Maybe<String>;
-  suggestions?: Maybe<String>;
-  additionalComments?: Maybe<String>;
+  firstImpression_rating?: Maybe<Int>;
+  firstImpression_comment?: Maybe<String>;
+  resume_rating?: Maybe<Int>;
+  resume_comment?: Maybe<String>;
+  professionalism_rating?: Maybe<Int>;
+  professionalism_comment?: Maybe<String>;
+  generalAttitude_rating?: Maybe<Int>;
+  generalAttitude_comment?: Maybe<String>;
+  technicalProficiency_rating?: Maybe<Int>;
+  technicalProficiency_comment?: Maybe<String>;
+  contentOfAnswers_rating?: Maybe<Int>;
+  contentOfAnswers_comment?: Maybe<String>;
+  communication_rating?: Maybe<Int>;
+  communication_comment?: Maybe<String>;
   isSent?: Maybe<Boolean>;
 }
 
@@ -1859,10 +2417,20 @@ export interface BookingUpsertWithoutReportInput {
 export interface ReportUpdateManyMutationInput {
   coach?: Maybe<String>;
   seeker?: Maybe<String>;
-  strengths?: Maybe<String>;
-  growthAreas?: Maybe<String>;
-  suggestions?: Maybe<String>;
-  additionalComments?: Maybe<String>;
+  firstImpression_rating?: Maybe<Int>;
+  firstImpression_comment?: Maybe<String>;
+  resume_rating?: Maybe<Int>;
+  resume_comment?: Maybe<String>;
+  professionalism_rating?: Maybe<Int>;
+  professionalism_comment?: Maybe<String>;
+  generalAttitude_rating?: Maybe<Int>;
+  generalAttitude_comment?: Maybe<String>;
+  technicalProficiency_rating?: Maybe<Int>;
+  technicalProficiency_comment?: Maybe<String>;
+  contentOfAnswers_rating?: Maybe<Int>;
+  contentOfAnswers_comment?: Maybe<String>;
+  communication_rating?: Maybe<Int>;
+  communication_comment?: Maybe<String>;
   isSent?: Maybe<Boolean>;
 }
 
@@ -1970,6 +2538,23 @@ export interface BookingSubscriptionWhereInput {
   AND?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
   OR?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
   NOT?: Maybe<BookingSubscriptionWhereInput[] | BookingSubscriptionWhereInput>;
+}
+
+export interface CoachReportSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CoachReportWhereInput>;
+  AND?: Maybe<
+    CoachReportSubscriptionWhereInput[] | CoachReportSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    CoachReportSubscriptionWhereInput[] | CoachReportSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    CoachReportSubscriptionWhereInput[] | CoachReportSubscriptionWhereInput
+  >;
 }
 
 export interface IndustrySubscriptionWhereInput {
@@ -2279,10 +2864,20 @@ export interface Report {
   id: ID_Output;
   coach: String;
   seeker: String;
-  strengths: String;
-  growthAreas: String;
-  suggestions: String;
-  additionalComments?: String;
+  firstImpression_rating: Int;
+  firstImpression_comment: String;
+  resume_rating: Int;
+  resume_comment: String;
+  professionalism_rating: Int;
+  professionalism_comment: String;
+  generalAttitude_rating: Int;
+  generalAttitude_comment: String;
+  technicalProficiency_rating: Int;
+  technicalProficiency_comment: String;
+  contentOfAnswers_rating: Int;
+  contentOfAnswers_comment: String;
+  communication_rating: Int;
+  communication_comment: String;
   createdAt: DateTimeOutput;
   isSent?: Boolean;
 }
@@ -2292,10 +2887,20 @@ export interface ReportPromise extends Promise<Report>, Fragmentable {
   coach: () => Promise<String>;
   seeker: () => Promise<String>;
   booking: <T = BookingPromise>() => T;
-  strengths: () => Promise<String>;
-  growthAreas: () => Promise<String>;
-  suggestions: () => Promise<String>;
-  additionalComments: () => Promise<String>;
+  firstImpression_rating: () => Promise<Int>;
+  firstImpression_comment: () => Promise<String>;
+  resume_rating: () => Promise<Int>;
+  resume_comment: () => Promise<String>;
+  professionalism_rating: () => Promise<Int>;
+  professionalism_comment: () => Promise<String>;
+  generalAttitude_rating: () => Promise<Int>;
+  generalAttitude_comment: () => Promise<String>;
+  technicalProficiency_rating: () => Promise<Int>;
+  technicalProficiency_comment: () => Promise<String>;
+  contentOfAnswers_rating: () => Promise<Int>;
+  contentOfAnswers_comment: () => Promise<String>;
+  communication_rating: () => Promise<Int>;
+  communication_comment: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   isSent: () => Promise<Boolean>;
 }
@@ -2307,10 +2912,20 @@ export interface ReportSubscription
   coach: () => Promise<AsyncIterator<String>>;
   seeker: () => Promise<AsyncIterator<String>>;
   booking: <T = BookingSubscription>() => T;
-  strengths: () => Promise<AsyncIterator<String>>;
-  growthAreas: () => Promise<AsyncIterator<String>>;
-  suggestions: () => Promise<AsyncIterator<String>>;
-  additionalComments: () => Promise<AsyncIterator<String>>;
+  firstImpression_rating: () => Promise<AsyncIterator<Int>>;
+  firstImpression_comment: () => Promise<AsyncIterator<String>>;
+  resume_rating: () => Promise<AsyncIterator<Int>>;
+  resume_comment: () => Promise<AsyncIterator<String>>;
+  professionalism_rating: () => Promise<AsyncIterator<Int>>;
+  professionalism_comment: () => Promise<AsyncIterator<String>>;
+  generalAttitude_rating: () => Promise<AsyncIterator<Int>>;
+  generalAttitude_comment: () => Promise<AsyncIterator<String>>;
+  technicalProficiency_rating: () => Promise<AsyncIterator<Int>>;
+  technicalProficiency_comment: () => Promise<AsyncIterator<String>>;
+  contentOfAnswers_rating: () => Promise<AsyncIterator<Int>>;
+  contentOfAnswers_comment: () => Promise<AsyncIterator<String>>;
+  communication_rating: () => Promise<AsyncIterator<Int>>;
+  communication_comment: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   isSent: () => Promise<AsyncIterator<Boolean>>;
 }
@@ -2322,10 +2937,20 @@ export interface ReportNullablePromise
   coach: () => Promise<String>;
   seeker: () => Promise<String>;
   booking: <T = BookingPromise>() => T;
-  strengths: () => Promise<String>;
-  growthAreas: () => Promise<String>;
-  suggestions: () => Promise<String>;
-  additionalComments: () => Promise<String>;
+  firstImpression_rating: () => Promise<Int>;
+  firstImpression_comment: () => Promise<String>;
+  resume_rating: () => Promise<Int>;
+  resume_comment: () => Promise<String>;
+  professionalism_rating: () => Promise<Int>;
+  professionalism_comment: () => Promise<String>;
+  generalAttitude_rating: () => Promise<Int>;
+  generalAttitude_comment: () => Promise<String>;
+  technicalProficiency_rating: () => Promise<Int>;
+  technicalProficiency_comment: () => Promise<String>;
+  contentOfAnswers_rating: () => Promise<Int>;
+  contentOfAnswers_comment: () => Promise<String>;
+  communication_rating: () => Promise<Int>;
+  communication_comment: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   isSent: () => Promise<Boolean>;
 }
@@ -2380,6 +3005,157 @@ export interface AggregateBookingPromise
 
 export interface AggregateBookingSubscription
   extends Promise<AsyncIterator<AggregateBooking>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CoachReport {
+  id: ID_Output;
+  coach: String;
+  seeker: String;
+  firstImpression_rating: Int;
+  firstImpression_comment: String;
+  resume_rating: Int;
+  resume_comment: String;
+  professionalism_rating: Int;
+  professionalism_comment: String;
+  generalAttitude_rating: Int;
+  generalAttitude_comment: String;
+  technicalProficiency_rating: Int;
+  technicalProficiency_comment: String;
+  contentOfAnswers_rating: Int;
+  contentOfAnswers_comment: String;
+  communication_rating: Int;
+  communication_comment: String;
+  createdAt: DateTimeOutput;
+  isSent?: Boolean;
+}
+
+export interface CoachReportPromise extends Promise<CoachReport>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  coach: () => Promise<String>;
+  seeker: () => Promise<String>;
+  booking: <T = BookingPromise>() => T;
+  firstImpression_rating: () => Promise<Int>;
+  firstImpression_comment: () => Promise<String>;
+  resume_rating: () => Promise<Int>;
+  resume_comment: () => Promise<String>;
+  professionalism_rating: () => Promise<Int>;
+  professionalism_comment: () => Promise<String>;
+  generalAttitude_rating: () => Promise<Int>;
+  generalAttitude_comment: () => Promise<String>;
+  technicalProficiency_rating: () => Promise<Int>;
+  technicalProficiency_comment: () => Promise<String>;
+  contentOfAnswers_rating: () => Promise<Int>;
+  contentOfAnswers_comment: () => Promise<String>;
+  communication_rating: () => Promise<Int>;
+  communication_comment: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  isSent: () => Promise<Boolean>;
+}
+
+export interface CoachReportSubscription
+  extends Promise<AsyncIterator<CoachReport>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  coach: () => Promise<AsyncIterator<String>>;
+  seeker: () => Promise<AsyncIterator<String>>;
+  booking: <T = BookingSubscription>() => T;
+  firstImpression_rating: () => Promise<AsyncIterator<Int>>;
+  firstImpression_comment: () => Promise<AsyncIterator<String>>;
+  resume_rating: () => Promise<AsyncIterator<Int>>;
+  resume_comment: () => Promise<AsyncIterator<String>>;
+  professionalism_rating: () => Promise<AsyncIterator<Int>>;
+  professionalism_comment: () => Promise<AsyncIterator<String>>;
+  generalAttitude_rating: () => Promise<AsyncIterator<Int>>;
+  generalAttitude_comment: () => Promise<AsyncIterator<String>>;
+  technicalProficiency_rating: () => Promise<AsyncIterator<Int>>;
+  technicalProficiency_comment: () => Promise<AsyncIterator<String>>;
+  contentOfAnswers_rating: () => Promise<AsyncIterator<Int>>;
+  contentOfAnswers_comment: () => Promise<AsyncIterator<String>>;
+  communication_rating: () => Promise<AsyncIterator<Int>>;
+  communication_comment: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  isSent: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface CoachReportNullablePromise
+  extends Promise<CoachReport | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  coach: () => Promise<String>;
+  seeker: () => Promise<String>;
+  booking: <T = BookingPromise>() => T;
+  firstImpression_rating: () => Promise<Int>;
+  firstImpression_comment: () => Promise<String>;
+  resume_rating: () => Promise<Int>;
+  resume_comment: () => Promise<String>;
+  professionalism_rating: () => Promise<Int>;
+  professionalism_comment: () => Promise<String>;
+  generalAttitude_rating: () => Promise<Int>;
+  generalAttitude_comment: () => Promise<String>;
+  technicalProficiency_rating: () => Promise<Int>;
+  technicalProficiency_comment: () => Promise<String>;
+  contentOfAnswers_rating: () => Promise<Int>;
+  contentOfAnswers_comment: () => Promise<String>;
+  communication_rating: () => Promise<Int>;
+  communication_comment: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  isSent: () => Promise<Boolean>;
+}
+
+export interface CoachReportConnection {
+  pageInfo: PageInfo;
+  edges: CoachReportEdge[];
+}
+
+export interface CoachReportConnectionPromise
+  extends Promise<CoachReportConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CoachReportEdge>>() => T;
+  aggregate: <T = AggregateCoachReportPromise>() => T;
+}
+
+export interface CoachReportConnectionSubscription
+  extends Promise<AsyncIterator<CoachReportConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CoachReportEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCoachReportSubscription>() => T;
+}
+
+export interface CoachReportEdge {
+  node: CoachReport;
+  cursor: String;
+}
+
+export interface CoachReportEdgePromise
+  extends Promise<CoachReportEdge>,
+    Fragmentable {
+  node: <T = CoachReportPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CoachReportEdgeSubscription
+  extends Promise<AsyncIterator<CoachReportEdge>>,
+    Fragmentable {
+  node: <T = CoachReportSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateCoachReport {
+  count: Int;
+}
+
+export interface AggregateCoachReportPromise
+  extends Promise<AggregateCoachReport>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCoachReportSubscription
+  extends Promise<AsyncIterator<AggregateCoachReport>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -2969,6 +3745,101 @@ export interface BookingPreviousValuesSubscription
   date: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
+export interface CoachReportSubscriptionPayload {
+  mutation: MutationType;
+  node: CoachReport;
+  updatedFields: String[];
+  previousValues: CoachReportPreviousValues;
+}
+
+export interface CoachReportSubscriptionPayloadPromise
+  extends Promise<CoachReportSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CoachReportPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CoachReportPreviousValuesPromise>() => T;
+}
+
+export interface CoachReportSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CoachReportSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CoachReportSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CoachReportPreviousValuesSubscription>() => T;
+}
+
+export interface CoachReportPreviousValues {
+  id: ID_Output;
+  coach: String;
+  seeker: String;
+  firstImpression_rating: Int;
+  firstImpression_comment: String;
+  resume_rating: Int;
+  resume_comment: String;
+  professionalism_rating: Int;
+  professionalism_comment: String;
+  generalAttitude_rating: Int;
+  generalAttitude_comment: String;
+  technicalProficiency_rating: Int;
+  technicalProficiency_comment: String;
+  contentOfAnswers_rating: Int;
+  contentOfAnswers_comment: String;
+  communication_rating: Int;
+  communication_comment: String;
+  createdAt: DateTimeOutput;
+  isSent?: Boolean;
+}
+
+export interface CoachReportPreviousValuesPromise
+  extends Promise<CoachReportPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  coach: () => Promise<String>;
+  seeker: () => Promise<String>;
+  firstImpression_rating: () => Promise<Int>;
+  firstImpression_comment: () => Promise<String>;
+  resume_rating: () => Promise<Int>;
+  resume_comment: () => Promise<String>;
+  professionalism_rating: () => Promise<Int>;
+  professionalism_comment: () => Promise<String>;
+  generalAttitude_rating: () => Promise<Int>;
+  generalAttitude_comment: () => Promise<String>;
+  technicalProficiency_rating: () => Promise<Int>;
+  technicalProficiency_comment: () => Promise<String>;
+  contentOfAnswers_rating: () => Promise<Int>;
+  contentOfAnswers_comment: () => Promise<String>;
+  communication_rating: () => Promise<Int>;
+  communication_comment: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  isSent: () => Promise<Boolean>;
+}
+
+export interface CoachReportPreviousValuesSubscription
+  extends Promise<AsyncIterator<CoachReportPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  coach: () => Promise<AsyncIterator<String>>;
+  seeker: () => Promise<AsyncIterator<String>>;
+  firstImpression_rating: () => Promise<AsyncIterator<Int>>;
+  firstImpression_comment: () => Promise<AsyncIterator<String>>;
+  resume_rating: () => Promise<AsyncIterator<Int>>;
+  resume_comment: () => Promise<AsyncIterator<String>>;
+  professionalism_rating: () => Promise<AsyncIterator<Int>>;
+  professionalism_comment: () => Promise<AsyncIterator<String>>;
+  generalAttitude_rating: () => Promise<AsyncIterator<Int>>;
+  generalAttitude_comment: () => Promise<AsyncIterator<String>>;
+  technicalProficiency_rating: () => Promise<AsyncIterator<Int>>;
+  technicalProficiency_comment: () => Promise<AsyncIterator<String>>;
+  contentOfAnswers_rating: () => Promise<AsyncIterator<Int>>;
+  contentOfAnswers_comment: () => Promise<AsyncIterator<String>>;
+  communication_rating: () => Promise<AsyncIterator<Int>>;
+  communication_comment: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  isSent: () => Promise<AsyncIterator<Boolean>>;
+}
+
 export interface IndustrySubscriptionPayload {
   mutation: MutationType;
   node: Industry;
@@ -3116,10 +3987,20 @@ export interface ReportPreviousValues {
   id: ID_Output;
   coach: String;
   seeker: String;
-  strengths: String;
-  growthAreas: String;
-  suggestions: String;
-  additionalComments?: String;
+  firstImpression_rating: Int;
+  firstImpression_comment: String;
+  resume_rating: Int;
+  resume_comment: String;
+  professionalism_rating: Int;
+  professionalism_comment: String;
+  generalAttitude_rating: Int;
+  generalAttitude_comment: String;
+  technicalProficiency_rating: Int;
+  technicalProficiency_comment: String;
+  contentOfAnswers_rating: Int;
+  contentOfAnswers_comment: String;
+  communication_rating: Int;
+  communication_comment: String;
   createdAt: DateTimeOutput;
   isSent?: Boolean;
 }
@@ -3130,10 +4011,20 @@ export interface ReportPreviousValuesPromise
   id: () => Promise<ID_Output>;
   coach: () => Promise<String>;
   seeker: () => Promise<String>;
-  strengths: () => Promise<String>;
-  growthAreas: () => Promise<String>;
-  suggestions: () => Promise<String>;
-  additionalComments: () => Promise<String>;
+  firstImpression_rating: () => Promise<Int>;
+  firstImpression_comment: () => Promise<String>;
+  resume_rating: () => Promise<Int>;
+  resume_comment: () => Promise<String>;
+  professionalism_rating: () => Promise<Int>;
+  professionalism_comment: () => Promise<String>;
+  generalAttitude_rating: () => Promise<Int>;
+  generalAttitude_comment: () => Promise<String>;
+  technicalProficiency_rating: () => Promise<Int>;
+  technicalProficiency_comment: () => Promise<String>;
+  contentOfAnswers_rating: () => Promise<Int>;
+  contentOfAnswers_comment: () => Promise<String>;
+  communication_rating: () => Promise<Int>;
+  communication_comment: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   isSent: () => Promise<Boolean>;
 }
@@ -3144,10 +4035,20 @@ export interface ReportPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   coach: () => Promise<AsyncIterator<String>>;
   seeker: () => Promise<AsyncIterator<String>>;
-  strengths: () => Promise<AsyncIterator<String>>;
-  growthAreas: () => Promise<AsyncIterator<String>>;
-  suggestions: () => Promise<AsyncIterator<String>>;
-  additionalComments: () => Promise<AsyncIterator<String>>;
+  firstImpression_rating: () => Promise<AsyncIterator<Int>>;
+  firstImpression_comment: () => Promise<AsyncIterator<String>>;
+  resume_rating: () => Promise<AsyncIterator<Int>>;
+  resume_comment: () => Promise<AsyncIterator<String>>;
+  professionalism_rating: () => Promise<AsyncIterator<Int>>;
+  professionalism_comment: () => Promise<AsyncIterator<String>>;
+  generalAttitude_rating: () => Promise<AsyncIterator<Int>>;
+  generalAttitude_comment: () => Promise<AsyncIterator<String>>;
+  technicalProficiency_rating: () => Promise<AsyncIterator<Int>>;
+  technicalProficiency_comment: () => Promise<AsyncIterator<String>>;
+  contentOfAnswers_rating: () => Promise<AsyncIterator<Int>>;
+  contentOfAnswers_comment: () => Promise<AsyncIterator<String>>;
+  communication_rating: () => Promise<AsyncIterator<Int>>;
+  communication_comment: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   isSent: () => Promise<AsyncIterator<Boolean>>;
 }
@@ -3256,6 +4157,10 @@ export const models: Model[] = [
   },
   {
     name: "Report",
+    embedded: false
+  },
+  {
+    name: "CoachReport",
     embedded: false
   }
 ];
