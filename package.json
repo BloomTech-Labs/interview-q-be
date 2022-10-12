@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@apollo/federation": "^0.11.0",
-    "apollo-server": "^2.9.9",
+    "apollo-server": "^2.25.4",
     "dotenv": "^8.2.0",
     "env-cmd": "^10.0.1",
     "graphql-yoga": "^1.18.3",
